@@ -64,10 +64,10 @@
 
        <div class="panel-body mtop10 invoice-item">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <?php $this->load->view('warehouse/item_include/main_item_select'); ?>
               </div>
-              <div class="col-md-8 text-right">
+              <div class="col-md-9 text-right">
                 <label class="bold mtop10 text-right" data-toggle="tooltip" title="" data-original-title="<?php echo _l('support_barcode_scanner_tooltip'); ?>"><?php echo _l('support_barcode_scanner'); ?>
                 <i class="fa fa-question-circle i_tooltip"></i></label>
               </div>

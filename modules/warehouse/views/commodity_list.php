@@ -497,137 +497,116 @@
                 <!-- interview process start -->
                   <div role="tabpanel" class="tab-pane active" id="interview_infor">
                         <div class="row parent_item_hide">
-                          <div class=" col-md-12">
+                          <div class=" col-md-4">
                             <div id="parent_item_html">
                               
                             </div>
-                            <!-- <div class="form-group">
-                              <label for="parent_id" class="control-label"><?php echo _l('parent_item'); ?></label>
-                              <select name="parent_id" id="parent_id" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="">
-                                
-                              </select>
-                            </div> -->
-
                           </div>
                         </div>
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <?php echo render_input('commodity_code', 'commodity_code'); ?>
-                                </div>
-                                <div class="col-md-6">
-                                  <?php echo render_input('description', 'commodity_name'); ?>
-                                </div>
-                                
+                        <!-- Row 1: Commodity Code, Commodity Name, Barcode -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?php echo render_input('commodity_code', 'commodity_code'); ?>
                             </div>
-
-                            <div class="row">
-                               <div class="col-md-6">
+                            <div class="col-md-4">
+                              <?php echo render_input('description', 'commodity_name'); ?>
+                            </div>
+                            <div class="col-md-4">
                                 <a href="#" class="pull-right display-block input_method"><i class="fa fa-question-circle skucode-tooltip"  data-toggle="tooltip" title="" data-original-title="<?php echo _l('commodity_barcode_tooltip'); ?>"></i></a>
-                                     <?php echo render_input('commodity_barcode', 'commodity_barcode','','text'); ?>
-                                </div>
-                              <div class="col-md-3">
+                                <?php echo render_input('commodity_barcode', 'commodity_barcode','','text'); ?>
+                            </div>
+                        </div>
+
+                        <!-- Row 2: SKU Code, SKU Name, Tags -->
+                        <div class="row">
+                            <div class="col-md-4">
                                 <a href="#" class="pull-right display-block input_method"><i class="fa fa-question-circle skucode-tooltip"  data-toggle="tooltip" title="" data-original-title="<?php echo _l('commodity_sku_code_tooltip'); ?>"></i></a>
                                 <?php echo render_input('sku_code', 'sku_code','',''); ?>
-                              </div>
-                              <div class="col-md-3">
-                                <?php echo render_input('sku_name', 'sku_name'); ?>
-                              </div>
                             </div>
-
-                            <div class="row">
-                              <div class="col-md-12">
-                                  <div class="form-group" id="tags_value">
+                            <div class="col-md-4">
+                                <?php echo render_input('sku_name', 'sku_name'); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group" id="tags_value">
                                     <div id="inputTagsWrapper">
                                        <label for="tags" class="control-label"><i class="fa fa-tag" aria-hidden="true"></i> <?php echo _l('tags'); ?></label>
                                        <input type="text" class="tagsinput" id="tags" name="tags" value="" data-role="tagsinput">
                                     </div>
-                                 </div>
-
-                              </div>
-                            </div>  
-
-                            <div class="row">
-                              <div class="col-md-12">
-                                    <?php echo render_textarea('long_description', 'description'); ?>
-                              </div>
-                            </div>
-
-                            <!--  add warehouse for item-->
-                            <div class="row">
-                              <div class="col-md-12">
-                                  <?php echo render_select('warehouse_id',$warehouses,array('warehouse_id',array('warehouse_code','warehouse_name')),'warehouse_name'); ?>
-                              </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                     <?php echo render_select('commodity_type',$commodity_types,array('commodity_type_id','commondity_name'),'commodity_type'); ?>
-
-                                </div>
-                                 <div class="col-md-6">
-                                     <?php echo render_select('unit_id',$units,array('unit_type_id','unit_name'),'units'); ?>
                                 </div>
                             </div>
+                        </div>
 
-
-                             <div class="row">
-                              
-                                <div class="col-md-6">
-                                     <?php echo render_select('group_id',$commodity_groups,array('id','name'),'commodity_group'); ?>
-                                </div>
-                                 <div class="col-md-6">
-                                     <?php echo render_select('sub_group',$sub_groups,array('id','sub_group_name'),'sub_group'); ?>
-                                </div>
+                        <!-- Row 3: Warehouse, Commodity Type, Units -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?php echo render_select('warehouse_id',$warehouses,array('warehouse_id',array('warehouse_code','warehouse_name')),'warehouse_name'); ?>
                             </div>
+                            <div class="col-md-4">
+                                <?php echo render_select('commodity_type',$commodity_types,array('commodity_type_id','commondity_name'),'commodity_type'); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php echo render_select('unit_id',$units,array('unit_type_id','unit_name'),'units'); ?>
+                            </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                  <?php 
+                        <!-- Row 4: Commodity Group, Sub Group, Profit Rate -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?php echo render_select('group_id',$commodity_groups,array('id','name'),'commodity_group'); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php echo render_select('sub_group',$sub_groups,array('id','sub_group_name'),'sub_group'); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php 
                                     $attr = array();
-                                   
-                                   ?>
-                                     <?php echo render_input('profif_ratio','_profit_rate_p','','number',$attr); ?>
-                                </div>
-                                <div class="col-md-3">
-                                     <?php echo render_select('tax',$taxes,array('id','name'),'tax_1'); ?>
-                                </div>
-                                <div class="col-md-3">
-                                     <?php echo render_select('tax2',$taxes,array('id','name'),'tax_2'); ?>
-                                </div>
+                                ?>
+                                <?php echo render_input('profif_ratio','_profit_rate_p','','number',$attr); ?>
                             </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-6">
-
-                                    <?php 
+                        <!-- Row 5: Tax 1, Tax 2, Purchase Price -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?php echo render_select('tax',$taxes,array('id','name'),'tax_1'); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php echo render_select('tax2',$taxes,array('id','name'),'tax_2'); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php 
                                     $attr = array();
-                                    //$attr = ['data-type' => 'currency'];
-                                     echo render_input('purchase_price', 'purchase_price','', 'number', $attr); ?>
-                                  
-                                </div>
-                                <div class="col-md-6">
+                                    echo render_input('purchase_price', 'purchase_price','', 'number', $attr); 
+                                ?>
+                            </div>
+                        </div>
 
-                                     <?php $premium_rates = isset($premium_rates) ? $premium_rates : '' ?>
-                                    <?php 
+                        <!-- Row 6: Rate, Description -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?php $premium_rates = isset($premium_rates) ? $premium_rates : '' ?>
+                                <?php 
                                     $attr = array();
-                                     //$attr = ['data-type' => 'currency'];
-                                     echo render_input('rate', 'rate','', 'number', $attr); ?>
-
-
-                                </div>
+                                    echo render_input('rate', 'rate','', 'number', $attr); 
+                                ?>
                             </div>
-
-                            <?php if(!isset($expense) || (isset($expense) && $expense->attachment == '')){ ?>
-                            <div id="dropzoneDragArea" class="dz-default dz-message">
-                               <span><?php echo _l('attach_images'); ?></span>
+                            <div class="col-md-8">
+                                <?php echo render_textarea('long_description', 'description'); ?>
                             </div>
-                            <div class="dropzone-previews"></div>
-                            <?php } ?>
+                        </div>
 
-                            <div id="images_old_preview">
-                              
-                            </div>
+                        <!-- Dropzone for images -->
+                        <?php if(!isset($expense) || (isset($expense) && $expense->attachment == '')){ ?>
+                        <div id="dropzoneDragArea" class="dz-default dz-message">
+                           <span><?php echo _l('attach_images'); ?></span>
+                        </div>
+                        <div class="dropzone-previews"></div>
+                        <?php } ?>
+
+                        <div id="images_old_preview">
+                          
+                        </div>
 
                         
                   </div>
@@ -638,83 +617,76 @@
                      <div id="additional_criteria"></div>   
                      <div class="form">
 
+                        <!-- Row 1: Origin, Styles, Model -->
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <?php echo render_input('origin', 'origin'); ?>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                  <?php echo render_select('style_id',$styles,array('style_type_id','style_name'),'styles'); ?>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                  <?php echo render_select('model_id',$models,array('body_type_id','body_name'),'model_id'); ?>
                             </div>
-                            <div class="col-md-6">
+                        </div>
+
+                        <!-- Row 2: Sizes, Color, Guarantee -->
+                        <div class="row">
+                            <div class="col-md-4">
                                  <?php echo render_select('size_id',$sizes,array('size_type_id','size_name'),'sizes'); ?>
                             </div>
+                            <div class="col-md-4">
+                                <?php echo render_select('color',$colors,array('color_id',array('color_hex','color_name')),'_color'); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php $attr = array();
+                                      $attr = ['min' => 0, 'step' => 1]; ?>
+                                <?php echo render_input('guarantee','guarantee_month','', 'number', $attr); ?>
+                            </div>
                         </div>
 
+                        <!-- Row 3: Checkboxes - Without Checking, Can Be Sold/Purchased, Can Be Inventory/Manufacturing -->
                         <div class="row">
-                          <div class="col-md-6">
-                            <?php echo render_select('color',$colors,array('color_id',array('color_hex','color_name')),'_color'); ?>
-                          </div>
-                          <div class="col-md-6">
-                            <?php $attr = array();
-                                  $attr = ['min' => 0, 'step' => 1]; ?>
-
-                            <?php echo render_input('guarantee','guarantee_month','', 'number', $attr); ?>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-md-6">
-                              <div class="form-group">
-                                <div class="checkbox checkbox-primary">
-                                  <input  type="checkbox" id="without_checking_warehouse" name="without_checking_warehouse" value="without_checking_warehouse">
-
-                                  <label for="without_checking_warehouse"><?php echo _l('without_checking_warehouse'); ?><small ><?php echo _l('without_checking_warehouse_tooltip') ?> </small>
-                                  </label>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-primary">
+                                        <input type="checkbox" id="without_checking_warehouse" name="without_checking_warehouse" value="without_checking_warehouse">
+                                        <label for="without_checking_warehouse"><?php echo _l('without_checking_warehouse'); ?><small><?php echo _l('without_checking_warehouse_tooltip') ?></small></label>
+                                    </div>
                                 </div>
-                              </div>
-                          </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-primary">
+                                        <input type="checkbox" id="can_be_sold" name="can_be_sold" value="can_be_sold">
+                                        <label for="can_be_sold"><?php echo _l('can_be_sold'); ?></label>
+                                    </div>
+                                    <div class="checkbox checkbox-primary <?php if(!get_status_modules_wh('purchase')){echo ' hide';} ?>">
+                                        <input type="checkbox" id="can_be_purchased" name="can_be_purchased" value="can_be_purchased">
+                                        <label for="can_be_purchased"><?php echo _l('can_be_purchased'); ?></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-primary">
+                                        <input type="checkbox" id="can_be_inventory" name="can_be_inventory" value="can_be_inventory">
+                                        <label for="can_be_inventory"><?php echo _l('can_be_inventory'); ?></label>
+                                    </div>
+                                    <div class="checkbox checkbox-primary <?php if(!get_status_modules_wh('manufacturing')){echo ' hide';} ?>">
+                                        <input type="checkbox" id="can_be_manufacturing" name="can_be_manufacturing" value="can_be_manufacturing">
+                                        <label for="can_be_manufacturing"><?php echo _l('can_be_manufacturing'); ?></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                          <div class="col-md-3 col-sm-6">
-                           <div class="form-group">
-                            <div class="checkbox checkbox-primary">
-                              <input  type="checkbox" id="can_be_sold" name="can_be_sold" value="can_be_sold" >
-                              <label for="can_be_sold"><?php echo _l('can_be_sold'); ?></label>
-                            </div>
-                            <div class="checkbox checkbox-primary <?php if(!get_status_modules_wh('purchase')){echo ' hide';} ?>">
-                              <input  type="checkbox" id="can_be_purchased" name="can_be_purchased" value="can_be_purchased" >
-                              <label for="can_be_purchased"><?php echo _l('can_be_purchased'); ?></label>
-                            </div>
-                            
-                          </div>
-                        </div>  
-                        <div class="col-md-3 col-sm-6">
-                          <div class="form-group">
-                            <div class="checkbox checkbox-primary">
-                              <input  type="checkbox" id="can_be_inventory" name="can_be_inventory" value="can_be_inventory" >
-                              <label for="can_be_inventory"><?php echo _l('can_be_inventory'); ?></label>
-                            </div>
-                            <div class="checkbox checkbox-primary <?php if(!get_status_modules_wh('manufacturing')){echo ' hide';} ?>">
-                              <input  type="checkbox" id="can_be_manufacturing" name="can_be_manufacturing" value="can_be_manufacturing" >
-                              <label for="can_be_manufacturing"><?php echo _l('can_be_manufacturing'); ?></label>
-                            </div>
-                          </div>
-                        </div>  
-                        </div>  
-
-                        
-
+                        <!-- Row 4: Long Description -->
                         <div class="row">
-                          <div class="col-md-12 ">
-                              <p class="bold"><?php echo _l('long_description'); ?></p>
-                              <?php echo render_textarea('long_descriptions','','',array(),array(),'','tinymce'); ?>
-                                  
-                          </div>
+                            <div class="col-md-12">
+                                <p class="bold"><?php echo _l('long_description'); ?></p>
+                                <?php echo render_textarea('long_descriptions','','',array(),array(),'','tinymce'); ?>
+                            </div>
                         </div>
                        
                         

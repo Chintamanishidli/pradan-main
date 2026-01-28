@@ -15,6 +15,71 @@
     </title>
 
     <?= app_compile_css(); ?>
+    
+    <!-- Global Table Row Hover Animation Styles -->
+    <style>
+    /* Fluid animated color transition when cursor moves between rows */
+    @keyframes rowHighlight {
+      0% { background-color: transparent; }
+      50% { background-color: #dbeafe; }
+      100% { background-color: #e0f2fe; }
+    }
+
+    @keyframes rowFadeOut {
+      0% { background-color: #e0f2fe; }
+      100% { background-color: transparent; }
+    }
+
+    table.dataTable tbody tr {
+      transition: 
+        background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s ease-out,
+        transform 0.2s ease-out,
+        border-left-color 0.3s ease !important;
+      position: relative;
+      border-left: 3px solid transparent;
+    }
+
+    table.dataTable tbody tr td {
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    table.dataTable tbody tr:hover {
+      background: linear-gradient(90deg, #dbeafe 0%, #e0f2fe 50%, #f0f9ff 100%) !important;
+      box-shadow: 
+        inset 0 0 0 1px rgba(59, 130, 246, 0.15),
+        0 2px 8px rgba(59, 130, 246, 0.08);
+      transform: scale(1.001);
+      border-left-color: #3b82f6 !important;
+      animation: rowHighlight 0.4s ease-out forwards;
+    }
+
+    table.dataTable tbody tr:not(:hover) {
+      animation: rowFadeOut 0.5s ease-out forwards;
+    }
+
+    table.dataTable tbody tr:hover td {
+      background-color: transparent !important;
+      color: #1e40af;
+    }
+
+    table.dataTable tbody tr:hover td a:not(.btn) {
+      color: #1d4ed8 !important;
+      transition: color 0.3s ease;
+    }
+    
+    /* Also apply to regular tables */
+    .table-hover > tbody > tr {
+      transition: 
+        background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s ease-out !important;
+    }
+    
+    .table-hover > tbody > tr:hover {
+      background: linear-gradient(90deg, #dbeafe 0%, #e0f2fe 50%, #f0f9ff 100%) !important;
+    }
+    </style>
+    
     <?php render_admin_js_variables(); ?>
 
     <script>

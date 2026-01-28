@@ -217,7 +217,7 @@
 
 					<div class="panel-body mtop10 invoice-item">
 						<div class="row <?php echo new_html_entity_decode($main_item_select_hide); ?>">
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<?php $this->load->view('warehouse/item_include/main_item_select'); ?>
 							</div>
 						</div>

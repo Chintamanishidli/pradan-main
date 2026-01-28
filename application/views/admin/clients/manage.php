@@ -186,14 +186,14 @@ $_table_data                         = [
         'name'     => _l('customer_active'),
         'th_attrs' => ['class' => 'text-center toggleable', 'id' => 'th-active'],
     ],
-    [
-        'name'     => _l('customer_groups'),
-        'th_attrs' => ['class' => 'toggleable', 'id' => 'th-groups'],
-    ],
-    [
-        'name'     => _l('date_created'),
-        'th_attrs' => ['class' => 'toggleable', 'id' => 'th-date-created'],
-    ],
+    // [
+    //     'name'     => _l('customer_groups'),
+    //     'th_attrs' => ['class' => 'toggleable', 'id' => 'th-groups'],
+    // ],
+    // [
+    //     'name'     => _l('date_created'),
+    //     'th_attrs' => ['class' => 'toggleable', 'id' => 'th-date-created'],
+    // ],
 ];
 
 foreach ($_table_data as $_t) {

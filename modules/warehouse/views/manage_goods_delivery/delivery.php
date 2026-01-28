@@ -40,7 +40,7 @@
                   <div class="col-md-12">
                      <div class="row">
 
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                           <?php $goods_delivery_code = isset($goods_delivery)? $goods_delivery->goods_delivery_code: (isset($goods_code) ? $goods_code : '');?>
                           <?php echo render_input('goods_delivery_code', 'document_number',$goods_delivery_code,'',array('disabled' => 'true')) ?>
                         </div>
@@ -60,9 +60,9 @@
                           <?php echo render_date_input('date_add','day_vouchers', _d($date_add), $disabled) ?>
                         </div>
 
-                        <br>
+                        
 
-                        <div class="col-md-6 <?php if($pr_orders_status == false || get_warehouse_option('goods_delivery_required_po') == 0){ echo 'hide';} ;?>" >
+                        <div class="col-md-3 <?php if($pr_orders_status == false || get_warehouse_option('goods_delivery_required_po') == 0){ echo 'hide';} ;?>" >
                           <div class="form-group">
                              <label for="pr_order_id"><?php echo _l('reference_purchase_order'); ?></label>
                             <select onchange="pr_order_change(this); return false;" name="pr_order_id" id="pr_order_id" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>" <?php if($edit_approval == 'true'){ echo 'disabled';} ; ?> >
@@ -74,7 +74,7 @@
                           </div>
                         </div>
 
-                        <div class="col-md-6 <?php if($pr_orders_status == true && get_warehouse_option('goods_delivery_required_po') == 1){ echo 'hide';} ;?> ">
+                        <div class="col-md-3 <?php if($pr_orders_status == true && get_warehouse_option('goods_delivery_required_po') == 1){ echo 'hide';} ;?> ">
                          <div class="form-group">
                           <label for="invoice_id"><?php echo _l('invoices'); ?></label>
                             <select onchange="invoice_change(this); return false;" name="invoice_id" id="invoice_id" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>" <?php if($edit_approval == 'true'){ echo 'disabled';} ; ?> >
@@ -105,7 +105,7 @@
                           <?php $to = (isset($goods_delivery) ? $goods_delivery->to_ : '');
                           echo render_input('to_','receiver',$to, '',$disabled) ?>
                       </div>
-                      <div class=" col-md-6">
+                      <div class=" col-md-3">
                           <?php $address = (isset($goods_delivery) ? $goods_delivery->address : '');
                           echo render_input('address','address',$address,'', $disabled) ?>
                       </div>
@@ -183,7 +183,7 @@
 
                     
                      
-                      <div class=" col-md-6">
+                      <div class=" col-md-3">
                         <div class="form-group">
                           <label for="staff_id" class="control-label"><?php echo _l('salesman'); ?></label>
                             <select name="staff_id" class="selectpicker" id="staff_id" data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>" <?php if($edit_approval == 'true'){ echo 'disabled';} ; ?>> 
@@ -214,10 +214,10 @@
 
                     <div class="panel-body mtop10 invoice-item">
                       <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                           <?php $this->load->view('warehouse/item_include/main_item_select'); ?>
                         </div>
-                        <div class="col-md-8 text-right">
+                        <div class="col-md-9 text-right">
                           <label class="bold mtop10 text-right" data-toggle="tooltip" title="" data-original-title="<?php echo _l('support_barcode_scanner_tooltip'); ?>"><?php echo _l('support_barcode_scanner'); ?>
                           <i class="fa fa-question-circle i_tooltip"></i></label>
                         </div>

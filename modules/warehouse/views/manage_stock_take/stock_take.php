@@ -18,80 +18,72 @@
                   <?php echo form_open_multipart(admin_url('warehouse/manage_goods_receipt'), array('id'=>'add_goods_receipt')); ?>
                
                 <div class="row row-margin">
-                  <div class="col-md-8">
-                     <div class="panel panel-primary">
-                      <div class="panel-heading"><?php echo _l('general_infor') ?></div>
-                      <div class="panel-body">
-
-                        <div class="col-md-6">
-                          <div class="form-group">
-                             <label for="pr_order_id"><?php echo _l('reference_purchase_request'); ?></label>
-                            <select onchange="pr_order_change(this); return false;" name="pr_order_id" id="pr_order_id" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
-                              <option value=""></option>
-                              <?php foreach($pr_orders as $pr_order) { ?>
-                                <option value="<?php echo new_html_entity_decode($pr_order['id']); ?>"><?php echo new_html_entity_decode($pr_order['pur_order_number'].' - '.$pr_order['pur_order_name']); ?></option>
-                                <?php } ?>
-                            </select>
-                          </div>
-
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="supplier_code"><?php echo _l('supplier_name'); ?></label>
-                            <select name="supplier_code" id="supplier_code" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
-                              <option value=""></option>
-                              <?php foreach($vendors as $vendor) { ?>
-                                <option value="<?php echo new_html_entity_decode($vendor['userid']); ?>"><?php echo new_html_entity_decode($vendor['company']); ?></option>
-                                <?php } ?>
-                            </select>
-                          </div>
-
-                        </div>
-
-                        <br>
-
-                      <div class=" col-md-6">
-                          <?php $deliver_name = (isset($candidate) ? $candidate->deliver_name : '');
-                          echo render_input('deliver_name','deliver_name',$deliver_name) ?>
-                      </div>
-                      <div class=" col-md-6">
-                          <label for="buyer_id" class="control-label"><?php echo _l('Buyer'); ?></label>
-                            <select name="buyer_id" class="selectpicker" id="buyer_id" data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>"> 
-                              <option value=""></option> 
-                              <?php foreach($staff as $s){ ?>
-                            <option value="<?php echo new_html_entity_decode($s['staffid']); ?>"> <?php echo new_html_entity_decode($s['firstname'].''.$s['lastname']); ?></option>                  
-                            <?php }?>
-                            </select>
-                      </div>
-
-                      <div class="col-md-12">
-                          <?php $description = (isset($candidate) ? $candidate->description : '');
-                          echo render_textarea('description','note', $description) ?>
-                      </div>
-
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                     <div class="panel panel-primary">
-                      <div class="panel-heading"><?php echo _l('license_number') ?></div>
+                    <div class="col-md-12">
+                      <div class="panel panel-primary">
+                        <div class="panel-heading"><?php echo _l('general_infor') ?></div>
                         <div class="panel-body">
-                          <div class="col-md-12">
-                            <?php $stock_take_code = (isset($goods_code) ? $goods_code : '');?>
-                            <?php echo render_input('stock_take_code', 'Số phiếu kiểm kê',$stock_take_code,'',array('disabled' => 'true')) ?></td>
-                          </div>
-                          <div class="col-md-12">
-                            <?php echo render_date_input('date_add','Ngày kiểm kê') ?>
-                          </div>
-                          <div class="col-md-12">
-                            <?php echo render_date_input('date_add','Giờ') ?>
+                          <div class="row">
+
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                   <label for="pr_order_id"><?php echo _l('reference_purchase_request'); ?></label>
+                                  <select onchange="pr_order_change(this); return false;" name="pr_order_id" id="pr_order_id" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
+                                    <option value=""></option>
+                                    <?php foreach($pr_orders as $pr_order) { ?>
+                                      <option value="<?php echo new_html_entity_decode($pr_order['id']); ?>"><?php echo new_html_entity_decode($pr_order['pur_order_number'].' - '.$pr_order['pur_order_name']); ?></option>
+                                      <?php } ?>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="supplier_code"><?php echo _l('supplier_name'); ?></label>
+                                  <select name="supplier_code" id="supplier_code" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
+                                    <option value=""></option>
+                                    <?php foreach($vendors as $vendor) { ?>
+                                      <option value="<?php echo new_html_entity_decode($vendor['userid']); ?>"><?php echo new_html_entity_decode($vendor['company']); ?></option>
+                                      <?php } ?>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="col-md-3">
+                                  <?php $deliver_name = (isset($candidate) ? $candidate->deliver_name : '');
+                                  echo render_input('deliver_name','deliver_name',$deliver_name) ?>
+                              </div>
+
+                              <div class="col-md-3">
+                                  <label for="buyer_id" class="control-label"><?php echo _l('Buyer'); ?></label>
+                                    <select name="buyer_id" class="selectpicker" id="buyer_id" data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>"> 
+                                      <option value=""></option> 
+                                      <?php foreach($staff as $s){ ?>
+                                    <option value="<?php echo new_html_entity_decode($s['staffid']); ?>"> <?php echo new_html_entity_decode($s['firstname'].''.$s['lastname']); ?></option>                  
+                                    <?php }?>
+                                    </select>
+                              </div>
+                              
+                              <div class="col-md-3">
+                                  <?php $stock_take_code = (isset($goods_code) ? $goods_code : '');?>
+                                  <?php echo render_input('stock_take_code', 'Số phiếu kiểm kê',$stock_take_code,'',array('disabled' => 'true')) ?>
+                              </div>
+                              <div class="col-md-3">
+                                  <?php echo render_date_input('date_add','Ngày kiểm kê') ?>
+                              </div>
+                              <div class="col-md-3">
+                                  <?php echo render_date_input('date_add','Giờ') ?>
+                              </div>
+
+                              <div class="col-md-12">
+                                  <?php $description = (isset($candidate) ? $candidate->description : '');
+                                  echo render_textarea('description','note', $description) ?>
+                              </div>
+
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                </div>
                     
                    
                     <div class="col-md-12 ">

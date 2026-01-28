@@ -25,73 +25,63 @@
                 <input type="hidden" name="id" value="<?php echo new_html_entity_decode($id); ?>">
 
           <div class="row">
-             <div class="col-md-6">
-                <div class="row">
-                  <div class="col-md-12">
-                    <?php $internal_delivery_name = (isset($internal_delivery) ? $internal_delivery->internal_delivery_name : $internal_delivery_name_ex);
-                    echo render_input('internal_delivery_name','internal_delivery_name',$internal_delivery_name); ?>
-                  </div>
-                </div>
-                
-                <div class="row">
-                  <div class="col-md-12">
-                    
-                    <?php $prefix = get_warehouse_option('internal_delivery_number_prefix');
-                          $next_number = get_warehouse_option('next_internal_delivery_mumber');
+             <div class="col-md-3">
+                <?php $internal_delivery_name = (isset($internal_delivery) ? $internal_delivery->internal_delivery_name : $internal_delivery_name_ex);
+                echo render_input('internal_delivery_name','internal_delivery_name',$internal_delivery_name); ?>
+             </div>
 
-                    $internal_delivery_code = (isset($internal_delivery) ? $internal_delivery->internal_delivery_code : $next_number);
-                    $internal_delivery_code = (isset($internal_delivery) ? $internal_delivery->internal_delivery_code : $next_number);
-                    echo form_hidden('internal_delivery_code',$internal_delivery_code); ?> 
-                    
-                    <label for="internal_delivery_code"><?php echo _l('internal_delivery_note_number'); ?></label>
-                    <div class="input-group" id="discount-total"><div class="input-group-addon">
-                          <div class="dropdown">
-                             <span class="discount-type-selected">
-                              <?php echo new_html_entity_decode($prefix) ;?>
-                             </span>
-                          </div>
-                       </div>
-                        <input type="text" readonly class="form-control" name="internal_delivery_code" value="<?php echo new_html_entity_decode($internal_delivery_code); ?>">
-                    </div>
-                  </div>
+             <div class="col-md-3">
+                <?php $prefix = get_warehouse_option('internal_delivery_number_prefix');
+                      $next_number = get_warehouse_option('next_internal_delivery_mumber');
+
+                $internal_delivery_code = (isset($internal_delivery) ? $internal_delivery->internal_delivery_code : $next_number);
+                $internal_delivery_code = (isset($internal_delivery) ? $internal_delivery->internal_delivery_code : $next_number);
+                echo form_hidden('internal_delivery_code',$internal_delivery_code); ?> 
+                
+                <label for="internal_delivery_code"><?php echo _l('internal_delivery_note_number'); ?></label>
+                <div class="input-group" id="discount-total"><div class="input-group-addon">
+                      <div class="dropdown">
+                         <span class="discount-type-selected">
+                          <?php echo new_html_entity_decode($prefix) ;?>
+                         </span>
+                      </div>
+                   </div>
+                    <input type="text" readonly class="form-control" name="internal_delivery_code" value="<?php echo new_html_entity_decode($internal_delivery_code); ?>">
                 </div>
              </div>
 
-             <div class="col-md-6">
-                <div class="col-md-6">
-                  <?php $date_c = isset($internal_delivery) ? $internal_delivery->date_c : $current_day ;?>
-                    <?php echo render_date_input('date_c','accounting_date', _d($date_c)) ?>
-                </div>
+              <div class="col-md-3">
+                <?php $date_c = isset($internal_delivery) ? $internal_delivery->date_c : $current_day ;?>
+                  <?php echo render_date_input('date_c','accounting_date', _d($date_c)) ?>
+              </div>
 
-                <div class="col-md-6">
-                  <?php $date_add = isset($internal_delivery) ? $internal_delivery->date_add : $current_day ;?>
-                  <?php echo render_date_input('date_add','day_vouchers', _d($date_add)) ?>
-                </div>
+              <div class="col-md-3">
+                <?php $date_add = isset($internal_delivery) ? $internal_delivery->date_add : $current_day ;?>
+                <?php echo render_date_input('date_add','day_vouchers', _d($date_add)) ?>
+              </div>
 
-                <div class="col-md-12">
-                     <?php
-                    $selected = '';
-                    foreach($staff as $member){
-                     if(isset($internal_delivery)){
-                       if($internal_delivery->staff_id == $member['staffid']) {
-                         $selected = $member['staffid'];
-                       }
+              <div class="col-md-3">
+                   <?php
+                  $selected = '';
+                  foreach($staff as $member){
+                   if(isset($internal_delivery)){
+                     if($internal_delivery->staff_id == $member['staffid']) {
+                       $selected = $member['staffid'];
                      }
-                    }
-                    echo render_select('staff_id',$staff,array('staffid',array('firstname','lastname')),'deliver_name',$selected);
-                    ?>
-                </div>
-             </div>  
-               
+                   }
+                  }
+                  echo render_select('staff_id',$staff,array('staffid',array('firstname','lastname')),'deliver_name',$selected);
+                  ?>
+              </div>
           </div>
         </div>
 
         <div class="panel-body mtop10 invoice-item">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <?php $this->load->view('warehouse/item_include/main_item_select'); ?>
               </div>
-              <div class="col-md-8 text-right">
+              <div class="col-md-9 text-right">
                 <label class="bold mtop10 text-right" data-toggle="tooltip" title="" data-original-title="<?php echo _l('support_barcode_scanner_tooltip'); ?>"><?php echo _l('support_barcode_scanner'); ?>
                 <i class="fa fa-question-circle i_tooltip"></i></label>
               </div>

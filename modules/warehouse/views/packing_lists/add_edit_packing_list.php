@@ -170,7 +170,7 @@ custom_name_for_m3 -->
 
 					<div class="panel-body mtop10 invoice-item">
 						<div class="row hide">
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<?php $this->load->view('warehouse/item_include/main_item_select'); ?>
 							</div>
 						</div>

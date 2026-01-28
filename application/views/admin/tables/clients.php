@@ -130,19 +130,19 @@ return App_table::find('clients')
 
             $row[] = $toggleActive;
 
-            // Customer groups parsing
-            $groupsRow = '';
-            if ($aRow['customerGroups']) {
-                $groups = explode(',', $aRow['customerGroups']);
+            // Customer groups parsing (hidden)
+            // $groupsRow = '';
+            // if ($aRow['customerGroups']) {
+            //     $groups = explode(',', $aRow['customerGroups']);
 
-                foreach ($groups as $group) {
-                    $groupsRow .= '<span class="label label-default mleft5 customer-group-list pointer">' . e($group) . '</span>';
-                }
-            }
+            //     foreach ($groups as $group) {
+            //         $groupsRow .= '<span class="label label-default mleft5 customer-group-list pointer">' . e($group) . '</span>';
+            //     }
+            // }
 
-            $row[] = $groupsRow;
+            // $row[] = $groupsRow;
 
-            $row[] = e(_dt($aRow['datecreated']));
+            // $row[] = e(_dt($aRow['datecreated']));
 
             // Custom fields add values
             foreach ($customFieldsColumns as $customFieldColumn) {
