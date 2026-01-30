@@ -104,7 +104,7 @@
                         </div>
                     </div>
                     <!-- Row 1: Company, Phone, Website -->
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php hooks()->do_action('before_customer_profile_company_field', $client ?? null); ?>
                         <?php $value = (isset($client) ? $client->company : ''); ?>
                         <?php $attrs = (isset($client) ? [] : ['autofocus' => true]); ?>
@@ -112,13 +112,13 @@
                         <div id="company_exists_info" class="hide"></div>
                         <?php hooks()->do_action('after_customer_profile_company_field', $client ?? null); ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php hooks()->do_action('before_customer_profile_phone_field', $client ?? null); ?>
                         <?php $value = (isset($client) ? $client->phonenumber : ''); ?>
                         <?= render_input('phonenumber', 'client_phonenumber', $value); ?>
                         <?php hooks()->do_action('after_customer_profile_company_phone', $client ?? null); ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php if ((isset($client) && empty($client->website)) || ! isset($client)) {
                             $value = (isset($client) ? $client->website : '');
                             echo render_input('website', 'client_website', $value);
@@ -141,12 +141,12 @@
 
                     <!-- Row 2: VAT, Groups, Currency -->
                     <?php if (get_option('company_requires_vat_number_field') == 1) { ?>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $value = (isset($client) ? $client->vat : '');
                         echo render_input('vat', 'client_vat_number', $value); ?>
                     </div>
                     <?php } ?>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php
                         $selected = [];
                         if (isset($customer_groups)) {
@@ -161,7 +161,7 @@
                         }
                         ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <i class="fa-regular fa-circle-question pull-left tw-mt-0.5 tw-mr-1"
                             data-toggle="tooltip"
                             data-title="<?= _l('customer_currency_change_notice'); ?>"></i>
@@ -184,7 +184,7 @@
 
                     <!-- Row 3: Language (if enabled) -->
                     <?php if (! is_language_disabled()) { ?>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group select-placeholder">
                             <label for="default_language" class="control-label"><?= _l('localization_default_language'); ?></label>
                             <select name="default_language" id="default_language"
@@ -223,11 +223,11 @@
                         <?php $value = (isset($client) ? $client->state : ''); ?>
                         <?= render_input('state', 'client_state', $value); ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $value = (isset($client) ? $client->zip : ''); ?>
                         <?= render_input('zip', 'client_postal_code', $value); ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $countries = get_all_countries();
                         $customer_default_country = get_option('customer_default_country');
                         $selected = (isset($client) ? $client->country : $customer_default_country);

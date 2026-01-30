@@ -78,7 +78,7 @@
                                 </div>
                                 <?php } ?>
                                 <?php if (isset($member) && $member->profile_image != null) { ?>
-                                <div class="form-group">
+                                <div class="form-group col-md-4">
                                     <div class="row">
                                         <div class="col-md-9">
                                             <?php echo staff_profile_image($member->staffid, ['img', 'img-responsive', 'staff-profile-image-thumb'], 'thumb'); ?>
@@ -95,17 +95,21 @@
                                 <?php $office_group = (isset($member) ? $member->office_group : '');
                                 echo render_select('office_group', $office_groups, array('id', 'office_name'), 'office_group', $office_group) ?>
 
-                                
+                                <div class="form-group col-md-4">
                                 <?php $value = (isset($member) ? $member->firstname : ''); ?>
                                 <?php $attrs = (isset($member) ? [] : ['autofocus' => true]); ?>
                                 <?php echo render_input('firstname', 'staff_add_edit_firstname', $value, 'text', $attrs); ?>
+                                </div>
+                                <div class="form-group col-md-4">
                                 <?php $value = (isset($member) ? $member->lastname : ''); ?>
                                 <?php echo render_input('lastname', 'staff_add_edit_lastname', $value); ?>
+                                </div>
+                                <div class="form-group col-md-4">
                                 <?php $value = (isset($member) ? $member->email : ''); ?>
                                 <?php echo render_input('email', 'staff_add_edit_email', $value, 'email', ['autocomplete' => 'off']); ?>
-
-                                 <?php 
-
+                                </div>
+                                <div class="form-group col-md-4">
+                                <?php 
                                  $genders = [
                                     ['id' => 'male', 'name' => _l('lg_male')],
                                     ['id' => 'female', 'name' => _l('lg_female')],
@@ -114,44 +118,47 @@
 
                                  $gender = (isset($member) ? $member->gender : '');
                                 echo render_select('gender', $genders, array('id', 'name'), 'lg_gender', $gender) ?>
-
-
+                                </div>
+                                <div class="form-group col-md-4">
                                 <?php $vehicle_license_plate = (isset($member) ? $member->vehicle_license_plate : ''); ?>
                                 <?php echo render_input('vehicle_license_plate', 'lg_vehicle_license_plate', $vehicle_license_plate); ?>
-
+                                </div>
+                                <div class="form-group col-md-4">
                                 <?php $vehicle_code = (isset($member) ? $member->vehicle_code : ''); ?>
                                 <?php echo render_input('vehicle_code', 'lg_vehicle_code', $vehicle_code); ?>
-
-                                <div class="form-group">
+                                </div>
+                                <div class="form-group col-md-4">
                                     <label for="hourly_rate"><?php echo _l('staff_hourly_rate'); ?></label>
                                     <div class="input-group">
                                         <input type="number" name="hourly_rate" value="<?php if (isset($member)) {
-                                  echo lg_html_entity_decode($member->hourly_rate);
-                              } else {
-                                  echo 0;
-                              } ?>" id="hourly_rate" class="form-control">
+                                        echo lg_html_entity_decode($member->hourly_rate);
+                                        } else {
+                                            echo 0;
+                                        } ?>" id="hourly_rate" class="form-control">
                                         <span class="input-group-addon">
                                             <?php echo lg_html_entity_decode($base_currency->symbol); ?>
                                         </span>
                                     </div>
                                 </div>
-                                <?php $value = (isset($member) ? $member->phonenumber : ''); ?>
-                                <?php echo render_input('phonenumber', 'staff_add_edit_phonenumber', $value); ?>
-                                <div class="form-group">
+                                <div class="form-group col-md-4">
+                                    <?php $value = (isset($member) ? $member->phonenumber : ''); ?>
+                                    <?php echo render_input('phonenumber', 'staff_add_edit_phonenumber', $value); ?>
+                                </div>
+                                <div class="form-group col-md-4">
                                     <label for="facebook" class="control-label"><i class="fa-brands fa-facebook-f"></i>
                                         <?php echo _l('staff_add_edit_facebook'); ?></label>
                                     <input type="text" class="form-control" name="facebook" value="<?php if (isset($member)) {
                                   echo lg_html_entity_decode($member->facebook);
                               } ?>">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-4">
                                     <label for="linkedin" class="control-label"><i class="fa-brands fa-linkedin-in"></i>
                                         <?php echo _l('staff_add_edit_linkedin'); ?></label>
                                     <input type="text" class="form-control" name="linkedin" value="<?php if (isset($member)) {
                                   echo lg_html_entity_decode($member->linkedin);
                               } ?>">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-4">
                                     <label for="skype" class="control-label"><i class="fa-brands fa-skype"></i>
                                         <?php echo _l('staff_add_edit_skype'); ?></label>
                                     <input type="text" class="form-control" name="skype" value="<?php if (isset($member)) {
@@ -176,8 +183,8 @@
                                         <option value="<?php echo lg_html_entity_decode($availableLanguage); ?>" <?php echo lg_html_entity_decode($selected); ?>>
                                             <?php echo ucfirst($availableLanguage); ?></option>
                                         <?php
-                              } ?>
-                                    </select>
+                                    } ?>
+                                            </select>
                                 </div>
                                 <?php } ?>
                                 <i class="fa-regular fa-circle-question pull-left tw-mt-0.5 tw-mr-1"
