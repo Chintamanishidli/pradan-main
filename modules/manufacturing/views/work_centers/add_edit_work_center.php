@@ -22,11 +22,11 @@
 				<div class="panel_s">
 					
 					<div class="panel-body">
-						<div class="row mb-5">
-							<div class="col-md-5">
+						<div class="row mb-3">
+							<div class="col-md-3">
 								<h4 class="no-margin"><?php echo new_html_entity_decode($title); ?> 
 							</div>
-							<div class="col-md-7">
+							<div class="col-md-3">
 
 								<div class="o_not_full oe_button_box"><button type="button" name="240" class="btn oe_stat_button"><i class="fa fa-fw o_button_icon fa-pie-chart"></i><div class="o_field_widget o_stat_info"><span class="o_stat_value"><div name="oee" class="o_field_widget o_stat_info o_readonly_modifier" data-original-title="" title="">
 									<span class="o_stat_value">0.00</span>
@@ -53,7 +53,7 @@
 								<!-- start general infor -->
 								<div class="row">
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-4">
 											<?php 
 											$work_center_name = isset($work_center) ? $work_center->work_center_name : '';
 											$work_center_code = isset($work_center) ? $work_center->work_center_code : '';
@@ -69,12 +69,10 @@
 
 											<?php echo render_input('work_center_name','work_center_name',$work_center_name,'text'); ?>   
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-4">
 											<?php echo render_input('work_center_code','work_center_code',$work_center_code,'text'); ?>   
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-4">
 											<?php echo render_select('working_hours',$working_hours,array('id','working_hour_name'),'work_center_working_hours',$working_hour_selected); ?>
 
 										</div>
@@ -87,22 +85,22 @@
 									<hr class="hr-color">
 
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-2">
 											<?php echo render_input('time_efficiency','time_efficiency',$time_efficiency,'number'); ?>   
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-2">
 											<?php echo render_input('costs_hour','costs_hour',$costs_hour,'number'); ?>   
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-2">
 											<?php echo render_input('capacity','work_center_capacity',$capacity,'number'); ?>   
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-2">
 											<?php echo render_input('oee_target','oee_target',$oee_target,'number'); ?>   
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-2">
 											<?php echo render_input('time_start','work_center_time_start',$time_start,'number'); ?>   
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-2">
 											<?php echo render_input('time_stop','time_stop',$time_stop,'number'); ?>   
 										</div>
 										<div class="col-md-12">

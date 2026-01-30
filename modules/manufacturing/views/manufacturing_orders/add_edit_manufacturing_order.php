@@ -57,43 +57,34 @@
 								?>
 								<div class="row">
 									<div class="row">
-										<div class="col-md-6"> 
+										<div class="col-md-2"> 
 											<?php echo render_select('product_id',$products,array('id','description'),'product_label', $product_id, $disabled_edit); ?>
 										</div>
-										<div class="col-md-6"> 
+										<div class="col-md-2"> 
 											<?php echo render_datetime_input('date_deadline','date_deadline', $date_deadline); ?>
 										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-2">
 											<?php echo render_input('product_qty','product_qty', $product_qty,'number', $disabled_edit); ?> 
 										</div>
-										<div class="col-md-6"> 
+										<div class="col-md-2"> 
 											<?php echo render_datetime_input('date_plan_from','date_plan_from', $date_plan_from); ?>
 										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-2">
 											<?php echo render_select('unit_id',$units,array('unit_type_id', 'unit_name'), 'unit_of_measure', $unit_id, $disabled_edit, [], '', '' , false); ?>
 										</div>
-										<div class="col-md-6">
+									</div>
+
+									<div class="row">
+										<div class="col-md-2">
 											<?php echo render_select('staff_id',$staffs,array('staffid', array('firstname', 'lastname')), 'responsible', $staff_id,[], [], '', '' , false); ?>
 										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-2">
 											<?php echo render_select('bom_id',$bill_of_materials,array('id', 'description'), 'bill_of_material_label', $bom_id, $disabled_edit, [], '', '' , false); ?>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-2">
 											<?php echo render_input('manufacturing_order_code', 'reference_code', $manufacturing_order_code, '', $disabled_edit); ?>
 										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-4">
 											<?php echo render_input('routing_id_view', 'routing_label', $routing_id_view, '', ['disabled' => true]); ?>
 											<input type="hidden" name="routing_id" value="<?php echo new_html_entity_decode($routing_id) ?>">
 										</div>

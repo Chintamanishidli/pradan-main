@@ -158,24 +158,42 @@
 							<!-- start general infor -->
 							<div class="row">
 								<div class="row">
-									
-									<div class="col-md-12">
+									<div class="row">
 										<input type="hidden" name="id" value="<?php echo new_html_entity_decode($id) ?>">
 
-										<?php echo render_input('description','product_name',$description,'text'); ?>
+										<!-- Product Name -->
+										<div class="col-md-6">
+											<?php echo render_input('description','product_name',$description,'text'); ?>
+										</div>
 
-										<div class="form-group">
-											<div class="checkbox checkbox-primary">
-												<input  type="checkbox" id="can_be_sold" name="can_be_sold" value="can_be_sold" <?php echo new_html_entity_decode($can_be_sold); ?>>
-												<label for="can_be_sold"><?php echo _l('can_be_sold'); ?></label>
-											</div>
-											<div class="checkbox checkbox-primary">
-												<input  type="checkbox" id="can_be_purchased" name="can_be_purchased" value="can_be_purchased" <?php echo new_html_entity_decode($can_be_purchased); ?>>
-												<label for="can_be_purchased"><?php echo _l('can_be_purchased'); ?></label>
-											</div>
-											<div class="checkbox checkbox-primary">
-												<input  type="checkbox" id="can_be_manufacturing" name="can_be_manufacturing" value="can_be_manufacturing" <?php echo new_html_entity_decode($can_be_manufacturing); ?>>
-												<label for="can_be_manufacturing"><?php echo _l('can_be_manufacturing'); ?></label>
+										<!-- Checkboxes -->
+										<div class="col-md-6">
+											<div class="form-group">
+												<div class="row">
+													<div class="col-md-4">
+														<div class="checkbox checkbox-primary">
+															<input type="checkbox" id="can_be_sold" name="can_be_sold"
+																value="can_be_sold" <?php echo new_html_entity_decode($can_be_sold); ?>>
+															<label for="can_be_sold"><?php echo _l('can_be_sold'); ?></label>
+														</div>
+													</div>
+
+													<div class="col-md-4">
+														<div class="checkbox checkbox-primary">
+															<input type="checkbox" id="can_be_purchased" name="can_be_purchased"
+																value="can_be_purchased" <?php echo new_html_entity_decode($can_be_purchased); ?>>
+															<label for="can_be_purchased"><?php echo _l('can_be_purchased'); ?></label>
+														</div>
+													</div>
+
+													<div class="col-md-4">
+														<div class="checkbox checkbox-primary">
+															<input type="checkbox" id="can_be_manufacturing" name="can_be_manufacturing"
+																value="can_be_manufacturing" <?php echo new_html_entity_decode($can_be_manufacturing); ?>>
+															<label for="can_be_manufacturing"><?php echo _l('can_be_manufacturing'); ?></label>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -239,17 +257,20 @@
 								<div class="tab-content active">
 									<div role="tabpanel" class="tab-pane active" id="general_information">
 										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-3">
 												<?php echo render_select('product_type',$array_product_type,array('name', 'label'), 'product_type', $product_type,[], [], '', '' , false); ?>   
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-3">
 												<?php echo render_input('rate','sales_price',$rate,'number'); ?> 
+											</div>
+											<div class="col-md-3">
+												<?php echo render_select('group_id',$product_group,array('id', 'name'), 'product_category','',[], [], $group_id, '' , false); ?>   
+											</div>
+											<div class="col-md-3">
+												<?php echo render_input('commodity_barcode','barcode',$barcode,'text'); ?> 
 											</div>
 										</div>
 										<div class="row">
-											<div class="col-md-6">
-												<?php echo render_select('group_id',$product_group,array('id', 'name'), 'product_category','',[], [], $group_id, '' , false); ?>   
-											</div>
 											<div class="col-md-3">
 												<div class="form-group">
 													<label class="control-label" for="tax"><?php echo _l('tax_1'); ?></label>
@@ -284,32 +305,21 @@
 													</select>
 												</div>
 											</div>
-
-										</div>	
-										<div class="row">
-											<div class="col-md-6">
-												<?php echo render_input('commodity_barcode','barcode',$barcode,'text'); ?> 
-											</div>
-											<div class="col-md-6">
+											<div class="col-md-3">
 												<?php echo render_input('purchase_price','mrp_cost', $purchase_price,'number'); ?> 
 											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
+											<div class="col-md-3">
 												<?php echo render_input('sku_code','sku_code', $sku_code,'text'); ?> 
 											</div>
-											<div class="col-md-6">
+										</div>
+										<div class="row">
+											<div class="col-md-3">
 												<?php echo render_select('unit_id',$units,array('unit_type_id', 'unit_name'), 'unit_of_measure', $unit_id,[], [], '', '' , false); ?>
 											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6"></div>
-											<div class="col-md-6">
+											<div class="col-md-3">
 												<?php echo render_select('purchase_unit_measure',$units,array('unit_type_id', 'unit_name'), 'purchase_unit_measure', $purchase_unit_measure,[], [], '', '' , false); ?>
 											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-12">
+											<div class="col-md-6">
 												<?php echo render_textarea('long_description', 'internal_notes', $long_description); ?>
 											</div>
 										</div>
@@ -415,6 +425,7 @@
 											</div>
 										</div>
 									</div>
+									
 
 									<div role="tabpanel" class="tab-pane tab_purchase_hide  <?php echo new_html_entity_decode($tab_purchase_hide); ?>" id="tab_purchase">
 										<div class="row">
@@ -439,50 +450,81 @@
 											</div>
 										</div>
 									</div>
-									<div role="tabpanel" class="tab-pane " id="tab_inventory">
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<h4><?php echo _l('operations') ; ?></h4>
-													<label><?php echo _l('routes'); ?></label>
-													<div class="checkbox checkbox-primary">
-														<input  type="checkbox" id="replenish_on_order" name="replenish_on_order" value="replenish_on_order" <?php echo new_html_entity_decode($replenish_on_order) ?>>
-														<label for="replenish_on_order"><?php echo _l('replenish_on_order_MTO'); ?></label>
-													</div>
-													<div class="checkbox checkbox-primary">
-														<input  type="checkbox" id="manufacture" name="manufacture" value="manufacture" <?php echo new_html_entity_decode($manufacture) ?> >
-														<label for="manufacture"><?php echo _l('manufacture'); ?></label>
-													</div>
 
-												</div>
-												<?php echo render_input('manufacturing_lead_time','manufacturing_lead_time',$manufacturing_lead_time,'number'); ?> 
-												<?php echo render_input('customer_lead_time','customer_lead_time',$customer_lead_time,'number'); ?> 
-											</div>
-											<div class="col-md-6">
-												<h4><?php echo _l('logistics') ; ?></h4>
-												<?php echo render_input('weight','product_weight',$weight,'number'); ?> 
-												<?php echo render_input('volume','product_volume',$volume,'number'); ?> 
-												<?php echo render_input('hs_code','hs_code',$hs_code,'text'); ?> 
-											</div>
 
-										</div>
-										<div class="row">
-											<div class="col-md-12">
-												<?php echo render_textarea('description_delivery_orders', 'description_delivery_orders', $description_delivery_orders); ?>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-12">
-												<?php echo render_textarea('description_receipts', 'description_receipts', $description_receipts); ?>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-12">
-												<?php echo render_textarea('description_internal_transfers', 'description_internal_transfers', $description_internal_transfers); ?>
-											</div>
-										</div>
 
-									</div>
+
+									<div role="tabpanel" class="tab-pane" id="tab_inventory">
+    <div class="row">
+
+        <!-- Operations -->
+        <div class="col-md-2">
+            <h4><?php echo _l('operations'); ?></h4>
+            <label><?php echo _l('routes'); ?></label>
+
+            <div class="checkbox checkbox-primary">
+                <input type="checkbox" id="replenish_on_order" name="replenish_on_order"
+                       value="replenish_on_order" <?php echo new_html_entity_decode($replenish_on_order) ?>>
+                <label for="replenish_on_order">
+                    <?php echo _l('replenish_on_order_MTO'); ?>
+                </label>
+            </div>
+
+            <div class="checkbox checkbox-primary">
+                <input type="checkbox" id="manufacture" name="manufacture"
+                       value="manufacture" <?php echo new_html_entity_decode($manufacture) ?>>
+                <label for="manufacture"><?php echo _l('manufacture'); ?></label>
+            </div>
+        </div>
+
+        <!-- Lead Times -->
+        <div class="col-md-2">
+            <?php echo render_input('manufacturing_lead_time','manufacturing_lead_time',$manufacturing_lead_time,'number'); ?>
+            <?php echo render_input('customer_lead_time','customer_lead_time',$customer_lead_time,'number'); ?>
+        </div>
+
+        <!-- Logistics -->
+        <div class="col-md-2">
+            <h4><?php echo _l('logistics'); ?></h4>
+            <?php echo render_input('weight','product_weight',$weight,'number'); ?>
+            <?php echo render_input('volume','product_volume',$volume,'number'); ?>
+            <?php echo render_input('hs_code','hs_code',$hs_code,'text'); ?>
+        </div>
+
+        <!-- Delivery Orders -->
+        <div class="col-md-3">
+            <?php echo render_textarea(
+                'description_delivery_orders',
+                'description_delivery_orders',
+                $description_delivery_orders
+            ); ?>
+        </div>
+
+        <!-- Receipts -->
+        <div class="col-md-3">
+            <?php echo render_textarea(
+                'description_receipts',
+                'description_receipts',
+                $description_receipts
+            ); ?>
+        </div>
+
+        <!-- Internal Transfers -->
+        <div class="col-md-12">
+            <?php echo render_textarea(
+                'description_internal_transfers',
+                'description_internal_transfers',
+                $description_internal_transfers
+            ); ?>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
 								</div>
 							</div>
 
@@ -493,10 +535,9 @@
 								<a href="<?php echo admin_url('manufacturing/product_variant_management'); ?>"  class="btn btn-default mr-2 "><?php echo _l('hr_close'); ?></a>
 							<?php }else{ ?>
 							<a href="<?php echo admin_url('manufacturing/product_management'); ?>"  class="btn btn-default mr-2 "><?php echo _l('hr_close'); ?></a>
-						<?php } ?>
+							<?php } ?>
 							<?php if(has_permission('manufacturing', '', 'create') || has_permission('manufacturing', '', 'edit')){ ?>
 								<button type="submit" class="btn btn-info pull-right submit_button"><?php echo _l('submit'); ?></button>
-
 							<?php } ?>
 						</div>
 

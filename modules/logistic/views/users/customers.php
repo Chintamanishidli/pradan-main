@@ -49,10 +49,11 @@
                                 </svg>
 
                                 <span>
-                                    <?php echo _l('customers_summary'); ?>
+                                    <?php echo _l
+                                    ('customers_summary'); ?>
                                 </span>
                             </h4>
-                            <div class="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-6 tw-gap-2">
+                            <div class="tw-grid tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-6 tw-gap-2 summary-stats">
                                 <div
                                     class="md:tw-border-r md:tw-border-solid md:tw-border-neutral-300 tw-flex-1 tw-flex tw-items-center">
                                     <span class="tw-font-semibold tw-mr-3 rtl:tw-ml-3 tw-text-lg">

@@ -20,9 +20,17 @@
 
                   <div class="row ">
                     <div class="col-md-12">
-                      <div class="col-md-6">
-                       <?php
-                          $prefix = get_purchase_option('pur_request_prefix');
+                        <div class="col-md-8">
+                          <div id="items-horizontal-preview" class="items-horizontal-preview"></div>
+                        </div>
+                        <style>
+                        .items-horizontal-preview{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+                        .item-card{ width:260px; box-shadow:0 1px 3px rgba(0,0,0,.08); border:1px solid #e5e5e5; border-radius:4px; overflow:hidden; }
+                        .item-card .panel-body{ padding:10px; }
+                        .item-card-title{ font-size:13px; margin-bottom:6px; }
+                        .item-card-code{ font-size:12px; }
+                        .item-card-total{ margin-top:6px; font-size:14px; }
+                        </style>
                           $next_number = get_purchase_option('next_pr_number');
                           $number = (isset($pur_request) ? $pur_request->number : $next_number);
                           echo form_hidden('number',$number); ?> 
