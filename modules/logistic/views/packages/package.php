@@ -81,13 +81,13 @@
 	                    <div class="panel-body">
 
 	                    	<div class="row">
-	                    		<div class="col-md-6">
+	                    		<div class="col-md-4">
 	                    			<?php $agency = (isset($package) ? $package->agency : '');
 	                    			echo render_select('agency', $agencies, array('id', 'agency_name'), 'lg_agency', $agency); ?>
 	                    		</div>
 
 
-	                    		<div class="col-md-6">
+	                    		<div class="col-md-4">
 	                    			<?php $office_of_origin = (isset($package) ? $package->office_of_origin : '');
 	                    			echo render_select('office_of_origin', $office_groups, array('id', 'office_name'), 'lg_office_of_origin', $office_of_origin); ?>
 	                    		</div>
@@ -138,7 +138,7 @@
                         	<hr class="hr-panel-heading" />
 
                         	<div class="row">
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="tracking_purchase"><span class="text-danger">* </span><?php echo _l('lg_tracking_purchase'); ?></label>
                         			<?php $tracking_purchase = (isset($package) ? $package->tracking_purchase : '');
                         			if(isset($pre_alert)){
@@ -149,7 +149,7 @@
                         		</div>
 
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="store_supplier"><span class="text-danger">* </span><?php echo _l('lg_store_supplier'); ?></label>
                         			<?php $store_supplier = (isset($package) ? $package->store_supplier : '');
 
@@ -159,7 +159,7 @@
                         			echo render_input('store_supplier', '', $store_supplier, 'text', ['required' => 'true']); ?>
                         		</div>
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="purchase_price"><span class="text-danger">* </span><?php echo _l('lg_purchase_price'); ?></label>
                         			<?php $purchase_price = (isset($package) ? $package->purchase_price : '');
 
@@ -170,20 +170,20 @@
                         		</div>
 
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="logistic_service_id"><?php echo _l('lg_logistic_service'); ?></label>
                         			<?php $logistic_service_id = (isset($package) ? $package->logistic_service_id : get_option('lg_default_logistic_service'));
 	                    			echo render_select('logistic_service_id', $logistics_services, array('id', 'logistics_service_name'), '', $logistic_service_id); ?>
                         		</div>
 
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="type_of_package"><?php echo _l('lg_type_of_packages'); ?></label>
                         			<?php $type_of_package = (isset($package) ? $package->type_of_package : get_option('lg_default_type_of_package'));
 	                    			echo render_select('type_of_package', $type_of_packages, array('id', 'type_of_package_name'), '', $type_of_package); ?>
                         		</div>
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="courrier_company"><?php echo _l('lg_courrier_company'); ?></label>
                         			<?php $courrier_company = (isset($package) ? $package->courrier_company : get_option('lg_default_courier_company'));
                         			if(isset($pre_alert)){
@@ -192,25 +192,25 @@
 	                    			echo render_select('courrier_company', $shipping_companies, array('id', 'shipping_company_name'), '', $courrier_company); ?>
                         		</div>
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="service_mode"><?php echo _l('lg_service_mode'); ?></label>
                         			<?php $service_mode = (isset($package) ? $package->service_mode : get_option('lg_default_service_mode'));
 	                    			echo render_select('service_mode', $shipping_modes, array('id', 'shipping_mode_name'), '', $service_mode); ?>
                         		</div>
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="delivery_time"><?php echo _l('lg_delivery_time'); ?></label>
                         			<?php $delivery_time = (isset($package) ? $package->delivery_time : get_option('lg_default_delivery_time'));
 	                    			echo render_select('delivery_time', $shipping_times, array('id', 'shipping_time_name'), '', $delivery_time); ?>
                         		</div>
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="assign_driver"><?php echo _l('lg_assign_driver'); ?></label>
                         			<?php $assign_driver = (isset($package) ? $package->assign_driver : '');
 	                    			echo render_select('assign_driver', $drivers, array('staffid', 'full_name'), '', $assign_driver); ?>
                         		</div>
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<?php
 				                        $currency_attr = array('data-show-subtext'=>true);
 
@@ -245,7 +245,7 @@
 					                echo form_hidden('from_currency', $from_currency);
 
 					              ?>
-                        		<div class="col-md-4 " id="currency_rate_div">
+                        		<div class="col-md-3 " id="currency_rate_div">
 						           
 						              
 						              <label for="currency_rate"><?php echo _l('currency_rate'); ?><span id="convert_str"><?php echo ' ('.$base_currency->name.' => '.$package_currency->name.') ';  ?></span></label>
@@ -260,7 +260,7 @@
 				
 						        </div>
 
-						        <div class="col-md-4">
+						        <div class="col-md-3">
                                            
                                     <?php 
                                    	$delivery_status = (isset($package) ? $package->delivery_status : get_option('lg_default_delivery_status'));
@@ -273,7 +273,7 @@
 
 
 
-	                                 <div class="col-md-4 form-group ">
+	                                 <div class="col-md-3 form-group ">
 				                      <label for="invoice_id"><?php echo _l('invoice'); ?></label>
 				                        <select name="invoice_id" id="invoice_id" class="selectpicker" onchange="invoice_select(); return false;" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
 				                          <option value=""></option>
@@ -289,7 +289,7 @@
                         		<div class="attachments_area">
                                     <div class=" attachments">
                                         <div class="attachment">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="attachment" class="control-label"><?php echo _l('lg_attachment') ?></label>
                                                     <div class="input-group">
@@ -415,7 +415,7 @@
 												echo render_input('package_information_update['.($key).'][amount]', 'lg_amount', $detail['amount'], 'number' , ['onchange' => 'calculate_package(); return false;'], [], '', 'amount'); ?>
 											</div>
 
-											<div class="col-md-3 pad_right_0">
+											<div class="col-md-2 pad_right_0">
 												<?php
 												echo render_input('package_information_update['.($key).'][package_description]', 'lg_package_description', $detail['package_description'], 'text'); ?>
 											</div>

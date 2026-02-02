@@ -104,6 +104,7 @@
                 </div>
 
 
+                <div class="clearfix"></div>
                 <div class="col-md-6">
                     <div class="panel_s panel-table-full">
                         <div class="panel-body">
@@ -350,7 +351,7 @@
                             <hr class="hr-panel-heading" />
 
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-6">
                                     <?php 
                                     $package_types = [
                                         ['id' => 'locker_packages', 'name' => _l('lg_locker_packages')],
@@ -369,7 +370,7 @@
                                     <?php echo render_select('rel_type', $package_types, ['id', 'name'], 'lg_package_type', $rel_type, $attr); ?>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <?php 
                                     $package_details = [];
                                     $rel_id = [];

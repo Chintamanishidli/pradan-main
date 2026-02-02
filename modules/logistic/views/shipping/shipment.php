@@ -98,6 +98,7 @@
 	            </div>
 
 
+	            <div class="clearfix"></div>
 	            <div class="col-md-6">
 	            	<div class="panel_s panel-table-full">
 	                    <div class="panel-body">
@@ -169,27 +170,27 @@
 
                         	<div class="row">
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="logistic_service_id"><?php echo _l('lg_logistic_service'); ?></label>
                         			<?php $logistic_service_id = (isset($shipment) ? $shipment->logistic_service_id : get_option('lg_default_logistic_service'));
 	                    			echo render_select('logistic_service_id', $logistics_services, array('id', 'logistics_service_name'), '', $logistic_service_id); ?>
                         		</div>
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="payment_term_id"><?php echo _l('lg_payment_term'); ?></label>
                         			<?php $payment_term_id = (isset($shipment) ? $shipment->payment_term_id : get_option('lg_default_payment_terms'));
 	                    			echo render_select('payment_term_id', $payment_terms, array('id', 'name'), '', $payment_term_id); ?>
                         		</div>
 
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="type_of_package"><?php echo _l('lg_type_of_packages'); ?></label>
                         			<?php $type_of_package = (isset($shipment) ? $shipment->type_of_package : get_option('lg_default_type_of_package'));
 	                    			echo render_select('type_of_package', $type_of_packages, array('id', 'type_of_package_name'), '', $type_of_package); ?>
                         		</div>
 
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="courrier_company"><?php echo _l('lg_courrier_company'); ?></label>
                         			<?php $courrier_company = (isset($shipment) ? $shipment->courrier_company : get_option('lg_default_courier_company'));
                         			if(isset($pre_alert)){
@@ -198,25 +199,25 @@
 	                    			echo render_select('courrier_company', $shipping_companies, array('id', 'shipping_company_name'), '', $courrier_company); ?>
                         		</div>
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="service_mode"><?php echo _l('lg_service_mode'); ?></label>
                         			<?php $service_mode = (isset($shipment) ? $shipment->service_mode : get_option('lg_default_service_mode'));
 	                    			echo render_select('service_mode', $shipping_modes, array('id', 'shipping_mode_name'), '', $service_mode); ?>
                         		</div>
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="delivery_time"><?php echo _l('lg_delivery_time'); ?></label>
                         			<?php $delivery_time = (isset($shipment) ? $shipment->delivery_time : get_option('lg_default_delivery_time'));
 	                    			echo render_select('delivery_time', $shipping_times, array('id', 'shipping_time_name'), '', $delivery_time); ?>
                         		</div>
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<label for="assign_driver"><?php echo _l('lg_assign_driver'); ?></label>
                         			<?php $assign_driver = (isset($shipment) ? $shipment->assign_driver : '');
 	                    			echo render_select('assign_driver', $drivers, array('staffid', 'full_name'), '', $assign_driver); ?>
                         		</div>
 
-                        		<div class="col-md-4">
+                        		<div class="col-md-3">
                         			<?php
 				                        $currency_attr = array('data-show-subtext'=>true);
 
@@ -251,7 +252,7 @@
 					                echo form_hidden('from_currency', $from_currency);
 
 					              ?>
-                        		<div class="col-md-4 " id="currency_rate_div">
+                        		<div class="col-md-3 " id="currency_rate_div">
 						           
 						              
 						              <label for="currency_rate"><?php echo _l('currency_rate'); ?><span id="convert_str"><?php echo ' ('.$base_currency->name.' => '.$shipment_currency->name.') ';  ?></span></label>
@@ -266,7 +267,7 @@
 				
 						        </div>
 
-						        <div class="col-md-4">
+						        <div class="col-md-3">
                                            
                                     <?php 
                                    	$delivery_status = (isset($shipment) ? $shipment->delivery_status : get_option('lg_default_delivery_status'));
@@ -279,7 +280,7 @@
 
 
 
-	                                 <div class="col-md-4 form-group ">
+	                                 <div class="col-md-3 form-group ">
 				                      <label for="invoice_id"><?php echo _l('invoice'); ?></label>
 				                        <select name="invoice_id" id="invoice_id" class="selectpicker" onchange="invoice_select(); return false;" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
 				                          <option value=""></option>
@@ -295,7 +296,7 @@
                         		<div class="attachments_area">
                                     <div class=" attachments">
                                         <div class="attachment">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="attachment" class="control-label"><?php echo _l('lg_attachment') ?></label>
                                                     <div class="input-group">
@@ -523,7 +524,7 @@
                         	<hr class="hr-panel-heading" />	
 
                         	<div class="row mtop15 mbot15">
-                        		<div class="col-md-2 pad_right_0">
+                        		<div class="col-md-3 pad_right_0">
                         			<label for="price_kg"><?php echo _l('lg_price').' '.get_option('lg_weight_units'); ?></label>
                         			<?php $price_kg = (isset($shipment) ? $shipment->price_kg : get_option('lg_weight_value'));
                         			echo render_input('price_kg', '', $price_kg, 'number', ['onchange' => 'calculate_shipment(1); return false;', 'step' => 'any'], [], '', 'price_kg'); ?>
@@ -535,7 +536,7 @@
                         			<?php echo form_hidden('weight_units_setting', $weight_units_setting); ?>
                         		</div>
 
-                        		<div class="col-md-2 pad_right_0">
+                        		<div class="col-md-3 pad_right_0">
                         			<label for="discount_percent"><?php echo _l('lg_discount').' %'; ?></label>
                         			<?php $discount_percent = (isset($shipment) ? $shipment->discount_percent : '');
                         			echo render_input('discount_percent', '', $discount_percent, 'number', ['onchange' => 'calculate_shipment(); return false;'], [], 'mbot5', 'discount_percent'); ?>
@@ -544,14 +545,14 @@
                         			<?php echo form_hidden('discount', ''); ?>
                         		</div>
 
-                        		<div class="col-md-2 pad_right_0">
+                        		<div class="col-md-3 pad_right_0">
                         			<label for="value_assured"><?php echo _l('lg_value_assured'); ?></label>
                         			<?php $value_assured = (isset($shipment) ? $shipment->value_assured : '');
                         			echo render_input('value_assured', '', $value_assured, 'number', ['onchange' => 'calculate_shipment(); return false;'], [], '', 'value_assured'); ?>
                         		</div>
 
 
-                        		<div class="col-md-2 pad_right_0">
+                        		<div class="col-md-3 pad_right_0">
                         			<label for="shipping_insurance_percent"><?php echo _l('lg_shipping_insurance').' %'; ?></label>
                         			<?php $shipping_insurance_percent = (isset($shipment) ? $shipment->shipping_insurance_percent : get_option('lg_shipping_insurance_percent'));
                         			echo render_input('shipping_insurance_percent', '', $shipping_insurance_percent, 'number', ['onchange' => 'calculate_shipment(); return false;'], [], 'mbot5', 'shipping_insurance_percent'); ?>
@@ -560,7 +561,7 @@
                         			<?php echo form_hidden('shipping_insurance', ''); ?>
                         		</div>
 
-                        		<div class="col-md-2 pad_right_0">
+                        		<div class="col-md-3 pad_right_0">
                         			<label for="custom_duties_percent"><?php echo _l('lg_custom_duties').' %'; ?></label>
                         			<?php $custom_duties_percent = (isset($shipment) ? $shipment->custom_duties_percent : get_option('lg_customs_duties'));
                         			echo render_input('custom_duties_percent', '', $custom_duties_percent, 'number', ['onchange' => 'calculate_shipment(); return false;'], [], 'mbot5', 'custom_duties_percent'); ?>
@@ -569,7 +570,7 @@
                         			<?php echo form_hidden('custom_duties', ''); ?>
                         		</div>
 
-                        		<div class="col-md-2 pad_right_0">
+                        		<div class="col-md-3 pad_right_0">
                         			<?php $minium_cost_to_apply_the_tax_setting = (isset($shipment) ? $shipment->minium_cost_to_apply_the_tax_setting : get_option('lg_minium_cost_to_apply_the_tax'));
                         			echo form_hidden('minium_cost_to_apply_the_tax_setting', $minium_cost_to_apply_the_tax_setting ) ?>
 
@@ -581,7 +582,7 @@
                         			<?php echo form_hidden('tax', ''); ?>
                         		</div>
 
-                        		<div class="col-md-2 pad_right_0">
+                        		<div class="col-md-3 pad_right_0">
                         			<?php $minium_cost_to_apply_declared_tax_setting = (isset($shipment) ? $shipment->minium_cost_to_apply_declared_tax_setting : get_option('lg_minium_cost_to_apply_declared_tax'));
                         			echo form_hidden('minium_cost_to_apply_declared_tax_setting', $minium_cost_to_apply_declared_tax_setting) ?>
 
@@ -594,13 +595,13 @@
                         		</div>
 
 
-                        		<div class="col-md-2 pad_right_0">
+                        		<div class="col-md-3 pad_right_0">
                         			<label for="reissue"><?php echo _l('lg_reissue'); ?></label>
                         			<?php $reissue = (isset($shipment) ? $shipment->reissue : '');
                         			echo render_input('reissue', '', $reissue, 'number', ['onchange' => 'calculate_shipment(); return false;'], [], '', 'reissue'); ?>
                         		</div>
 
-                        		<div class="col-md-2 pad_right_0">
+                        		<div class="col-md-3 pad_right_0">
                         			<label for="fixed_charge"><?php echo _l('lg_fixed_charge'); ?></label><br>
                         			<?php $fixed_charge = (isset($shipment) ? $shipment->fixed_charge : ''); ?>
 
@@ -608,7 +609,7 @@
                         			<?php echo form_hidden('fixed_charge', $fixed_charge); ?>
                         		</div>
 
-                        		<div class="col-md-2 pad_right_0 label-warning">
+                        		<div class="col-md-3 pad_right_0 label-warning">
                         			<label for="total" class="text-uppercase"><?php echo _l('lg_total'); ?></label><br>
                         			<?php $total = (isset($shipment) ? $shipment->total : ''); ?>
 
