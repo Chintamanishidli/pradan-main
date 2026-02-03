@@ -12,30 +12,30 @@
 					<div class="row">
 						<?php $ready_to_produce = 'components_for_1st'; ?>
 						<div class="col-md-12">
-							<div class="col-md-12">
+							<div class="col-md-4">
 								<?php echo render_input('bom_code','BOM_code', $bom_code,'text'); ?> 
 							</div>
-							<div class="col-md-12">
+							<div class="col-md-4">
 								<?php echo render_select('product_id',$parent_product,array('id','description'),'product_label',''); ?>
 							</div>
-							<div class="col-md-12">
+							<div class="col-md-4">
 								<?php echo render_select('product_variant_id',$parent_product,array('id','description'),'product_variant',''); ?>
 
 							</div>
 
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<?php echo render_input('product_qty','product_qty', 1.0,'number'); ?> 
 							</div>
 
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<?php echo render_select('unit_id',$units,array('unit_type_id', 'unit_name'), 'unit_of_measure', '',[], [], '', '' , false); ?>
 							</div>
 
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<?php echo render_select('routing_id',$routings,array('id', array('routing_code','routing_name')), 'routing_label', '',[], [], '', '' , true); ?>
 							</div>
 
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="form-group">
 									<label for="profit_rate" class="control-label clearfix"><?php echo _l('bom_type'); ?></label>
 									<div class="radio radio-primary radio-inline" >
@@ -59,10 +59,10 @@
 
 							<h4><?php echo _l('miscellaneous') ?></h4>
 							
-							<div class="col-md-12">
+							<div class="col-md-4">
 								<?php echo render_select('ready_to_produce',$ready_to_produce_type,array('name', 'label'), 'ready_to_produce', $ready_to_produce,[], [], '', '' , false); ?>
 							</div>
-							<div class="col-md-12">
+							<div class="col-md-4">
 								<?php echo render_select('consumption',$consumption_type,array('name', 'label'), 'consumption', '',[], [], '', '' , false); ?>
 							</div>
 							

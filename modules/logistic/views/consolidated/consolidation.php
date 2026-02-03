@@ -20,7 +20,7 @@
                         <div class="panel-body">
 
                             <div class="row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-8">
 
                                     <label for="shipping_prefix"><span class="text-danger">* </span><?php echo _l('lg_shipping_prefix'); ?></label>
                                     <div class="input-group">
@@ -50,7 +50,7 @@
                                 </div>
 
 
-                                <div class="col-md-3">
+                                <div class="col-md-8">
                                     <?php 
                                     $number = ( isset($consolidation) ? $consolidation->number : get_consolidation_next_number());
                                     $number_code = (isset($consolidation) ? $consolidation->number_code : $number);
@@ -71,7 +71,7 @@
                                       echo form_hidden('number_type', $number_type); ?>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-8">
                                     <label for="stamps"><span class="text-danger">* </span><?php echo _l('lg_stamps'); ?></label>
                                     <?php $stamps = ( isset($consolidation) ? $consolidation->stamps : '');
                                     echo render_input('stamps', '', $stamps, 'text', ['required' => 'true']); ?>
@@ -87,13 +87,13 @@
                         <div class="panel-body">
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <?php $agency = (isset($consolidation) ? $consolidation->agency : '');
                                     echo render_select('agency', $agencies, array('id', 'agency_name'), 'lg_agency', $agency); ?>
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <?php $office_of_origin = (isset($consolidation) ? $consolidation->office_of_origin : '');
                                     echo render_select('office_of_origin', $office_groups, array('id', 'office_name'), 'lg_office_of_origin', $office_of_origin); ?>
                                 </div>
@@ -112,7 +112,7 @@
                             <hr class="hr-panel-heading" />
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <label for="customer_id"><span class="text-danger">* </span><?php echo _l('lg_sender_customer'); ?></label>
                                     <?php $customer_id = (isset($consolidation) ? $consolidation->customer_id : '');
 
@@ -124,7 +124,7 @@
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <label for="customer_address"><span class="text-danger">* </span><?php echo _l('lg_sender_customer_address'); ?></label>
                                     <?php 
                                     $client_address = [];
@@ -145,7 +145,7 @@
                             <hr class="hr-panel-heading" />
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <label for="recipient_id"><span class="text-danger">* </span><?php echo _l('lg_recipient_customer'); ?></label>
                                     <?php $recipient_id = (isset($consolidation) ? $consolidation->recipient_id : '');
 
@@ -154,7 +154,7 @@
                                 </div>
 
 
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <label for="recipient_address_id"><span class="text-danger">* </span><?php echo _l('lg_recipient_address'); ?></label>
                                     <?php 
                                     $recipient_address = [];
@@ -176,27 +176,27 @@
 
                             <div class="row">
 
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <label for="logistic_service_id"><?php echo _l('lg_logistic_service'); ?></label>
                                     <?php $logistic_service_id = (isset($consolidation) ? $consolidation->logistic_service_id : get_option('lg_default_logistic_service'));
                                     echo render_select('logistic_service_id', $logistics_services, array('id', 'logistics_service_name'), '', $logistic_service_id); ?>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <label for="payment_term_id"><?php echo _l('lg_payment_term'); ?></label>
                                     <?php $payment_term_id = (isset($consolidation) ? $consolidation->payment_term_id : get_option('lg_default_payment_terms'));
                                     echo render_select('payment_term_id', $payment_terms, array('id', 'name'), '', $payment_term_id); ?>
                                 </div>
 
 
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <label for="type_of_package"><?php echo _l('lg_type_of_packages'); ?></label>
                                     <?php $type_of_package = (isset($consolidation) ? $consolidation->type_of_package : get_option('lg_default_type_of_package'));
                                     echo render_select('type_of_package', $type_of_packages, array('id', 'type_of_package_name'), '', $type_of_package); ?>
                                 </div>
 
 
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <label for="courrier_company"><?php echo _l('lg_courrier_company'); ?></label>
                                     <?php $courrier_company = (isset($consolidation) ? $consolidation->courrier_company : get_option('lg_default_courier_company'));
                                     if(isset($pre_alert)){
@@ -205,25 +205,25 @@
                                     echo render_select('courrier_company', $shipping_companies, array('id', 'shipping_company_name'), '', $courrier_company); ?>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <label for="service_mode"><?php echo _l('lg_service_mode'); ?></label>
                                     <?php $service_mode = (isset($consolidation) ? $consolidation->service_mode : get_option('lg_default_service_mode'));
                                     echo render_select('service_mode', $shipping_modes, array('id', 'shipping_mode_name'), '', $service_mode); ?>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <label for="delivery_time"><?php echo _l('lg_delivery_time'); ?></label>
                                     <?php $delivery_time = (isset($consolidation) ? $consolidation->delivery_time : get_option('lg_default_delivery_time'));
                                     echo render_select('delivery_time', $shipping_times, array('id', 'shipping_time_name'), '', $delivery_time); ?>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <label for="assign_driver"><?php echo _l('lg_assign_driver'); ?></label>
                                     <?php $assign_driver = (isset($consolidation) ? $consolidation->assign_driver : '');
                                     echo render_select('assign_driver', $drivers, array('staffid', 'full_name'), '', $assign_driver); ?>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <?php
                                         $currency_attr = array('data-show-subtext'=>true);
 
@@ -273,7 +273,7 @@
                 
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                            
                                     <?php 
                                     $delivery_status = (isset($consolidation) ? $consolidation->delivery_status : get_option('lg_default_delivery_status'));
@@ -351,7 +351,7 @@
                             <hr class="hr-panel-heading" />
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <?php 
                                     $package_types = [
                                         ['id' => 'locker_packages', 'name' => _l('lg_locker_packages')],
@@ -370,7 +370,7 @@
                                     <?php echo render_select('rel_type', $package_types, ['id', 'name'], 'lg_package_type', $rel_type, $attr); ?>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <?php 
                                     $package_details = [];
                                     $rel_id = [];
@@ -502,7 +502,7 @@
                             <hr class="hr-panel-heading" /> 
 
                             <div class="row mtop15 mbot15">
-                                <div class="col-md-2 pad_right_0">
+                                <div class="col-md-8 pad_right_0">
                                     <label for="price_kg"><?php echo _l('lg_price').' '.get_option('lg_weight_units'); ?></label>
                                     <?php $price_kg = (isset($consolidation) ? $consolidation->price_kg : get_option('lg_weight_value'));
                                     echo render_input('price_kg', '', $price_kg, 'number', ['onchange' => 'calculate_consolidation(1); return false;', 'step' => 'any'], [], '', 'price_kg'); ?>
@@ -514,7 +514,7 @@
                                     <?php echo form_hidden('weight_units_setting', $weight_units_setting); ?>
                                 </div>
 
-                                <div class="col-md-2 pad_right_0">
+                                <div class="col-md-8 pad_right_0">
                                     <label for="discount_percent"><?php echo _l('lg_discount').' %'; ?></label>
                                     <?php $discount_percent = (isset($consolidation) ? $consolidation->discount_percent : '');
                                     echo render_input('discount_percent', '', $discount_percent, 'number', ['onchange' => 'calculate_consolidation(); return false;'], [], 'mbot5', 'discount_percent'); ?>
@@ -523,14 +523,14 @@
                                     <?php echo form_hidden('discount', ''); ?>
                                 </div>
 
-                                <div class="col-md-2 pad_right_0">
+                                <div class="col-md-8 pad_right_0">
                                     <label for="value_assured"><?php echo _l('lg_value_assured'); ?></label>
                                     <?php $value_assured = (isset($consolidation) ? $consolidation->value_assured : '');
                                     echo render_input('value_assured', '', $value_assured, 'number', ['onchange' => 'calculate_consolidation(); return false;'], [], '', 'value_assured'); ?>
                                 </div>
 
 
-                                <div class="col-md-2 pad_right_0">
+                                <div class="col-md-8 pad_right_0">
                                     <label for="shipping_insurance_percent"><?php echo _l('lg_shipping_insurance').' %'; ?></label>
                                     <?php $shipping_insurance_percent = (isset($consolidation) ? $consolidation->shipping_insurance_percent : get_option('lg_shipping_insurance_percent'));
                                     echo render_input('shipping_insurance_percent', '', $shipping_insurance_percent, 'number', ['onchange' => 'calculate_consolidation(); return false;'], [], 'mbot5', 'shipping_insurance_percent'); ?>
@@ -539,7 +539,7 @@
                                     <?php echo form_hidden('shipping_insurance', ''); ?>
                                 </div>
 
-                                <div class="col-md-2 pad_right_0">
+                                <div class="col-md-8 pad_right_0">
                                     <label for="custom_duties_percent"><?php echo _l('lg_custom_duties').' %'; ?></label>
                                     <?php $custom_duties_percent = (isset($consolidation) ? $consolidation->custom_duties_percent : get_option('lg_customs_duties'));
                                     echo render_input('custom_duties_percent', '', $custom_duties_percent, 'number', ['onchange' => 'calculate_consolidation(); return false;'], [], 'mbot5', 'custom_duties_percent'); ?>
@@ -548,7 +548,7 @@
                                     <?php echo form_hidden('custom_duties', ''); ?>
                                 </div>
 
-                                <div class="col-md-2 pad_right_0">
+                                <div class="col-md-8 pad_right_0">
                                     <?php $minium_cost_to_apply_the_tax_setting = (isset($consolidation) ? $consolidation->minium_cost_to_apply_the_tax_setting : get_option('lg_minium_cost_to_apply_the_tax'));
                                     echo form_hidden('minium_cost_to_apply_the_tax_setting', $minium_cost_to_apply_the_tax_setting ) ?>
 
@@ -560,7 +560,7 @@
                                     <?php echo form_hidden('tax', ''); ?>
                                 </div>
 
-                                <div class="col-md-2 pad_right_0">
+                                <div class="col-md-8 pad_right_0">
                                     <?php $minium_cost_to_apply_declared_tax_setting = (isset($consolidation) ? $consolidation->minium_cost_to_apply_declared_tax_setting : get_option('lg_minium_cost_to_apply_declared_tax'));
                                     echo form_hidden('minium_cost_to_apply_declared_tax_setting', $minium_cost_to_apply_declared_tax_setting) ?>
 
@@ -573,13 +573,13 @@
                                 </div>
 
 
-                                <div class="col-md-2 pad_right_0">
+                                <div class="col-md-8 pad_right_0">
                                     <label for="reissue"><?php echo _l('lg_reissue'); ?></label>
                                     <?php $reissue = (isset($consolidation) ? $consolidation->reissue : '');
                                     echo render_input('reissue', '', $reissue, 'number', ['onchange' => 'calculate_consolidation(); return false;'], [], '', 'reissue'); ?>
                                 </div>
 
-                                <div class="col-md-2 pad_right_0">
+                                <div class="col-md-8 pad_right_0">
                                     <label for="fixed_charge"><?php echo _l('lg_fixed_charge'); ?></label><br>
                                     <?php $fixed_charge = (isset($consolidation) ? $consolidation->fixed_charge : ''); ?>
 
@@ -587,7 +587,7 @@
                                     <?php echo form_hidden('fixed_charge', $fixed_charge); ?>
                                 </div>
 
-                                <div class="col-md-2 pad_right_0 label-warning">
+                                <div class="col-md-8 pad_right_0 label-warning">
                                     <label for="total" class="text-uppercase"><?php echo _l('lg_total'); ?></label><br>
                                     <?php $total = (isset($consolidation) ? $consolidation->total : ''); ?>
 

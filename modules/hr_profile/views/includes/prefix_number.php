@@ -9,13 +9,13 @@
 	</div>
 </div>
 
-<div class="form-group">
+<div class="form-group col-md-6">
 	<label><?php echo _l('hr_job_position_prefix'); ?></label>
 	<div  class="form-group" app-field-wrapper="job_position_prefix">
 		<input type="text" id="job_position_prefix" name="job_position_prefix" class="form-control" value="<?php echo get_hr_profile_option('job_position_prefix'); ?>"></div>
 	</div>
 
-	<div class="form-group">
+	<div class="form-group col-md-6">
 		<label><?php echo _l('hr_job_position_number'); ?></label>
 		<i class="fa fa-question-circle i_tooltip" data-toggle="tooltip" title="" data-original-title="<?php echo _l('hr_next_number_tooltip'); ?>"></i>
 		<div  class="form-group" app-field-wrapper="job_position_number">
@@ -31,13 +31,13 @@
 		</div>
 	</div>
 
-	<div class="form-group">
+	<div class="form-group col-md-6">
 		<label><?php echo _l('hr_contract_code_prefix'); ?></label>
 		<div  class="form-group" app-field-wrapper="contract_code_prefix">
 			<input type="text" id="contract_code_prefix" name="contract_code_prefix" class="form-control" value="<?php echo get_hr_profile_option('contract_code_prefix'); ?>"></div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group col-md-6">
 			<label><?php echo _l('hr_contract_code_number'); ?></label>
 			<i class="fa fa-question-circle i_tooltip" data-toggle="tooltip" title="" data-original-title="<?php echo _l('hr_next_number_tooltip'); ?>"></i>
 			<div  class="form-group" app-field-wrapper="contract_code_number">
@@ -53,14 +53,14 @@
 			</div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group col-md-6">
 			<label><?php echo _l('hr_staff_code_prefix'); ?></label>
 			<div  class="form-group" app-field-wrapper="staff_code_prefix">
 				<input type="text" id="staff_code_prefix" name="staff_code_prefix" class="form-control" value="<?php echo get_hr_profile_option('staff_code_prefix'); ?>">
 			</div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group col-md-6">
 			<label><?php echo _l('hr_staff_code_number'); ?></label>
 			<i class="fa fa-question-circle i_tooltip" data-toggle="tooltip" title="" data-original-title="<?php echo _l('hr_next_number_tooltip'); ?>"></i>
 			<div  class="form-group" app-field-wrapper="staff_code_number">
@@ -76,7 +76,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-6">
 				<div class="form-group">
 					<div class="checkbox checkbox-primary">
 						<input type="checkbox" id="hr_profile_hide_menu" name="hr_profile_hide_menu" <?php if(get_option('hr_profile_hide_menu') == 1 ){ echo 'checked';} ?> value="1">

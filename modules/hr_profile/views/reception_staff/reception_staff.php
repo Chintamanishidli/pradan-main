@@ -88,7 +88,7 @@
 			<?php echo form_open(admin_url('hr_profile/add_new_reception'),  array('id'=>'add_new_reception')); ?>
 
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-4">
 						<label for="staff_id" class="control-label"><small class="req text-danger">* </small><?php echo _l('hr_select_employee'); ?></label>
 						<select name="staff_id" data-live-search="true" class="selectpicker" id="staff_id" data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>" required> 
 							<option value=""></option> 
@@ -100,173 +100,173 @@
 
 
 
-					<?php if(count($group_checklist)>0){ ?>
-						<div class="col-md-12">
-							<br>
-							<h4 class="text-primary"><i class="fa fa-info-circle"></i> <?php echo _l('hr_reception_information'); ?></h4>
-							<hr>
+						<div class="row">
 							<div class="col-md-12">
-								<div class="col-md-12" id="manage_reception">
+								<?php if(count($group_checklist)>0){ ?>
+									<br>
+									<h4 class="text-primary"><i class="fa fa-info-circle"></i> <?php echo _l('hr_reception_information'); ?></h4>
+									<hr>
+									<div class="col-md-12 p-0" id="manage_reception">
 
-									<?php 
+										<?php 
 
-									if (isset($group_checklist)) {
-										foreach ($group_checklist as $key => $value) {?>                 
-											<div class="row title">                           
-												<div class="row">
-													<div class="col-md-10">
-														<div class="form-group">
-															<input type="text" name="title_name[<?php echo new_html_entity_decode($key); ?>]" class="form-control" placeholder="<?php echo _l('hr_title'); ?>" value="<?php echo new_html_entity_decode($value['group_name']); ?>" required>
+										if (isset($group_checklist)) {
+											foreach ($group_checklist as $key => $value) {?>                 
+												<div class="col-md-6 title m-0">                           
+													<div class="row m-0">
+														<div class="col-md-10 p-0">
+															<div class="form-group">
+																<input type="text" name="title_name[<?php echo new_html_entity_decode($key); ?>]" class="form-control" placeholder="<?php echo _l('hr_title'); ?>" value="<?php echo new_html_entity_decode($value['group_name']); ?>" required>
+															</div>
+														</div>
+														<div class="col-md-2 p-0 pl-1" name="button_add">
+															<?php 
+															if($key == 0){ ?>
+																<button onclick="add_title(this); return false;" class="btn btn-primary mt-1 btn-title" data-ticket="true" type="button"><i class="fa fa-plus"></i></button>
+															<?php }else{?>
+																<button onclick="remove_title(this); return false;" class="btn btn-danger mt-1 btn-title" data-ticket="true" type="button"><i class="fa fa-minus"></i></button>
+															<?php } ?>
 														</div>
 													</div>
-													<div class="col-md-2" name="button_add">
-														<?php 
-														if($key == 0){ ?>
-															<button onclick="add_title(this); return false;" class="btn btn-primary mt-1 btn-title" data-ticket="true" type="button"><i class="fa fa-plus"></i></button>
-														<?php }else{?>
-															<button onclick="remove_title(this); return false;" class="btn btn-danger mt-1 btn-title" data-ticket="true" type="button"><i class="fa fa-minus"></i></button>
-														<?php } ?>
-													</div>
-												</div>
-												<?php 
-												$checklist = $this->hr_profile_model->checklist_by_group($value['id']);
+													<?php 
+													$checklist = $this->hr_profile_model->checklist_by_group($value['id']);
 
-												foreach ($checklist as $ind => $sub_item) {?>
-													<div class="sub"> 
-														<div class="row">                          
-															<div class="col-md-9">
-																<div class="form-group">
-																	<input type="text" name="sub_title_name[<?php echo new_html_entity_decode($key); ?>][<?php echo new_html_entity_decode($ind); ?>]" data-count="<?php echo new_html_entity_decode($key); ?>" class="form-control" value="<?php echo new_html_entity_decode($sub_item['name']); ?>" placeholder="<?php echo _l('hr_sub_title'); ?>" required>
+													foreach ($checklist as $ind => $sub_item) {?>
+														<div class="sub"> 
+															<div class="row m-0">                          
+																<div class="col-md-9 p-0">
+																	<div class="form-group">
+																		<input type="text" name="sub_title_name[<?php echo new_html_entity_decode($key); ?>][<?php echo new_html_entity_decode($ind); ?>]" data-count="<?php echo new_html_entity_decode($key); ?>" class="form-control" value="<?php echo new_html_entity_decode($sub_item['name']); ?>" placeholder="<?php echo _l('hr_sub_title'); ?>" required>
+																	</div>
+																</div>
+																<div class="col-md-3 p-0 pl-1" name="button_add">
+																	<?php 
+																	if($ind == 0){ ?>
+																		<button onclick="add_subtitle(this); return false;" class="btn btn-primary btn-sub-title" data-ticket="true" type="button"><i class="fa fa-plus"></i></button>
+																	<?php }else{?>
+																		<button onclick="remove_subtitle(this); return false;" class="btn btn-danger btn-sub-title" data-ticket="true" type="button"><i class="fa fa-minus"></i></button>
+																	<?php } ?>
 																</div>
 															</div>
-															<div class="col-md-3" name="button_add">
-																<?php 
-																if($ind == 0){ ?>
-																	<button onclick="add_subtitle(this); return false;" class="btn btn-primary btn-sub-title" data-ticket="true" type="button"><i class="fa fa-plus"></i></button>
-																<?php }else{?>
-																	<button onclick="remove_subtitle(this); return false;" class="btn btn-danger btn-sub-title" data-ticket="true" type="button"><i class="fa fa-minus"></i></button>
-																<?php } ?>
-															</div>
 														</div>
-													</div>
-												<?php  } ?>                   
-												<div class="col-md-12 pl-0 sub_title"></div>
-											</div>
-											<?php 
-										}}else{?>            
-											<div class="row title">                           
-												<div class="col-md-11 pt-2">
-													<div class="form-group">
-														<input type="text" name="title_name[0]" class="form-control" placeholder="Tiêu đề mục" value="">
-													</div>
+													<?php  } ?>                   
+													<div class="col-md-12 pl-0 sub_title"></div>
 												</div>
-												<div class="col-md-1 pl-0 pt-0" name="button_add">
-													<button onclick="add_title(this); return false;" class="btn btn-primary mt-1" data-ticket="true" type="button"><i class="fa fa-plus"></i></button>
-												</div>
-
-												<div class="col-md-12 pl-0">
-													<div class="sub">                           
-														<div class="col-md-10 pt-2">
+												<?php 
+											}}else{?>            
+												<div class="col-md-6 title m-0">                           
+													<div class="row m-0">
+														<div class="col-md-10 p-0 pt-2">
 															<div class="form-group">
-																<input type="text" name="sub_title_name[0][0]" data-count="0" class="form-control" value="" placeholder="Mục con">
+																<input type="text" name="title_name[0]" class="form-control" placeholder="Tiêu đề mục" value="">
 															</div>
 														</div>
-														<div class="col-md-2 pl-0 pt-0" name="button_add">
-															<button onclick="add_subtitle(this); return false;" class="btn btn-primary mt-1" data-ticket="true" type="button"><i class="fa fa-plus"></i></button>
+														<div class="col-md-2 pl-1 pt-2" name="button_add">
+															<button onclick="add_title(this); return false;" class="btn btn-primary mt-0" data-ticket="true" type="button"><i class="fa fa-plus"></i></button>
 														</div>
 													</div>
-												</div>
-												<div class="col-md-12 pl-0 sub_title"></div>
-											</div>
-										<?php } ?>
-									</div>
-								</div>
-							</div>
-						<?php } ?>
-						<?php if(count($list_reception_staff_asset)>0){ ?>
-							<div class="col-md-12 mt-1">
-								<br>
-								<h4 class="text-primary"><i class="fa fa-star"></i> <?php echo _l('hr_property_allocation'); ?></h4>
-								<hr>
-								<div class="col-md-12">
-									<!--  Add assets    -->
-									<div class="col-md-12 assets_wrap">
-										<?php if($list_reception_staff_asset){
-											foreach ($list_reception_staff_asset as $p_key => $p_value) {              
-												?>
-												<div id ="assets_emp" class="row">                            
-													<div class="col-md-11 pt-2">
-														<div class="form-group">
-															<?php
-															$name=$p_value['name'];
 
-															?>
-															<input type="text" name="asset_name[]" class="form-control" value="<?php echo new_html_entity_decode($name); ?>" placeholder="<?php echo _l('hr_enter_property_name'); ?>" required>
+													<div class="col-md-12 p-0">
+														<div class="sub">                           
+															<div class="row m-0">
+																<div class="col-md-10 p-0 pt-2">
+																	<div class="form-group">
+																		<input type="text" name="sub_title_name[0][0]" data-count="0" class="form-control" value="" placeholder="Mục con">
+																	</div>
+																</div>
+																<div class="col-md-2 pl-1 pt-2" name="button_add">
+																	<button onclick="add_subtitle(this); return false;" class="btn btn-primary mt-0" data-ticket="true" type="button"><i class="fa fa-plus"></i></button>
+																</div>
+															</div>
 														</div>
-													</div>                            
-													<div class="col-md-1 pl-0 pt-0" name="button_add">
-														<button name="add_asset" class="btn mt-1 <?php if($p_key == 0){ echo 'new_assets_emp btn-primary' ;}else{echo 'remove_assets_emp btn-danger' ;} ?>" data-ticket="true" type="button"><i class="fa <?php if($p_key == 0){ echo 'fa-plus' ;}else{ echo 'fa-minus' ;} ?> "></i></button>
+													</div>
+													<div class="col-md-12 pl-0 sub_title"></div>
+												</div>
+											<?php } ?>
+									</div>
+								<?php } ?>
+							</div>
+
+							<div class="col-md-12">
+								<?php if(count($list_reception_staff_asset)>0){ ?>
+									<br>
+									<h4 class="text-primary"><i class="fa fa-star"></i> <?php echo _l('hr_property_allocation'); ?></h4>
+									<hr>
+									<div class="col-md-12 p-0">
+										<!--  Add assets    -->
+										<div class="col-md-12 assets_wrap p-0">
+											<?php if($list_reception_staff_asset){
+												foreach ($list_reception_staff_asset as $p_key => $p_value) {              
+													?>
+													<div id ="assets_emp" class="col-md-6 m-0">                            
+														<div class="col-md-10 p-0 pt-2">
+															<div class="form-group">
+																<?php
+																$name=$p_value['name'];
+
+																?>
+																<input type="text" name="asset_name[]" class="form-control" value="<?php echo new_html_entity_decode($name); ?>" placeholder="<?php echo _l('hr_enter_property_name'); ?>" required>
+															</div>
+														</div>                            
+														<div class="col-md-2 pl-1 pt-2" name="button_add">
+															<button name="add_asset" class="btn mt-0 <?php if($p_key == 0){ echo 'new_assets_emp btn-primary' ;}else{echo 'remove_assets_emp btn-danger' ;} ?>" data-ticket="true" type="button"><i class="fa <?php if($p_key == 0){ echo 'fa-plus' ;}else{ echo 'fa-minus' ;} ?> "></i></button>
+														</div>
+													</div>
+												<?php } ?>
+											<?php }else{ ?>
+												<div id ="assets_emp" class="col-md-6 m-0">                           
+													<div class="col-md-10 p-0 pt-2">
+														<div class="form-group">                
+															<input type="text" name="asset_name[]" class="form-control" value="" placeholder="<?php echo _l('hr_enter_property_name'); ?>" required>
+														</div>
+													</div>
+													<div class="col-md-2 pl-1 pt-2" name="button_add">
+														<button name="add_asset" class="btn new_assets_emp btn-primary mt-0" data-ticket="true" type="button"><i class="fa fa-plus"></i></button>
 													</div>
 												</div>
 											<?php } ?>
-										<?php }else{ ?>
-											<div id ="assets_emp" class="row">                           
-												<div class="col-md-11 pt-2">
-													<div class="form-group">                
-														<input type="text" name="asset_name[]" class="form-control" value="" placeholder="<?php echo _l('hr_enter_property_name'); ?>" required>
-													</div>
-												</div>
-												<div class="col-md-1 pl-0 pt-0" name="button_add">
-													<button name="add_asset" class="btn new_assets_emp btn-primary mt-1" data-ticket="true" type="button"><i class="fa fa-plus"></i></button>
+										</div>
+										<!--  End add asset    -->
+									</div>
+								<?php } ?>
+							</div>
+
+							<div class="col-md-12">
+								<?php if(isset($setting_training)>0){ ?>
+									<br>
+									<h4 class="text-primary "><i class="fa fa-graduation-cap"></i> <?php echo _l('hr_training'); ?></h4>
+									<hr >
+									<div class="col-md-12 p-0">      
+										<div class="row m-0">
+
+											<div class="col-md-6 p-0">
+												<div class="form-group">
+													<label><?php echo _l('type_of_training'); ?></label>
+
+													<select name="training_type" class="selectpicker" id="training_type" data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>"> 
+														<option value=""></option> 
+														<?php foreach ($type_of_trainings as $key => $value) { ?>
+															<option value="<?php echo $value['id'] ?>" <?php if(isset($setting_training) && $setting_training->training_type == $value['id']  ){echo 'selected';}; ?> ><?php echo $value['name']  ?></option>
+														<?php } ?>
+													</select>
 												</div>
 											</div>
-										<?php } ?>
-									</div>
-									<!--  End add asset    -->
-								</div>
-							</div>
-						<?php } ?>
-						<?php if(isset($setting_training)>0){ ?>
-							<div class="col-md-12">
-								<br>
-								<h4 class="text-primary "><i class="fa fa-graduation-cap"></i> <?php echo _l('hr_training'); ?></h4>
-								<hr >
-								<div class="col-md-12">      
-									<div class="row">
 
-										<div class="col-md-12">
-										<div class="form-group">
-											<label><?php echo _l('type_of_training'); ?></label>
+											<div class="col-md-6 p-0">
+												<div class="form-group">
+													<label><small class="req text-danger">* </small><?php echo _l('hr_training_program'); ?></label>
+													<select name="training_program" class="selectpicker" id="training_program" data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>" required> 
+														
+													</select>
+												</div>
+											</div>
 
-											<select name="training_type" class="selectpicker" id="training_type" data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>"> 
-												<option value=""></option> 
-												<?php foreach ($type_of_trainings as $key => $value) { ?>
-													<option value="<?php echo $value['id'] ?>" <?php if(isset($setting_training) && $setting_training->training_type == $value['id']  ){echo 'selected';}; ?> ><?php echo $value['name']  ?></option>
-												<?php } ?>
-											</select>
 										</div>
 									</div>
-									</div>
-								</div>
-							</div>
-						<?php } ?>
 
-						<div class="col-md-12">
-							<div class="col-md-12">      
-								<div class="row">
-									<div class="col-md-12 ">
-										<div class="form-group">
-											<label><small class="req text-danger">* </small><?php echo _l('hr_training_program'); ?></label>
-											<select name="training_program" class="selectpicker" id="training_program" data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>" required> 
-												
-											</select>
-										</div>
-									</div>
-								</div>
+								<?php } ?>
 							</div>
 						</div>
-
-					</div>
 					<div class="clearfix"></div>
 					<hr>
 					<div class="row d-flex justify-content-end m-0 p-0 pb-4">

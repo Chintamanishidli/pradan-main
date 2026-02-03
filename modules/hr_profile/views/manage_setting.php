@@ -66,7 +66,7 @@
 <?php
 $viewuri = $_SERVER['REQUEST_URI'];
 
-require('modules/hr_profile/assets/js/setting/manage_setting_js.php');
+require('modules/hr_profile/a    ssets/js/setting/manage_setting_js.php');
 if($group == 'reception_staff'){
 	require('modules/hr_profile/assets/js/setting/reception_staff_js.php');
 }elseif(!(strpos($viewuri,'admin/hr_profile/setting?group=hr_profile_permissions') === false)){

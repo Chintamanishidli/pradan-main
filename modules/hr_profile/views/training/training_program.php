@@ -85,10 +85,10 @@
 						<div role="tabpanel" class="tab-pane active" id="interview_infor">
 
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<?php echo render_input('training_name', 'hr_training_name'); ?>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<label for="training_type" class="control-label"><?php echo _l('hr_training_type'); ?></label>
 									<select onchange="training_type_change(this)" name="training_type" class="selectpicker" id="training_type" data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>"> 
 										<option value=""></option> 
@@ -101,16 +101,16 @@
 									</select>
 
 								</div>
-							</div>
-
-							<div class="row ">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<label for="position_training_id" class="control-label get_id_row" value ="0" ><span class="text-danger">* </span><?php echo _l('hr_training_item'); ?></label>
 
 									<select name="position_training_id[]" class="selectpicker mb-5" id="position_training_id[]" data-width="100%" data-live-search="true" multiple="true" data-actions-box="true" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>" data-sl-id="e_criteria[0]" > 
 									</select>
 								</div>
-								<div class="col-md-6">
+							</div>
+
+							<div class="row ">
+								<div class="col-md-4">
 									<?php $mint_point_f="1";
 									$min_p =[];
 									$min_p['min']='0';
@@ -119,10 +119,34 @@
 									?>
 									<?php echo render_input('mint_point','hr_mint_point',$mint_point_f,'number', $min_p) ?>
 								</div>
+								<div class="col-md-4">
+
+									<label for="department_id" class="control-label get_id_row" value ="0" ><?php echo _l('hr_department'); ?></label>
+									<select onchange="department_change(this)" name="department_id[]" class="selectpicker" id="department_id" data-width="100%" data-live-search="true" multiple="true" data-actions-box="true" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>">
+										<?php foreach($hr_profile_get_department_name as $dp){ ?> 
+											<option value="<?php echo new_html_entity_decode($dp['departmentid']); ?>"><?php echo new_html_entity_decode($dp['name']); ?></option>
+										<?php } ?>
+
+									</select>
+
+								</div>
+
+								<div class="col-md-4">
+
+									<label for="job_position_id" class="control-label get_id_row" value ="0" ><span class="text-danger">* </span><?php echo _l('hr__position_apply'); ?></label>
+
+									<select name="job_position_id[]" class="selectpicker" id="job_position_id" data-width="100%" data-live-search="true" multiple="true" data-actions-box="true" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>" required> 
+										<?php foreach($get_job_position as $p){ ?> 
+											<option value="<?php echo new_html_entity_decode($p['position_id']); ?>" <?php if(isset($member) && $member->job_position == $p['position_id']){echo 'selected';} ?>><?php echo new_html_entity_decode($p['position_name']); ?></option>
+										<?php } ?>
+									</select>
+									<div class="clearfix"></div>
+									<br>
+								</div>
 							</div>
 
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<div class="form-group">
 										<div class="checkbox checkbox-primary">
 											<input  type="checkbox" id="additional_training" name="additional_training"  value="additional_training" >
@@ -144,42 +168,16 @@
 									</div>
 								</div>
 								
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<?php
 									echo render_date_input('time_to_start','hr_time_to_start'); ?>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<?php
 									echo render_date_input('time_to_end','hr_time_to_end'); ?>
 								</div>
 							</div>
 
-							<div class="row mb-4 onboading_hide">
-								<div class="col-md-6">
-
-									<label for="department_id" class="control-label get_id_row" value ="0" ><?php echo _l('hr_department'); ?></label>
-									<select onchange="department_change(this)" name="department_id[]" class="selectpicker" id="department_id" data-width="100%" data-live-search="true" multiple="true" data-actions-box="true" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>">
-										<?php foreach($hr_profile_get_department_name as $dp){ ?> 
-											<option value="<?php echo new_html_entity_decode($dp['departmentid']); ?>"><?php echo new_html_entity_decode($dp['name']); ?></option>
-										<?php } ?>
-
-									</select>
-
-								</div>
-
-								<div class="col-md-6">
-
-									<label for="job_position_id" class="control-label get_id_row" value ="0" ><span class="text-danger">* </span><?php echo _l('hr__position_apply'); ?></label>
-
-									<select name="job_position_id[]" class="selectpicker" id="job_position_id" data-width="100%" data-live-search="true" multiple="true" data-actions-box="true" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>" required> 
-										<?php foreach($get_job_position as $p){ ?> 
-											<option value="<?php echo new_html_entity_decode($p['position_id']); ?>" <?php if(isset($member) && $member->job_position == $p['position_id']){echo 'selected';} ?>><?php echo new_html_entity_decode($p['position_name']); ?></option>
-										<?php } ?>
-									</select>
-									<div class="clearfix"></div>
-									<br>
-								</div>
-							</div>
 
 							<div class="row">
 								<div class="col-md-12">
