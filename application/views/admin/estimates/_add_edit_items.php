@@ -1,4 +1,92 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<style>
+/* Light blue background for ENTIRE PAGE */
+.panel_s.accounting-template.estimate {
+    background: #b3cde0 !important;
+}
+
+.panel_s.accounting-template.estimate .panel-body {
+    background: #b3cde0 !important;
+}
+
+/* Light blue background for table headers - HIGHEST PRIORITY */
+.table-responsive.s_table .table.estimate-items-table thead,
+.estimate-items-table thead,
+table.estimate-items-table thead {
+    background: #8ab4d5 !important;
+    background-color: #8ab4d5 !important;
+}
+
+.table-responsive.s_table .table.estimate-items-table thead th,
+.estimate-items-table thead th,
+table.estimate-items-table thead th {
+    background: #8ab4d5 !important;
+    background-color: #8ab4d5 !important;
+    color: #1f2937 !important;
+    font-weight: 600 !important;
+    border: none !important;
+    padding: 12px 8px !important;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.estimate-items-table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    background: white;
+}
+
+.estimate-items-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Force estimate items table to always be horizontal */
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+    /* Show table headers */
+    .estimate-items-table thead tr {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+    }
+    
+    /* Force table display */
+    .estimate-items-table,
+    .estimate-items-table table {
+        display: table !important;
+        width: 100% !important;
+    }
+    
+    .estimate-items-table thead {
+        display: table-header-group !important;
+    }
+    
+    .estimate-items-table tbody {
+        display: table-row-group !important;
+    }
+    
+    .estimate-items-table tr {
+        display: table-row !important;
+    }
+    
+    .estimate-items-table th,
+    .estimate-items-table td {
+        display: table-cell !important;
+        padding: 8px !important;
+    }
+    
+    /* Remove pseudo-element labels */
+    .estimate-items-table td:before {
+        content: none !important;
+        display: none !important;
+    }
+    
+    /* Ensure cells display inline */
+    .estimate-items-table tbody > tr > td {
+        display: table-cell !important;
+        width: auto !important;
+    }
+}
+</style>
 <div class="panel-body">
     <div class="row">
         <div class="col-md-4">
@@ -37,16 +125,16 @@
             <thead>
                 <tr>
                     <th></th>
+                    <th width="25%" align="left">
+                        <?= _l('estimate_table_item_description'); ?>
+                    </th>
                     <th width="20%" align="left"><i class="fa-solid fa-circle-exclamation tw-mr-1" aria-hidden="true"
                             data-toggle="tooltip"
                             data-title="<?= _l('item_description_new_lines_notice'); ?>"></i>
                         <?= _l('estimate_table_item_heading'); ?>
                     </th>
-                    <th width="25%" align="left">
-                        <?= _l('estimate_table_item_description'); ?>
-                    </th>
                     <?php
-                  $custom_fields = get_custom_fields('items');
+                   $custom_fields = get_custom_fields('items');
 
 foreach ($custom_fields as $cf) {
     echo '<th width="15%" align="left" class="custom_field">' . e($cf['name']) . '</th>';
@@ -78,7 +166,11 @@ if (isset($estimate) && $estimate->show_quantity_as == 2) {
                 <tr class="main">
                     <td></td>
                     <td>
-                        <textarea name="description" rows="4" class="form-control"
+                        <textarea name="long_description" rows="2" class="form-control"
+                            placeholder="<?= _l('item_long_description_placeholder'); ?>"></textarea>
+                    </td>
+                    <td>
+                        <textarea name="description" rows="2" class="form-control"
                             placeholder="<?= _l('item_description_placeholder'); ?>"></textarea>
                         <div class="tw-mt-1.5">
                             <div class="checkbox checkbox-info">
@@ -92,10 +184,6 @@ if (isset($estimate) && $estimate->show_quantity_as == 2) {
                                     for="main-optional-choosen"><?= _l('item_is_selected'); ?></label>
                             </div>
                         </div>
-                    </td>
-                    <td>
-                        <textarea name="long_description" rows="4" class="form-control"
-                            placeholder="<?= _l('item_long_description_placeholder'); ?>"></textarea>
                     </td>
                     <?= render_custom_fields_items_table_add_edit_preview(); ?>
                     <td>
@@ -171,6 +259,7 @@ if (isset($estimate)) {
                         // order input
                         $table_row .= '<input type="hidden" class="order" name="' . $items_indicator . '[' . $i . '][order]">';
                         $table_row .= '</td>';
+                        $table_row .= '<td><textarea name="' . $items_indicator . '[' . $i . '][long_description]" class="form-control" rows="5">' . clear_textarea_breaks($item['long_description']) . '</textarea></td>';
                         $table_row .= '<td class="bold description"><textarea name="' . $items_indicator . '[' . $i . '][description]" class="form-control" rows="5">' . clear_textarea_breaks($item['description']) . '</textarea>';
 
                         $table_row .= '<div class="tw-mt-1.5">';
@@ -188,7 +277,6 @@ if (isset($estimate)) {
                         $table_row .= '</div>';
 
                         $table_row .= '</td>';
-                        $table_row .= '<td><textarea name="' . $items_indicator . '[' . $i . '][long_description]" class="form-control" rows="5">' . clear_textarea_breaks($item['long_description']) . '</textarea></td>';
                         $table_row .= render_custom_fields_items_table_in($item, $items_indicator . '[' . $i . ']');
                         $table_row .= '<td><input type="number" min="0" onblur="calculate_total();" onchange="calculate_total();" data-quantity name="' . $items_indicator . '[' . $i . '][qty]" value="' . $item['qty'] . '" class="form-control">';
                         $unit_placeholder = '';

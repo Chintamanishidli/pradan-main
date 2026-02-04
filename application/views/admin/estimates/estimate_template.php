@@ -307,11 +307,7 @@
         </div>
     </div>
 
-    <hr class="hr-panel-separator" />
-
     <?php $this->load->view('admin/estimates/_add_edit_items'); ?>
-
-    <hr class="hr-panel-separator" />
 
     <div class="panel-body">
         <?php
