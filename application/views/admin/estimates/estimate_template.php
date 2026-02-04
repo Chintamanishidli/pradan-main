@@ -8,25 +8,111 @@
                 }
             ?>
             <div class="col-md-6">
-                <div class="f_client_id">
-                    <div class="form-group select-placeholder">
-                        <label for="clientid"
-                            class="control-label"><?php echo _l('estimate_select_customer'); ?></label>
-                        <select id="clientid" name="clientid" data-live-search="true" data-width="100%" class="ajax-search<?php if (isset($estimate) && empty($estimate->clientid)) {
-                echo ' customer-removed';
-            } ?>" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>">
-                            <?php $selected = (isset($estimate) ? $estimate->clientid : '');
-                 if ($selected == '') {
-                     $selected = (isset($customer_id) ? $customer_id: '');
-                 }
-                 if ($selected != '') {
-                     $rel_data = get_relation_data('customer', $selected);
-                     $rel_val  = get_relation_values($rel_data, 'customer');
-                     echo '<option value="' . $rel_val['id'] . '" selected>' . $rel_val['name'] . '</option>';
-                 } ?>
-                        </select>
+                <!-- Customer and Estimate Number Side by Side -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="f_client_id">
+                        <div class="form-group select-placeholder">
+                            <label for="clientid" class="control-label"><small class="req text-danger">* </small><?php echo _l('estimate_select_customer'); ?></label>
+                            <select id="clientid" name="clientid" data-live-search="true" data-width="100%" class="ajax-search<?php if (isset($estimate) && empty($estimate->clientid)) {
+                    echo ' customer-removed';
+                    } ?>" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>">
+                                <?php $selected = (isset($estimate) ? $estimate->clientid : '');
+                     if ($selected == '') {
+                         $selected = (isset($customer_id) ? $customer_id: '');
+                     }
+                     if ($selected != '') {
+                         $rel_data = get_relation_data('customer', $selected);
+                         $rel_val  = get_relation_values($rel_data, 'customer');
+                         echo '<option value="' . $rel_val['id'] . '" selected>' . $rel_val['name'] . '</option>';
+                     } ?>
+                            </select>
+                        </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <?php
+                    $next_estimate_number = get_option('next_estimate_number');
+                    $format               = get_option('estimate_number_format');
+
+                    if (isset($estimate)) {
+                        $format = $estimate->number_format;
+                    }
+
+                    $prefix = get_option('estimate_prefix');
+
+                    if ($format == 1) {
+                        $__number = $next_estimate_number;
+                        if (isset($estimate)) {
+                            $__number = $estimate->number;
+                            $prefix   = '<span id="prefix">' . $estimate->prefix . '</span>';
+                        }
+                    } elseif ($format == 2) {
+                        if (isset($estimate)) {
+                            $__number = $estimate->number;
+                            $prefix   = $estimate->prefix;
+                            $prefix   = '<span id="prefix">' . $prefix . '</span><span id="prefix_year">' . date('Y', strtotime($estimate->date)) . '</span>/';
+                        } else {
+                            $__number = $next_estimate_number;
+                            $prefix   = $prefix . '<span id="prefix_year">' . date('Y') . '</span>/';
+                        }
+                    } elseif ($format == 3) {
+                        if (isset($estimate)) {
+                            $yy       = date('y', strtotime($estimate->date));
+                            $__number = $estimate->number;
+                            $prefix   = '<span id="prefix">' . $estimate->prefix . '</span>';
+                        } else {
+                            $yy       = date('y');
+                            $__number = $next_estimate_number;
+                        }
+                    } elseif ($format == 4) {
+                        if (isset($estimate)) {
+                            $yyyy     = date('Y', strtotime($estimate->date));
+                            $mm       = date('m', strtotime($estimate->date));
+                            $__number = $estimate->number;
+                            $prefix   = '<span id="prefix">' . $estimate->prefix . '</span>';
+                        } else {
+                            $yyyy     = date('Y');
+                            $mm       = date('m');
+                            $__number = $next_estimate_number;
+                        }
+                    }
+
+                    $_estimate_number     = str_pad($__number, get_option('number_padding_prefixes'), '0', STR_PAD_LEFT);
+                    $isedit               = isset($estimate) ? 'true' : 'false';
+                    $data_original_number = isset($estimate) ? $estimate->number : 'false';
+                    ?>
+                    <div class="form-group">
+                        <label for="number"><small class="req text-danger">* </small><?php echo _l('estimate_add_edit_number'); ?></label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <?php if (isset($estimate)) { ?>
+                                <a href="#" onclick="return false;" data-toggle="popover"
+                                    data-container='._transaction_form' data-html="true"
+                                    data-content="<label class='control-label'><?php echo _l('settings_sales_estimate_prefix'); ?></label><div class='input-group'><input name='s_prefix' type='text' class='form-control' value='<?php echo e($estimate->prefix); ?>'></div><button type='button' onclick='save_sales_number_settings(this); return false;' data-url='<?php echo admin_url('estimates/update_number_settings/' . $estimate->id); ?>' class='btn btn-primary btn-block mtop15'><?php echo _l('submit'); ?></button>"><i
+                                        class="fa fa-cog"></i></a>
+                                <?php }
+                                echo $prefix;
+                                ?>
+                            </span>
+                            <input type="text" name="number" class="form-control" value="<?php echo e($_estimate_number); ?>"
+                                data-isedit="<?php echo e($isedit); ?>"
+                                data-original-number="<?php echo e($data_original_number); ?>">
+                            <?php if ($format == 3) { ?>
+                            <span class="input-group-addon">
+                                <span id="prefix_year" class="format-n-yy"><?php echo e($yy); ?></span>
+                            </span>
+                            <?php } elseif ($format == 4) { ?>
+                            <span class="input-group-addon">
+                                <span id="prefix_month" class="format-mm-yyyy"><?php echo e($mm); ?></span>
+                                /
+                                <span id="prefix_year" class="format-mm-yyyy"><?php echo e($yyyy); ?></span>
+                            </span>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div class="form-group select-placeholder projects-wrapper<?php if ((!isset($estimate)) || (isset($estimate) && !customer_has_projects($estimate->clientid))) {
                      echo (isset($customer_id) && (!isset($project_id) || !$project_id)) ? ' hide' : '';
                  } ?>">
@@ -35,16 +121,16 @@
                         <select name="project_id" id="project_id" class="projects ajax-search" data-live-search="true"
                             data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>">
                             <?php
-                 if (!isset($project_id)) {
-                     $project_id = '';
-                 }
-                  if (isset($estimate) && $estimate->project_id) {
-                      $project_id = $estimate->project_id;
-                  }
-                  if ($project_id) {
-                      echo '<option value="' . $project_id . '" selected>' . e(get_project_name_by_id($project_id)) . '</option>';
-                  }
-                ?>
+                            if (!isset($project_id)) {
+                                $project_id = '';
+                            }
+                            if (isset($estimate) && $estimate->project_id) {
+                                $project_id = $estimate->project_id;
+                            }
+                            if ($project_id) {
+                                echo '<option value="' . $project_id . '" selected>' . e(get_project_name_by_id($project_id)) . '</option>';
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>
@@ -107,86 +193,6 @@
                         </address>
                     </div>
                 </div>
-                <?php
-               $next_estimate_number = get_option('next_estimate_number');
-               $format               = get_option('estimate_number_format');
-
-                if (isset($estimate)) {
-                    $format = $estimate->number_format;
-                }
-
-               $prefix = get_option('estimate_prefix');
-
-               if ($format == 1) {
-                   $__number = $next_estimate_number;
-                   if (isset($estimate)) {
-                       $__number = $estimate->number;
-                       $prefix   = '<span id="prefix">' . $estimate->prefix . '</span>';
-                   }
-               } elseif ($format == 2) {
-                   if (isset($estimate)) {
-                       $__number = $estimate->number;
-                       $prefix   = $estimate->prefix;
-                       $prefix   = '<span id="prefix">' . $prefix . '</span><span id="prefix_year">' . date('Y', strtotime($estimate->date)) . '</span>/';
-                   } else {
-                       $__number = $next_estimate_number;
-                       $prefix   = $prefix . '<span id="prefix_year">' . date('Y') . '</span>/';
-                   }
-               } elseif ($format == 3) {
-                   if (isset($estimate)) {
-                       $yy       = date('y', strtotime($estimate->date));
-                       $__number = $estimate->number;
-                       $prefix   = '<span id="prefix">' . $estimate->prefix . '</span>';
-                   } else {
-                       $yy       = date('y');
-                       $__number = $next_estimate_number;
-                   }
-               } elseif ($format == 4) {
-                   if (isset($estimate)) {
-                       $yyyy     = date('Y', strtotime($estimate->date));
-                       $mm       = date('m', strtotime($estimate->date));
-                       $__number = $estimate->number;
-                       $prefix   = '<span id="prefix">' . $estimate->prefix . '</span>';
-                   } else {
-                       $yyyy     = date('Y');
-                       $mm       = date('m');
-                       $__number = $next_estimate_number;
-                   }
-               }
-
-               $_estimate_number     = str_pad($__number, get_option('number_padding_prefixes'), '0', STR_PAD_LEFT);
-               $isedit               = isset($estimate) ? 'true' : 'false';
-               $data_original_number = isset($estimate) ? $estimate->number : 'false';
-               ?>
-                <div class="form-group">
-                    <label for="number"><?php echo _l('estimate_add_edit_number'); ?></label>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <?php if (isset($estimate)) { ?>
-                            <a href="#" onclick="return false;" data-toggle="popover"
-                                data-container='._transaction_form' data-html="true"
-                                data-content="<label class='control-label'><?php echo _l('settings_sales_estimate_prefix'); ?></label><div class='input-group'><input name='s_prefix' type='text' class='form-control' value='<?php echo e($estimate->prefix); ?>'></div><button type='button' onclick='save_sales_number_settings(this); return false;' data-url='<?php echo admin_url('estimates/update_number_settings/' . $estimate->id); ?>' class='btn btn-primary btn-block mtop15'><?php echo _l('submit'); ?></button>"><i
-                                    class="fa fa-cog"></i></a>
-                            <?php }
-                    echo $prefix;
-                  ?>
-                        </span>
-                        <input type="text" name="number" class="form-control" value="<?php echo e($_estimate_number); ?>"
-                            data-isedit="<?php echo e($isedit); ?>"
-                            data-original-number="<?php echo e($data_original_number); ?>">
-                        <?php if ($format == 3) { ?>
-                        <span class="input-group-addon">
-                            <span id="prefix_year" class="format-n-yy"><?php echo e($yy); ?></span>
-                        </span>
-                        <?php } elseif ($format == 4) { ?>
-                        <span class="input-group-addon">
-                            <span id="prefix_month" class="format-mm-yyyy"><?php echo e($mm); ?></span>
-                            /
-                            <span id="prefix_year" class="format-mm-yyyy"><?php echo e($yyyy); ?></span>
-                        </span>
-                        <?php } ?>
-                    </div>
-                </div>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -217,15 +223,8 @@
             </div>
             <div class="col-md-6">
                 <div class="tw-ml-3">
-                    <div class="form-group">
-                        <label for="tags" class="control-label"><i class="fa fa-tag" aria-hidden="true"></i>
-                            <?php echo _l('tags'); ?></label>
-                        <input type="text" class="tagsinput" id="tags" name="tags"
-                            value="<?php echo(isset($estimate) ? prep_tags_input(get_tags_in($estimate->id, 'estimate')) : ''); ?>"
-                            data-role="tagsinput">
-                    </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <?php
 
                         $currency_attr = ['disabled' => true, 'data-show-subtext' => true];
@@ -248,7 +247,7 @@
                         ?>
                             <?php echo render_select('currency', $currencies, ['id', 'name', 'symbol'], 'estimate_add_edit_currency', $selected, $currency_attr); ?>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group select-placeholder">
                                 <label class="control-label"><?php echo _l('estimate_status'); ?></label>
                                 <select class="selectpicker display-block mbot15" name="status" data-width="100%"
@@ -261,11 +260,11 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             <?php $value = (isset($estimate) ? $estimate->reference_no : ''); ?>
                             <?php echo render_input('reference_no', 'reference_no', $value); ?>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <?php
                                 $selected = !isset($estimate) && get_option('automatically_set_logged_in_staff_sales_agent') == '1' ? get_staff_user_id() : '';
                                 foreach ($staff as $member) {
@@ -278,7 +277,7 @@
                                 echo render_select('sale_agent', $staff, ['staffid', ['firstname', 'lastname']], 'sale_agent_string', $selected);
                             ?>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group select-placeholder">
                                 <label for="discount_type"
                                     class="control-label"><?php echo _l('discount_type'); ?></label>
