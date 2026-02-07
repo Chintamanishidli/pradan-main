@@ -1,4 +1,92 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<style>
+/* Light blue background for ENTIRE PAGE */
+.panel_s.invoice.accounting-template {
+    background: #b3cde0 !important;
+}
+
+.panel_s.invoice.accounting-template .panel-body {
+    background: #b3cde0 !important;
+}
+
+/* Light blue background for table headers - HIGHEST PRIORITY */
+.table-responsive.s_table .table.invoice-items-table thead,
+.invoice-items-table thead,
+table.invoice-items-table thead {
+    background: #8ab4d5 !important;
+    background-color: #8ab4d5 !important;
+}
+
+.table-responsive.s_table .table.invoice-items-table thead th,
+.invoice-items-table thead th,
+table.invoice-items-table thead th {
+    background: #8ab4d5 !important;
+    background-color: #8ab4d5 !important;
+    color: #1f2937 !important;
+    font-weight: 600 !important;
+    border: none !important;
+    padding: 12px 8px !important;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.invoice-items-table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+    background: white;
+}
+
+.invoice-items-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Force invoice items table to always be horizontal */
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+    /* Show table headers */
+    .invoice-items-table thead tr {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+    }
+    
+    /* Force table display */
+    .invoice-items-table,
+    .invoice-items-table table {
+        display: table !important;
+        width: 100% !important;
+    }
+    
+    .invoice-items-table thead {
+        display: table-header-group !important;
+    }
+    
+    .invoice-items-table tbody {
+        display: table-row-group !important;
+    }
+    
+    .invoice-items-table tr {
+        display: table-row !important;
+    }
+    
+    .invoice-items-table th,
+    .invoice-items-table td {
+        display: table-cell !important;
+        padding: 8px !important;
+    }
+    
+    /* Remove pseudo-element labels */
+    .invoice-items-table td:before {
+        content: none !important;
+        display: none !important;
+    }
+    
+    /* Ensure cells display inline */
+    .invoice-items-table tbody > tr > td {
+        display: table-cell !important;
+        width: auto !important;
+    }
+}
+</style>
 <div class="<?= (! isset($invoice) || (isset($invoice) && count($invoices_to_merge) == 0 && (! isset($invoice_from_project) && count($expenses_to_bill) == 0 || $invoice->status == Invoices_model::STATUS_CANCELLED))) ? 'hide' : ''; ?>"
     id="invoice_top_info">
     <div class="panel_s">
@@ -30,7 +118,7 @@
         } ?>
         <div class="row">
             <div class="col-md-6">
-                <div class="f_client_id">
+                <div class="f_client_id col-md-6">
                     <div class="form-group select-placeholder">
                         <label for="clientid"
                             class="control-label"><?= _l('invoice_select_customer'); ?></label>
@@ -47,27 +135,119 @@
                     </div>
                 </div>
                 <?php
-                                        if (! isset($invoice_from_project)) { ?>
-                <div class="form-group select-placeholder projects-wrapper<?php if ((! isset($invoice)) || (isset($invoice) && ! customer_has_projects($invoice->clientid))) {
-                    echo (isset($customer_id) && (! isset($project_id) || ! $project_id)) ? ' hide' : '';
-                } ?>">
-                    <label
-                        for="project_id"><?= _l('project'); ?></label>
-                    <div id="project_ajax_search_wrapper">
-                        <select name="project_id" id="project_id" class="projects ajax-search" data-live-search="true"
-                            data-width="100%"
-                            data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>">
-                            <?php $project_id = isset($invoice) && $invoice->project_id ?
-                                $invoice->project_id :
-                                ($project_id ?? ''); ?>
+                            if (! isset($invoice_from_project)) { ?>
+                    <div class="form-group select-placeholder projects-wrapper<?php if ((! isset($invoice)) || (isset($invoice) && ! customer_has_projects($invoice->clientid))) {
+                        echo (isset($customer_id) && (! isset($project_id) || ! $project_id)) ? ' hide' : '';
+                        } ?>">
+                        <label
+                            for="project_id"><?= _l('project'); ?></label>
+                        <div id="project_ajax_search_wrapper">
+                            <select name="project_id" id="project_id" class="projects ajax-search" data-live-search="true"
+                                data-width="100%"
+                                data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>">
+                                <?php $project_id = isset($invoice) && $invoice->project_id ?
+                                    $invoice->project_id :
+                                    ($project_id ?? ''); ?>
 
-                            <?php if ($project_id) {
-                                echo '<option value="' . $project_id . '" selected>' . e(get_project_name_by_id($project_id)) . '</option>';
-                            } ?>
-                        </select>
+                                <?php if ($project_id) {
+                                    echo '<option value="' . $project_id . '" selected>' . e(get_project_name_by_id($project_id)) . '</option>';
+                                } ?>
+                            </select>
+                        </div>
+                    </div>
+                <?php } ?>
+
+                              <?php $next_invoice_number = get_option('next_invoice_number'); ?>
+                <?php $format              = get_option('invoice_number_format'); ?>
+                <?php
+if (isset($invoice)) {
+    $format = $invoice->number_format;
+}
+
+$prefix = get_option('invoice_prefix');
+
+if ($format == 1) {
+    $__number = $next_invoice_number;
+    if (isset($invoice)) {
+        $__number = $invoice->number;
+        $prefix   = '<span id="prefix">' . $invoice->prefix . '</span>';
+    }
+} elseif ($format == 2) {
+    if (isset($invoice)) {
+        $__number = $invoice->number;
+        $prefix   = $invoice->prefix;
+        $prefix   = '<span id="prefix">' . $prefix . '</span><span id="prefix_year">' . date('Y', strtotime($invoice->date)) . '</span>/';
+    } else {
+        $__number = $next_invoice_number;
+        $prefix   = $prefix . '<span id="prefix_year">' . date('Y') . '</span>/';
+    }
+} elseif ($format == 3) {
+    if (isset($invoice)) {
+        $yy       = date('y', strtotime($invoice->date));
+        $__number = $invoice->number;
+        $prefix   = '<span id="prefix">' . $invoice->prefix . '</span>';
+    } else {
+        $yy       = date('y');
+        $__number = $next_invoice_number;
+    }
+} elseif ($format == 4) {
+    if (isset($invoice)) {
+        $yyyy     = date('Y', strtotime($invoice->date));
+        $mm       = date('m', strtotime($invoice->date));
+        $__number = $invoice->number;
+        $prefix   = '<span id="prefix">' . $invoice->prefix . '</span>';
+    } else {
+        $yyyy     = date('Y');
+        $mm       = date('m');
+        $__number = $next_invoice_number;
+    }
+}
+
+$_is_draft            = (isset($invoice) && $invoice->status == Invoices_model::STATUS_DRAFT) ? true : false;
+$_invoice_number      = str_pad($__number, get_option('number_padding_prefixes'), '0', STR_PAD_LEFT);
+$isedit               = isset($invoice) ? 'true' : 'false';
+$data_original_number = isset($invoice) ? $invoice->number : 'false';
+
+?>
+                <div class="form-group col-md-6">
+                    <label for="number">
+                        <?= _l('invoice_add_edit_number'); ?>
+                        <i class="fa-regular fa-circle-question" data-toggle="tooltip"
+                            data-title="<?= _l('invoice_number_not_applied_on_draft') ?>"
+                            data-placement="top"></i>
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <?php if (isset($invoice)) { ?>
+                            <a href="#" onclick="return false;" data-toggle="popover"
+                                data-container='._transaction_form' data-html="true"
+                                data-content="<label class='control-label'><?= _l('settings_sales_invoice_prefix'); ?></label><div class='input-group'><input name='s_prefix' type='text' class='form-control' value='<?= e($invoice->prefix); ?>'></div><button type='button' onclick='save_sales_number_settings(this); return false;' data-url='<?= admin_url('invoices/update_number_settings/' . $invoice->id); ?>' class='btn btn-primary btn-block mtop15'><?= _l('submit'); ?></button>">
+                                <i class="fa fa-cog"></i>
+                            </a>
+                            <?php } ?>
+                            <?= $prefix; ?>
+                        </span>
+                        <input type="text" name="number" class="form-control"
+                            value="<?= ($_is_draft) ? 'DRAFT' : $_invoice_number; ?>"
+                            data-isedit="<?= e($isedit); ?>"
+                            data-original-number="<?= e($data_original_number); ?>"
+                            <?= ($_is_draft) ? 'disabled' : '' ?>>
+                        <?php if ($format == 3) { ?>
+                        <span class="input-group-addon">
+                            <span id="prefix_year"
+                                class="format-n-yy"><?= e($yy); ?></span>
+                        </span>
+                        <?php } elseif ($format == 4) { ?>
+                        <span class="input-group-addon">
+                            <span id="prefix_month"
+                                class="format-mm-yyyy"><?= e($mm); ?></span>
+                            /
+                            <span id="prefix_year"
+                                class="format-mm-yyyy"><?= e($yyyy); ?></span>
+                        </span>
+                        <?php } ?>
                     </div>
                 </div>
-                <?php } ?>
                 <div class="row">
                     <div class="col-md-12">
                         <hr class="hr-10" />
@@ -132,97 +312,7 @@
                         </address>
                     </div>
                 </div>
-                <?php $next_invoice_number = get_option('next_invoice_number'); ?>
-                <?php $format              = get_option('invoice_number_format'); ?>
-                <?php
-if (isset($invoice)) {
-    $format = $invoice->number_format;
-}
-
-$prefix = get_option('invoice_prefix');
-
-if ($format == 1) {
-    $__number = $next_invoice_number;
-    if (isset($invoice)) {
-        $__number = $invoice->number;
-        $prefix   = '<span id="prefix">' . $invoice->prefix . '</span>';
-    }
-} elseif ($format == 2) {
-    if (isset($invoice)) {
-        $__number = $invoice->number;
-        $prefix   = $invoice->prefix;
-        $prefix   = '<span id="prefix">' . $prefix . '</span><span id="prefix_year">' . date('Y', strtotime($invoice->date)) . '</span>/';
-    } else {
-        $__number = $next_invoice_number;
-        $prefix   = $prefix . '<span id="prefix_year">' . date('Y') . '</span>/';
-    }
-} elseif ($format == 3) {
-    if (isset($invoice)) {
-        $yy       = date('y', strtotime($invoice->date));
-        $__number = $invoice->number;
-        $prefix   = '<span id="prefix">' . $invoice->prefix . '</span>';
-    } else {
-        $yy       = date('y');
-        $__number = $next_invoice_number;
-    }
-} elseif ($format == 4) {
-    if (isset($invoice)) {
-        $yyyy     = date('Y', strtotime($invoice->date));
-        $mm       = date('m', strtotime($invoice->date));
-        $__number = $invoice->number;
-        $prefix   = '<span id="prefix">' . $invoice->prefix . '</span>';
-    } else {
-        $yyyy     = date('Y');
-        $mm       = date('m');
-        $__number = $next_invoice_number;
-    }
-}
-
-$_is_draft            = (isset($invoice) && $invoice->status == Invoices_model::STATUS_DRAFT) ? true : false;
-$_invoice_number      = str_pad($__number, get_option('number_padding_prefixes'), '0', STR_PAD_LEFT);
-$isedit               = isset($invoice) ? 'true' : 'false';
-$data_original_number = isset($invoice) ? $invoice->number : 'false';
-
-?>
-                <div class="form-group">
-                    <label for="number">
-                        <?= _l('invoice_add_edit_number'); ?>
-                        <i class="fa-regular fa-circle-question" data-toggle="tooltip"
-                            data-title="<?= _l('invoice_number_not_applied_on_draft') ?>"
-                            data-placement="top"></i>
-                    </label>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <?php if (isset($invoice)) { ?>
-                            <a href="#" onclick="return false;" data-toggle="popover"
-                                data-container='._transaction_form' data-html="true"
-                                data-content="<label class='control-label'><?= _l('settings_sales_invoice_prefix'); ?></label><div class='input-group'><input name='s_prefix' type='text' class='form-control' value='<?= e($invoice->prefix); ?>'></div><button type='button' onclick='save_sales_number_settings(this); return false;' data-url='<?= admin_url('invoices/update_number_settings/' . $invoice->id); ?>' class='btn btn-primary btn-block mtop15'><?= _l('submit'); ?></button>">
-                                <i class="fa fa-cog"></i>
-                            </a>
-                            <?php } ?>
-                            <?= $prefix; ?>
-                        </span>
-                        <input type="text" name="number" class="form-control"
-                            value="<?= ($_is_draft) ? 'DRAFT' : $_invoice_number; ?>"
-                            data-isedit="<?= e($isedit); ?>"
-                            data-original-number="<?= e($data_original_number); ?>"
-                            <?= ($_is_draft) ? 'disabled' : '' ?>>
-                        <?php if ($format == 3) { ?>
-                        <span class="input-group-addon">
-                            <span id="prefix_year"
-                                class="format-n-yy"><?= e($yy); ?></span>
-                        </span>
-                        <?php } elseif ($format == 4) { ?>
-                        <span class="input-group-addon">
-                            <span id="prefix_month"
-                                class="format-mm-yyyy"><?= e($mm); ?></span>
-                            /
-                            <span id="prefix_year"
-                                class="format-mm-yyyy"><?= e($yyyy); ?></span>
-                        </span>
-                        <?php } ?>
-                    </div>
-                </div>
+  
                 <div class="row">
                     <div class="col-md-6">
                         <?php $value      = isset($invoice) ? _d($invoice->date) : _d(date('Y-m-d')); ?>
@@ -253,15 +343,38 @@ $data_original_number = isset($invoice) ? $invoice->number : 'false';
             </div>
             <div class="col-md-6">
                 <div class="tw-ml-3">
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="tags" class="control-label"><i class="fa fa-tag" aria-hidden="true"></i>
                             <?= _l('tags'); ?></label>
                         <input type="text" class="tagsinput" id="tags" name="tags"
                             value="<?= isset($invoice) ? prep_tags_input(get_tags_in($invoice->id, 'invoice')) : ''; ?>"
                             data-role="tagsinput">
-                    </div>
+                    </div> -->
+                     <div class="col-md-4">
+                            <?php
+                                     $currency_attr = ['disabled' => true, 'data-show-subtext' => true];
+                                $currency_attr                                      = apply_filters_deprecated('invoice_currency_disabled', [$currency_attr], '2.3.0', 'invoice_currency_attributes');
+
+                                foreach ($currencies as $currency) {
+                                    if ($currency['isdefault'] == 1) {
+                                        $currency_attr['data-base'] = $currency['id'];
+                                    }
+                                    if (isset($invoice)) {
+                                        if ($currency['id'] == $invoice->currency) {
+                                            $selected = $currency['id'];
+                                        }
+                                    } else {
+                                        if ($currency['isdefault'] == 1) {
+                                            $selected = $currency['id'];
+                                        }
+                                    }
+                                }
+                                $currency_attr = hooks()->apply_filters('invoice_currency_attributes', $currency_attr);
+                                ?>
+                            <?= render_select('currency', $currencies, ['id', 'name', 'symbol'], 'invoice_add_edit_currency', $selected, $currency_attr); ?>
+                        </div>
                     <div
-                        class="form-group mbot15<?= count($payment_modes) > 0 ? ' select-placeholder' : ''; ?>">
+                        class="form-group col-md-6 mbot15<?= count($payment_modes) > 0 ? ' select-placeholder' : ''; ?>">
                         <label for="allowed_payment_modes"
                             class="control-label"><?= _l('invoice_add_edit_allowed_payment_modes'); ?></label>
                         <br />
@@ -308,45 +421,23 @@ $data_original_number = isset($invoice) ? $invoice->number : 'false';
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <?php
-                                     $currency_attr = ['disabled' => true, 'data-show-subtext' => true];
-$currency_attr                                      = apply_filters_deprecated('invoice_currency_disabled', [$currency_attr], '2.3.0', 'invoice_currency_attributes');
-
-foreach ($currencies as $currency) {
-    if ($currency['isdefault'] == 1) {
-        $currency_attr['data-base'] = $currency['id'];
-    }
-    if (isset($invoice)) {
-        if ($currency['id'] == $invoice->currency) {
-            $selected = $currency['id'];
-        }
-    } else {
-        if ($currency['isdefault'] == 1) {
-            $selected = $currency['id'];
-        }
-    }
-}
-$currency_attr = hooks()->apply_filters('invoice_currency_attributes', $currency_attr);
-?>
-                            <?= render_select('currency', $currencies, ['id', 'name', 'symbol'], 'invoice_add_edit_currency', $selected, $currency_attr); ?>
-                        </div>
-                        <div class="col-md-6">
+                       
+                        <div class="col-md-4">
                             <?php
                                 $selected = isset($invoice) ? $invoice->sale_agent : (get_option('automatically_set_logged_in_staff_sales_agent') == '1' ? get_staff_user_id() : '');
 
-foreach ($staff as $member) {
-    if (isset($invoice) && $invoice->sale_agent == $member['staffid']) {
-        $selected = $member['staffid'];
-        break;
-    }
-}
+                            foreach ($staff as $member) {
+                                if (isset($invoice) && $invoice->sale_agent == $member['staffid']) {
+                                    $selected = $member['staffid'];
+                                    break;
+                                }
+                            }
 
-echo render_select('sale_agent', $staff, ['staffid', ['firstname', 'lastname']], 'sale_agent_string', $selected);
-?>
+                            echo render_select('sale_agent', $staff, ['staffid', ['firstname', 'lastname']], 'sale_agent_string', $selected);
+                            ?>
 
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group select-placeholder" <?php if (isset($invoice) && ! empty($invoice->is_recurring_from)) { ?>
                                 data-toggle="tooltip"
                                 data-title="<?= _l('create_recurring_from_child_error_message', [_l('invoice_lowercase'), _l('invoice_lowercase'), _l('invoice_lowercase')]); ?>"
@@ -357,14 +448,14 @@ echo render_select('sale_agent', $staff, ['staffid', ['firstname', 'lastname']],
                                 <select class="selectpicker" data-width="100%" name="recurring"
                                     data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>"
                                     <?php
-                        // The problem is that this invoice was generated from previous recurring invoice
-                        // Then this new invoice you set it as recurring but the next invoice date was still taken from the previous invoice.
-                        if (isset($invoice) && ! empty($invoice->is_recurring_from)) {
-                            echo 'disabled';
-                        } ?>>
+                            // The problem is that this invoice was generated from previous recurring invoice
+                            // Then this new invoice you set it as recurring but the next invoice date was still taken from the previous invoice.
+                            if (isset($invoice) && ! empty($invoice->is_recurring_from)) {
+                                echo 'disabled';
+                            } ?>>
                                     <?php for ($i = 0; $i <= 12; $i++) { ?>
                                     <?php
-                              $selected = '';
+                                        $selected = '';
                                         if (isset($invoice)) {
                                             if ($invoice->custom_recurring == 0) {
                                                 if ($invoice->recurring == $i) {
@@ -390,7 +481,7 @@ echo render_select('sale_agent', $staff, ['staffid', ['firstname', 'lastname']],
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group select-placeholder">
                                 <label for="discount_type"
                                     class="control-label"><?= _l('discount_type'); ?></label>
@@ -410,7 +501,7 @@ echo render_select('sale_agent', $staff, ['staffid', ['firstname', 'lastname']],
                             </div>
                         </div>
                         <div
-                            class="recurring_custom<?= (isset($invoice) && $invoice->custom_recurring != 1) || (! isset($invoice)) ? ' hide' : ''; ?>">
+                            class="recurring_custom <?= (isset($invoice) && $invoice->custom_recurring != 1) || (! isset($invoice)) ? ' hide' : ''; ?>">
                             <div class="col-md-6">
                                 <?php $value = (isset($invoice) && $invoice->custom_recurring == 1 ? $invoice->recurring : 1); ?>
                                 <?= render_input('repeat_every_custom', '', $value, 'number', ['min' => 1]); ?>
@@ -558,13 +649,13 @@ echo render_select('sale_agent', $staff, ['staffid', ['firstname', 'lastname']],
                 <thead>
                     <tr>
                         <th></th>
+                        <th width="25%" align="left">
+                            <?= _l('invoice_table_item_description'); ?>
+                        </th>
                         <th width="20%" align="left"><i class="fa-solid fa-circle-exclamation tw-mr-1"
                                 aria-hidden="true" data-toggle="tooltip"
                                 data-title="<?= _l('item_description_new_lines_notice'); ?>"></i>
                             <?= _l('invoice_table_item_heading'); ?>
-                        </th>
-                        <th width="25%" align="left">
-                            <?= _l('invoice_table_item_description'); ?>
                         </th>
                         <?php
                   $custom_fields = get_custom_fields('items');
@@ -598,12 +689,12 @@ if (isset($invoice) && $invoice->show_quantity_as == 2 || isset($hours_quantity)
                     <tr class="main">
                         <td></td>
                         <td>
-                            <textarea name="description" class="form-control" rows="4"
-                                placeholder="<?= _l('item_description_placeholder'); ?>"></textarea>
-                        </td>
-                        <td>
                             <textarea name="long_description" rows="4" class="form-control"
                                 placeholder="<?= _l('item_long_description_placeholder'); ?>"></textarea>
+                        </td>
+                        <td>
+                            <textarea name="description" class="form-control" rows="4"
+                                placeholder="<?= _l('item_description_placeholder'); ?>"></textarea>
                         </td>
                         <?= render_custom_fields_items_table_add_edit_preview(); ?>
                         <td>
@@ -672,8 +763,8 @@ echo $select;
                             // order input
                             $table_row .= '<input type="hidden" class="order" name="' . $items_indicator . '[' . $i . '][order]">';
                             $table_row .= '</td>';
-                            $table_row .= '<td class="bold description"><textarea name="' . $items_indicator . '[' . $i . '][description]" class="form-control" rows="5">' . clear_textarea_breaks($item['description']) . '</textarea></td>';
                             $table_row .= '<td><textarea name="' . $items_indicator . '[' . $i . '][long_description]" class="form-control" rows="5">' . clear_textarea_breaks($item['long_description']) . '</textarea></td>';
+                            $table_row .= '<td class="bold description"><textarea name="' . $items_indicator . '[' . $i . '][description]" class="form-control" rows="5">' . clear_textarea_breaks($item['description']) . '</textarea></td>';
 
                             $table_row .= render_custom_fields_items_table_in($item, $items_indicator . '[' . $i . ']');
 

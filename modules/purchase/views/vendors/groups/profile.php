@@ -66,99 +66,135 @@
                      <label for="show_primary_contact"><?php echo _l('show_primary_contact',_l('invoices').', '._l('estimates').', '._l('payments').', '._l('credit_notes')); ?></label>
                   </div>
                </div>
-               <div class="col-md-6">
-                  <?php $vendor_code = ( isset($client) ? $client->vendor_code : '');
-                   echo render_input('vendor_code','vendor_code',$vendor_code,'text'); ?>
-                  <?php $value=( isset($client) ? $client->company : ''); ?>
-                  <?php $attrs = (isset($client) ? array() : array('autofocus'=>true)); ?>
-                  <?php echo render_input( 'company', 'client_company',$value,'text',$attrs); ?>
-                  <div id="company_exists_info" class="hide"></div>
-                  <?php hooks()->do_action('after_pur_vendor_profile_company_field', $client ?? null); ?>
-                  <?php 
-                     $value=( isset($client) ? $client->vat : '');
-                     echo render_input( 'vat', 'vendor_vat',$value);
-                      ?>
-                  <?php $value=( isset($client) ? $client->phonenumber : ''); ?>
-                  <?php echo render_input( 'phonenumber', 'client_phonenumber',$value); ?>
-                  <?php if((isset($client) && empty($client->website)) || !isset($client)){
-                     $value=( isset($client) ? $client->website : '');
-                     echo render_input( 'website', 'client_website',$value);
-                     } else { ?>
-                  <div class="form-group">
-                     <label for="website"><?php echo _l('client_website'); ?></label>
-                     <div class="input-group">
-                        <input type="text" name="website" id="website" value="<?php echo pur_html_entity_decode($client->website); ?>" class="form-control">
-                        <div class="input-group-addon">
-                           <span><a href="<?php echo maybe_add_http($client->website); ?>" target="_blank" tabindex="-1"><i class="fa fa-globe"></i></a></span>
+                  <!-- Row 1: Vendor Code, Company, VAT Number -->
+                  <div class="col-md-3">
+                     <?php $vendor_code = ( isset($client) ? $client->vendor_code : '');
+                     echo render_input('vendor_code','vendor_code',$vendor_code,'text'); ?>
+                  </div>
+                  <div class="col-md-3">
+                     <?php $value=( isset($client) ? $client->company : ''); ?>
+                     <?php $attrs = (isset($client) ? array() : array('autofocus'=>true)); ?>
+                     <?php echo render_input( 'company', 'client_company',$value,'text',$attrs); ?>
+                     <div id="company_exists_info" class="hide"></div>
+                     <?php hooks()->do_action('after_pur_vendor_profile_company_field', $client ?? null); ?>
+                  </div>
+                  <div class="col-md-3">
+                     <?php 
+                        $value=( isset($client) ? $client->vat : '');
+                        echo render_input( 'vat', 'vendor_vat',$value);
+                        ?>
+                  </div>
+                   <div class="col-md-3">
+                     <?php $value=( isset($client) ? $client->phonenumber : ''); ?>
+                     <?php echo render_input( 'phonenumber', 'client_phonenumber',$value); ?>
+                  </div>
+                  
+                  <div class="clearfix"></div>
+
+                  <!-- Row 2: Address, City, State -->
+                  <div class="col-md-3">
+                     <?php $value=( isset($client) ? $client->address : ''); ?>
+                     <?php echo render_textarea( 'address', 'client_address',$value); ?>
+                  </div>
+                  <div class="col-md-3">
+                     <?php $value=( isset($client) ? $client->city : ''); ?>
+                     <?php echo render_input( 'city', 'client_city',$value); ?>
+                  </div>
+                  <div class="col-md-3">
+                     <?php $value=( isset($client) ? $client->state : ''); ?>
+                     <?php echo render_input( 'state', 'client_state',$value); ?>
+                  </div>
+                  <div class="col-md-3">
+                     <?php $value=( isset($client) ? $client->zip : ''); ?>
+                     <?php echo render_input( 'zip', 'client_postal_code',$value); ?>
+                  </div>
+                  <div class="col-md-3">
+                     <?php $countries= get_all_countries();
+                        $customer_default_country = get_option('customer_default_country');
+                        $selected =( isset($client) ? $client->country : $customer_default_country);
+                        echo render_select( 'country',$countries,array( 'country_id',array( 'short_name')), 'clients_country',$selected,array('data-none-selected-text'=>_l('dropdown_non_selected_tex')));
+                        ?>
+                  </div>
+                   <div class="col-md-3">
+                     <?php if((isset($client) && empty($client->website)) || !isset($client)){
+                        $value=( isset($client) ? $client->website : '');
+                        echo render_input( 'website', 'client_website',$value);
+                        } else { ?>
+                        <div class="form-group">
+                           <label for="website"><?php echo _l('client_website'); ?></label>
+                           <div class="input-group">
+                              <input type="text" name="website" id="website" value="<?php echo pur_html_entity_decode($client->website); ?>" class="form-control">
+                              <div class="input-group-addon">
+                                 <span><a href="<?php echo maybe_add_http($client->website); ?>" target="_blank" tabindex="-1"><i class="fa fa-globe"></i></a></span>
+                              </div>
+                           </div>
                         </div>
+                     <?php } ?>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <label  for="category"><?php echo _l('vendor_category'); ?></label>
+                        <select  name="category[]" id="category" class="selectpicker" data-live-search="true" multiple data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
+                           <?php foreach ($vendor_categories as $vc) {?>
+                              <option value="<?php echo pur_html_entity_decode($vc['id']); ?>" <?php if(isset($client) && in_array($vc['id'], explode(',',$client->category))){ echo 'selected'; } ?>><?php echo pur_html_entity_decode($vc['category_name']); ?></option>
+                              <?php }?>
+                        </select>
                      </div>
                   </div>
-                  <?php } ?>
 
-                  <div class="form-group">
-                    
-                     <label  for="category"><?php echo _l('vendor_category'); ?></label>
-                     <select  name="category[]" id="category" class="selectpicker" data-live-search="true" multiple data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
-                         <?php foreach ($vendor_categories as $vc) {?>
-                           <option value="<?php echo pur_html_entity_decode($vc['id']); ?>" <?php if(isset($client) && in_array($vc['id'], explode(',',$client->category))){ echo 'selected'; } ?>><?php echo pur_html_entity_decode($vc['category_name']); ?></option>
-                           <?php }?>
-                     </select>
+                  <div class="clearfix"></div>
+
+                  <!-- Row 4: Bank Detail, Payment Terms -->
+                  <div class="col-md-6">
+                     <?php $bank_detail=( isset($client) ? $client->bank_detail : ''); ?>
+                     <?php echo render_textarea( 'bank_detail', 'bank_detail',$bank_detail); ?>
                   </div>
+                  <div class="col-md-6">
+                     <?php $payment_terms=( isset($client) ? $client->payment_terms : ''); ?>
+                     <?php echo render_textarea( 'payment_terms', 'payment_terms',$payment_terms); ?>
+                  </div>
+                  <div class="clearfix"></div>
 
-                  <?php if(!isset($client)){ ?>
-                  <i class="fa fa-question-circle pull-left" data-toggle="tooltip" data-title="<?php echo _l('customer_currency_change_notice'); ?>"></i>
-                  <?php }
-                     $s_attrs = array('data-none-selected-text'=>_l('system_default_string'));
-                     $selected = '';
-                     
-                     foreach($currencies as $currency){
-                        if(isset($client)){
-                          if($currency['id'] == $client->default_currency){
-                            $selected = $currency['id'];
+                  <!-- Remaining Fields: Currency, Language -->
+                  <div class="col-md-6">
+                      <?php if(!isset($client)){ ?>
+                      <i class="fa fa-question-circle pull-left" data-toggle="tooltip" data-title="<?php echo _l('customer_currency_change_notice'); ?>"></i>
+                      <?php }
+                         $s_attrs = array('data-none-selected-text'=>_l('system_default_string'));
+                         $selected = '';
+                         
+                         foreach($currencies as $currency){
+                            if(isset($client)){
+                            if($currency['id'] == $client->default_currency){
+                               $selected = $currency['id'];
+                            }
                          }
-                      }
-                     }
-                            // Do not remove the currency field from the customer profile!
-                     echo render_select('default_currency',$currencies,array('id','name','symbol'),'invoice_add_edit_currency',$selected,$s_attrs); ?>
-                  <?php if(get_option('disable_language') == 0){ ?>
-                  <div class="form-group select-placeholder">
-                     <label for="default_language" class="control-label"><?php echo _l('localization_default_language'); ?>
-                     </label>
-                     <select name="default_language" id="default_language" class="form-control selectpicker" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>">
-                        <option value=""><?php echo _l('system_default_string'); ?></option>
-                        <?php foreach($this->app->get_available_languages() as $availableLanguage){
-                           $selected = '';
-                           if(isset($client)){
-                              if($client->default_language == $availableLanguage){
-                                 $selected = 'selected';
-                              }
-                           }
-                           ?>
-                        <option value="<?php echo pur_html_entity_decode($availableLanguage); ?>" <?php echo pur_html_entity_decode($selected); ?>><?php echo ucfirst($availableLanguage); ?></option>
-                        <?php } ?>
-                     </select>
-                  </div>
-                  <?php } ?>
-               </div>
-               <div class="col-md-6">
-                  <?php $value=( isset($client) ? $client->address : ''); ?>
-                  <?php echo render_textarea( 'address', 'client_address',$value); ?>
-                  <?php $value=( isset($client) ? $client->city : ''); ?>
-                  <?php echo render_input( 'city', 'client_city',$value); ?>
-                  <?php $value=( isset($client) ? $client->state : ''); ?>
-                  <?php echo render_input( 'state', 'client_state',$value); ?>
-                  <?php $value=( isset($client) ? $client->zip : ''); ?>
-                  <?php echo render_input( 'zip', 'client_postal_code',$value); ?>
-                  <?php $countries= get_all_countries();
-                     $customer_default_country = get_option('customer_default_country');
-                     $selected =( isset($client) ? $client->country : $customer_default_country);
-                     echo render_select( 'country',$countries,array( 'country_id',array( 'short_name')), 'clients_country',$selected,array('data-none-selected-text'=>_l('dropdown_non_selected_tex')));
-                     ?>
-                  <?php $bank_detail=( isset($client) ? $client->bank_detail : ''); ?>
-                  <?php echo render_textarea( 'bank_detail', 'bank_detail',$bank_detail); ?>
-                  <?php $payment_terms=( isset($client) ? $client->payment_terms : ''); ?>
-                  <?php echo render_textarea( 'payment_terms', 'payment_terms',$payment_terms); ?>
-               </div>
+                         }
+                         
+                             // Do not remove the currency field from the customer profile!
+                      echo render_select('default_currency',$currencies,array('id','name','symbol'),'invoice_add_edit_currency',$selected,$s_attrs); ?>
+                   </div>
+                   <div class="col-md-6">
+                   <?php if(get_option('disable_language') == 0){ ?>
+                   <div class="form-group select-placeholder">
+                      <label for="default_language" class="control-label"><?php echo _l('localization_default_language'); ?>
+                      </label>
+                      <select name="default_language" id="default_language" class="form-control selectpicker" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>">
+                         <option value=""><?php echo _l('system_default_string'); ?></option>
+                         <?php foreach($this->app->get_available_languages() as $availableLanguage){
+                            $selected = '';
+                            if(isset($client)){
+                               if($client->default_language == $availableLanguage){
+                                  $selected = 'selected';
+                               }
+                            }
+                            ?>
+                         <option value="<?php echo pur_html_entity_decode($availableLanguage); ?>" <?php echo pur_html_entity_decode($selected); ?>><?php echo ucfirst($availableLanguage); ?></option>
+                         <?php } ?>
+                      </select>
+                   </div>
+                   <?php } ?>
+                   </div>
             </div>
          </div>
          <?php if(isset($client)){ ?>
