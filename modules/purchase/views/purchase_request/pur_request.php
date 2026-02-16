@@ -193,26 +193,31 @@
 
                       </div>
                       
-<div class="table-responsive s_table ">
-                        <table class="table invoice-items-table items table-main-invoice-edit has-calculations no-mtop">
-                          <thead style="background: #465a6f; color: #fff;">
-                             <tr>
-                               <th></th>
-                               <th width="30%" align="left"><i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-title="<?php echo _l('item_description_new_lines_notice'); ?>"></i> <?php echo _l('item_description'); ?></th>
-                               <th width="10%" align="right" class="qty"><?php echo _l('pur_qty'); ?></th>
-                               <th width="10%" align="right"><?php echo _l('pur_rate'); ?><span class="th_currency"><?php echo '('.$pur_request_currency->name.')'; ?></span></th>
-                               <th width="15%" align="right"><?php echo _l('tax'); ?></th>
-                               <th width="10%" align="right"><?php echo _l('amount'); ?><span class="th_currency"><?php echo '('.$pur_request_currency->name.')'; ?></span></th>
-                               <th align="right"><i class="fa fa-cog"></i></th>
-                             </tr>
-                           </thead>
-                          <tbody>
-                            <?php echo pur_html_entity_decode($purchase_request_row_template); ?>
-                          </tbody>
-                        </table>
-                      </div>
-                    
+<div class="table-responsive ">
+  <!-- Fixed Header Table -->
+  <table class="table invoice-items-table items table-main-invoice-edit has-calculations no-mtop" style="margin-bottom: 0; border-bottom: none;">
+    <thead style="background: #465a6f; color: #fff;">
+      <tr>
+        <th></th>
+        <th width="30%" align="left"><i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-title="<?php echo _l('item_description_new_lines_notice'); ?>"></i> <?php echo _l('item_description'); ?></th>
+        <th width="10%" align="right" class="qty"><?php echo _l('pur_qty'); ?></th>
+        <th width="10%" align="right"><?php echo _l('pur_rate'); ?><span class="th_currency"><?php echo '('.$pur_request_currency->name.')'; ?></span></th>
+        <th width="15%" align="right"><?php echo _l('tax'); ?></th>
+        <th width="10%" align="right"><?php echo _l('amount'); ?><span class="th_currency"><?php echo '('.$pur_request_currency->name.')'; ?></span></th>
+        <th align="right"><i class="fa fa-cog"></i></th>
+      </tr>
+    </thead>
+  </table>
 
+  <!-- Scrollable Body Table -->
+  <div style="max-height: 400px; overflow-y: auto;">
+    <table class="table invoice-items-table items table-main-invoice-edit has-calculations no-mtop" style="border-top: none; margin-top: 0;">
+      <tbody id="item-table-body">
+        <?php echo pur_html_entity_decode($purchase_request_row_template); ?>
+      </tbody>
+    </table>
+  </div>
+</div>
 
                   <div class="col-md-6 pright0 col-md-offset-6">
                      <table class="table text-right mbot0">

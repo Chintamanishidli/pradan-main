@@ -84,13 +84,13 @@
 								<?php $fee_return_order = isset($order_return) ? $order_return->fee_return_order : 0;
 											echo form_hidden('fee_return_order', $fee_return_order); ?>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<?php if($rel_type == 'purchasing_return_order'){ ?>
 											<?php echo render_select('rel_id', $rel_id_data, array('id', array('pur_order_number')), $rel_id_lable, $rel_id, ['data-width' => '100%', 'class' => 'selectpicker', 'data-live-search' => "true"], array(), '', '', true); ?>
 										<?php } ?>
 									</div>
 
-									<div class="col-md-6 form-group">
+									<div class="col-md-4 form-group">
 										<label for="number">
 											<?php echo _l('order_return_number'); ?>
 										</label>
@@ -101,15 +101,16 @@
 											<input type="text" name="order_return_name" class="form-control" value="<?php echo pur_html_entity_decode($order_return_name); ?>" >
 										</div>
 									</div>
+									<div class="col-md-4">
+										<?php echo render_select('company_id', $company_id_data, array('userid', array('company')), $company_id_lable, $company_id, ['data-width' => '100%', 'class' => 'selectpicker', 'data-live-search' => "true"], array(), '', '', true); ?>
+									</div>
 								</div>
 
-								<?php echo render_select('company_id', $company_id_data, array('userid', array('company')), $company_id_lable, $company_id, ['data-width' => '100%', 'class' => 'selectpicker', 'data-live-search' => "true"], array(), '', '', true); ?>
-
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<?php echo render_input('email','email',$email, 'text') ?>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<?php echo render_input('phonenumber','phonenumber',$phonenumber, 'text') ?>
 									</div>
 								</div>
@@ -119,19 +120,19 @@
 
 							<div class="col-md-6">
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<?php echo render_input('order_number','order_number_lable',$order_number, 'text') ?>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<?php echo render_datetime_input('order_date','order_date_label',$order_date) ?>
+									</div>
+									<div class="col-md-4">
+										<?php echo render_datetime_input('datecreated','datecreated',$datecreated) ?>
 									</div>
 								</div>
 	
 								<div class="row">
-									<div class="col-md-6">
-										<?php echo render_datetime_input('datecreated','datecreated',$datecreated) ?>
-									</div>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<?php 
 										$return_type_data = [];
 	
@@ -147,10 +148,7 @@
 										 ?>
 										<?php echo render_select('return_type',$return_type_data,array('id', 'label'), 'return_type', $return_type) ?>
 									</div>
-									
-								</div>
-								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<?php
 					                        $currency_attr = array('data-show-subtext'=>true, 'disabled' => 1);
 
@@ -171,7 +169,7 @@
 					                     <?php echo render_select('currency', $currencies, array('id','name','symbol'), 'invoice_add_edit_currency', $selected, $currency_attr); ?>
 									</div>
 
-									<div class="col-md-6 ">
+									<div class="col-md-4">
 				                       <div class="form-group select-placeholder">
 				                          <label for="discount_type"
 				                              class="control-label"><?php echo _l('discount_type'); ?></label>
@@ -278,31 +276,28 @@
 
 					<div class="row">
 						<div class="col-md-12 mtop15">
-							<div class="panel-body bottom-transaction">
+							<div class="panel-body bottom-transaction col-md-6">
 								<?php echo render_textarea('return_reason','pur_return_reason',$return_reason,array(),array(),'mtop15'); ?>
+							</div>
+							<div class="panel-body bottom-transaction col-md-6">	
 								<?php echo render_textarea('admin_note','admin_note',$admin_note,array(),array(),'mtop15'); ?>
-
-								<div class=" row ">
-									<div class="col-md-12">
-										<label><strong><?php echo _l('pur_return_policies_information'); ?></strong></label>
-										
-										<p id="return_policies_information"></p>
-										
-									</div>
-								</div>
-
-								<div class="btn-bottom-toolbar text-right">
-									<a href="<?php echo admin_url('warehouse/manage_order_return'); ?>"class="btn btn-default text-right mright5"><?php echo _l('close'); ?></a>
-
-									<?php if (is_admin() || has_permission('purchase_order_return', '', 'edit') || has_permission('purchase_order_return', '', 'create')) { ?>
-										
-										<a href="javascript:void(0)"class="btn btn-info pull-right mright5 add_order_return" ><?php echo _l('save'); ?></a>
-										
-									<?php } ?>
-
+							</div>
+							<div class=" row ">
+								<div class="col-md-6">
+									<label><strong><?php echo _l('pur_return_policies_information'); ?></strong></label>
+									<p id="return_policies_information"></p>
 								</div>
 							</div>
-							<div class="btn-bottom-pusher"></div>
+
+							<div class="btn-bottom-toolbar text-right">
+								<a href="<?php echo admin_url('warehouse/manage_order_return'); ?>"class="btn btn-default text-right mright5"><?php echo _l('close'); ?></a>
+								<?php if (is_admin() || has_permission('purchase_order_return', '', 'edit') || has_permission('purchase_order_return', '', 'create')) { ?>
+								<a href="javascript:void(0)"class="btn btn-info pull-right mright5 add_order_return" ><?php echo _l('save'); ?></a>
+								<?php } ?>
+
+							</div>
+						</div>
+						<div class="btn-bottom-pusher"></div>
 						</div>
 					</div>
 				</div>
@@ -310,9 +305,9 @@
 			<?php echo form_close(); ?>
 		</div>
 	</div>
+</div>  
 </div>
-</div>
-</div>
+</div>  
 
 
 <?php init_tail(); ?>

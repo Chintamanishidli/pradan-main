@@ -10,7 +10,7 @@
 			echo form_open_multipart($this->uri->uri_string(),array('id'=>'contract-form','class'=>'_transaction_form'));
 			
 			?>
-			<div class="col-md-5 left-column">
+			<div class="col-md-12 left-column">
         <div class="panel_s accounting-template estimate">
         <div class="panel-body">
           
@@ -20,17 +20,17 @@
                 <hr class="hr_style" />
                 <div class="row">
 
-                <div class="col-md-6">
+                <div class="col-md-2">
                   <?php $contract_description = (isset($contract) ? $contract->contract_name : '');
                   echo render_input('contract_name','contract_description',$contract_description); ?>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-2">
                   <?php $contract_name = (isset($contract) ? $contract->contract_name : '');
                   echo render_input('service_category','service_category',$contract_name); ?>
                 </div>
 
-                <div class="col-md-6 form-group">
+                <div class="col-md-2 form-group">
                   <label for="vendor"><?php echo _l('vendor'); ?></label>
                   <select name="vendor" id="vendor" class="selectpicker" onchange="vendor_change(this); return false;" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>" >
                     <option value=""></option>
@@ -40,7 +40,7 @@
                   </select>
                 </div>
 
-                <div class="col-md-6 form-group">
+                <div class="col-md-2 form-group">
                   <label for="pur_order"><?php echo _l('pur_order'); ?></label>
                   <select name="pur_order" id="pur_order" class="selectpicker" onchange="view_pur_order(this); return false;" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>" >
                     <option value=""></option>
@@ -56,7 +56,7 @@
                   }
                  ?>
 
-                <div class="col-md-6 form-group">
+                <div class="col-md-2 form-group">
                   <label for="project"><?php echo _l('project'); ?></label>
                   <select name="project" id="project" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>" >
                     <option value=""></option>
@@ -66,7 +66,7 @@
                   </select>
                 </div>
   
-                <div class="col-md-6 form-group">
+                <div class="col-md-2 form-group">
                   <label for="department"><?php echo _l('department'); ?></label>
                   <select name="department" readonly="true" id="department" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>" >
                     <option value=""></option>
@@ -76,27 +76,27 @@
                   </select>
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-md-2">
                   <?php $start_date = (isset($contract) ? _d($contract->start_date) : _d(date('Y-m-d')));
                   echo render_date_input('start_date','start_date',$start_date); ?>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-2">
                   <?php $end_date = (isset($contract) ? _d($contract->end_date) : '');
                    echo render_date_input('end_date','end_date',$end_date); ?>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-2">
                    <?php $payment_terms = (isset($contract) ? $contract->payment_terms : '');
                     echo render_input('payment_terms','payment_terms',$payment_terms); ?> 
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-2">
                     <?php $payment_amount = (isset($contract) ? app_format_money($contract->payment_amount,'') : '');
                     echo render_input('payment_amount','payment_amount',$payment_amount,'text',array('data-type' => 'currency')); ?> 
                 </div>
 
-                <div class="col-md-6 form-group">
+                <div class="col-md-2 form-group">
                   <label for="payment_cycle"><?php echo _l('payment_cycle'); ?></label>
                   <select name="payment_cycle" readonly="true" id="payment_cycle" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>" >
                     <option value=""></option>
@@ -106,14 +106,14 @@
                     <option value="every_6_months"  <?php if(isset($contract) && $contract->payment_cycle == 'every_6_months'){ echo 'selected'; } ?>><?php echo _l('every_6_months'); ?></option>
                   </select>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-2">
                   <?php $contract_value = (isset($contract) ? app_format_money($contract->contract_value,'') : '');
                   echo render_input('contract_value','contract_value',$contract_value,'text',array('data-type' => 'currency')); ?>
         
                 </div>
                 
 
-                <div class="col-md-6">
+                <div class="col-md-2">
                   <label for="signed_status"><?php echo _l('signed_status'); ?></label>
                   <select name="signed_status" readonly="true" id="signed_status" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>" >
                     <option value=""></option>
@@ -121,13 +121,13 @@
                     <option value="signed"  <?php if(isset($contract) && $contract->signed_status == 'signed'){ echo 'selected'; } ?>><?php echo _l('signed'); ?></option>
                   </select>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-2">
                   <?php $signed_date = (isset($contract) ? _d($contract->signed_date) : '');
                    echo render_date_input('signed_date','signed_date',$signed_date); ?>
         
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-4">
                   <div class="attachments">
                     <div class="attachment">
                       <div class="mbot15">
@@ -152,7 +152,7 @@
         </div>
 
         <div class="row">
-          <div class="col-md-12 mtop15">
+          <div class="col-md-12 mtop5">
              <div class="panel-body bottom-transaction">
                 <?php $value = (isset($contract) ? $contract->note : ''); ?>
                 <?php echo render_textarea('note','decription',$value,array('rows'=>8),array(),'mtop15'); ?>
@@ -176,7 +176,7 @@
           <div class="panel_s">
               <div class="panel-body">
 
-                <div class="col-md-12 mtop15">
+                <div class="col-md-4 mtop5">
                 <div class="horizontal-scrollable-tabs preview-tabs-top">
                      <div class="scroller arrow-left"><i class="fa fa-angle-left"></i></div>
                      <div class="scroller arrow-right"><i class="fa fa-angle-right"></i></div>

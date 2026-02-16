@@ -19,7 +19,7 @@
       <?php } ?>
       <div class="row">
        <div class="col-md-6">
-       <div class="form-group">
+       <div class="form-group col-md-4">
        <label for="vendorid"><?php echo _l('vendor'); ?></label>
         <select name="vendorid" id="vendorid" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>" >
             <option value=""></option>
@@ -238,35 +238,35 @@
    $qty_heading = _l('debit_note_table_quantity_heading');
    if(isset($debit_note) && $debit_note->show_quantity_as == 2 || isset($hours_quantity)){
     $qty_heading = _l('debit_note_table_hours_heading');
-  } else if(isset($debit_note) && $debit_note->show_quantity_as == 3){
-    $qty_heading = _l('debit_note_table_quantity_heading') .'/'._l('debit_note_table_hours_heading');
-  }
-  ?>
-  <th width="10%" class="qty" align="right"><?php echo $qty_heading; ?></th>
-  <th width="15%" align="right"><?php echo _l('debit_note_table_rate_heading'); ?></th>
-  <th width="20%" align="right"><?php echo _l('debit_note_table_tax_heading'); ?></th>
-  <th width="10%" align="right"><?php echo _l('debit_note_table_amount_heading'); ?></th>
-  <th align="center"><i class="fa fa-cog"></i></th>
-</tr>
-</thead>
+      } else if(isset($debit_note) && $debit_note->show_quantity_as == 3){
+        $qty_heading = _l('debit_note_table_quantity_heading') .'/'._l('debit_note_table_hours_heading');
+      }
+      ?>
+      <th width="10%" class="qty" align="right"><?php echo $qty_heading; ?></th>
+      <th width="15%" align="right"><?php echo _l('debit_note_table_rate_heading'); ?></th>
+      <th width="20%" align="right"><?php echo _l('debit_note_table_tax_heading'); ?></th>
+      <th width="10%" align="right"><?php echo _l('debit_note_table_amount_heading'); ?></th>
+      <th align="center"><i class="fa fa-cog"></i></th>
+    </tr>
+  </thead>
 <tbody>
- <tr class="main">
-  <td></td>
-  <td>
-   <textarea name="description" class="form-control" rows="4" placeholder="<?php echo _l('item_description_placeholder'); ?>"></textarea>
- </td>
- <td>
-   <textarea name="long_description" rows="4" class="form-control" placeholder="<?php echo _l('item_long_description_placeholder'); ?>"></textarea>
- </td>
+    <tr class="main">
+      <td></td>
+      <td>
+      <textarea name="description" class="form-control" rows="4" placeholder="<?php echo _l('item_description_placeholder'); ?>"></textarea>
+    </td>
+    <td>
+      <textarea name="long_description" rows="4" class="form-control" placeholder="<?php echo _l('item_long_description_placeholder'); ?>"></textarea>
+    </td>
 
- <td>
-   <input type="number" name="quantity" min="0" value="1" class="form-control" placeholder="<?php echo _l('item_quantity_placeholder'); ?>">
-   <input type="text" placeholder="<?php echo _l('unit'); ?>" name="unit" class="form-control input-transparent text-right">
- </td>
- <td>
-   <input type="number" name="rate" class="form-control" placeholder="<?php echo _l('item_rate_placeholder'); ?>">
- </td>
- <td>
+    <td>
+      <input type="number" name="quantity" min="0" value="1" class="form-control" placeholder="<?php echo _l('item_quantity_placeholder'); ?>">
+      <input type="text" placeholder="<?php echo _l('unit'); ?>" name="unit" class="form-control input-transparent text-right">
+    </td>
+    <td>
+      <input type="number" name="rate" class="form-control" placeholder="<?php echo _l('item_rate_placeholder'); ?>">
+    </td>
+    <td>
    <?php
    $default_tax = unserialize(get_option('default_tax'));
    $select = '<select class="selectpicker display-block tax main-tax" data-width="100%" name="taxname" multiple data-none-selected-text="'._l('no_tax').'">';

@@ -235,7 +235,7 @@
 
   <div class="row">
    <div class="col-md-12">
-    <div class="table-responsive s_table ">
+    <div class="table-responsive ">
         <table class="table invoice-items-table items table-main-invoice-edit has-calculations no-mtop">
           <thead>
             <tr>
