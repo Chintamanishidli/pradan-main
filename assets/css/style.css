@@ -3,7 +3,7 @@
 */
 body {
   font-family: "Inter", sans-serif;
-  background: #f4f4f5;
+  background: #E3F2FD;
   color: #111827;
 }
 
@@ -662,7 +662,7 @@ body.page-small #header {
 #wrapper {
   margin: 0 0 0 230px;
   padding: 0;
-  background: #f4f4f5;
+  background: #E3F2FD;
   position: relative;
   min-height: 100%;
 }
@@ -3681,14 +3681,13 @@ li.task.overdue-task .panel-body {
 
 @media only screen and (max-width: 760px),
   (min-device-width: 768px) and (max-device-width: 1024px) {
-  
   /* Keep estimate items table horizontal - EXCEPTION */
   .estimate-items-table thead tr {
     position: relative !important;
     top: auto !important;
     left: auto !important;
   }
-  
+
   .estimate-items-table table,
   .estimate-items-table thead,
   .estimate-items-table tbody,
@@ -3697,34 +3696,34 @@ li.task.overdue-task .panel-body {
   .estimate-items-table tr {
     display: table !important;
   }
-  
+
   .estimate-items-table thead {
     display: table-header-group !important;
   }
-  
+
   .estimate-items-table tbody {
     display: table-row-group !important;
   }
-  
+
   .estimate-items-table tr {
     display: table-row !important;
   }
-  
+
   .estimate-items-table th,
   .estimate-items-table td {
     display: table-cell !important;
     padding-left: 8px !important;
   }
-  
+
   .estimate-items-table td:before {
     content: none !important;
   }
-  
+
   .estimate-items-table tbody > tr > td:not(:first-child) {
     display: table-cell !important;
     width: auto !important;
   }
-  
+
   .s_table table,
   .s_table .table.items .main {
     margin-top: 0;

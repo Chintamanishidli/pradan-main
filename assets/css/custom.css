@@ -1,0 +1,122 @@
+/* Custom CSS for Perfex CRM - Pradan Project */
+body {
+    background-color: #E3F2FD !important;
+    color: #000000 !important;
+}
+#wrapper {
+    background-color: #E3F2FD !important;
+}
+body.styled {
+    background-color: #E3F2FD !important;
+    color: #000000 !important;
+}
+.panel-body {
+    background-color: #E3F2FD !important;
+}
+
+/* Global Heading Styles - Blue Background, Black Font, Bold, No Margin */
+h1, h2, h3, h4, h5, h6 {
+    color: #000000 !important;
+    background-color: #1565C0 !important;
+    font-weight: bold !important;
+    margin: 0 !important;
+    padding: 6px 12px !important;
+    border-radius: 4px !important;
+}
+
+/* ============================
+   Global Table Row Highlight
+   ============================ */
+
+/* Table Header Row - Dark Blue Background, White Text */
+table thead tr,
+table thead tr th,
+.table thead tr,
+.table thead tr th {
+    background-color: #1565C0 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    border-color: #0d47a1 !important;
+}
+
+/* Odd Rows - White */
+table tbody tr:nth-child(odd),
+.table tbody tr:nth-child(odd) {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Even Rows - Light Blue */
+table tbody tr:nth-child(even),
+.table tbody tr:nth-child(even) {
+    background-color: #BBDEFB !important;
+    color: #000000 !important;
+}
+
+/* Row Hover - Blue Highlight */
+table tbody tr:hover,
+.table tbody tr:hover {
+    background-color: #1565C0 !important;
+    color: #ffffff !important;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Table Cell Borders */
+table td, table th,
+.table td, .table th {
+    border-color: #90CAF9 !important;
+}
+
+/* ============================
+   Nav Tabs Highlight (nav nav-tabs mbot15)
+   ============================ */
+
+/* Tab Bar Background */
+.nav.nav-tabs,
+.nav.nav-tabs.mbot15 {
+    background-color: #1565c09f !important;
+    border-bottom: 3px solid #0d47a1 !important;
+    border-radius: 6px 6px 0 0 !important;
+    padding: 4px 6px 0 6px !important;
+}
+
+/* Each Tab Item */
+.nav.nav-tabs > li > a,
+.nav.nav-tabs.mbot15 > li > a {
+    color: #ffffff !important;
+    background-color: transparent !important;
+    border: none !important;
+    font-weight: bold !important;
+    border-radius: 4px 4px 0 0 !important;
+    padding: 8px 18px !important;
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+/* Tab Hover Effect */
+.nav.nav-tabs > li > a:hover,
+.nav.nav-tabs.mbot15 > li > a:hover {
+    background-color: #0d47a1 !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+
+/* Active Tab - White Background, Dark Blue Text */
+.nav.nav-tabs > li.active > a,
+.nav.nav-tabs > li.active > a:hover,
+.nav.nav-tabs > li.active > a:focus,
+.nav.nav-tabs.mbot15 > li.active > a,
+.nav.nav-tabs.mbot15 > li.active > a:hover,
+.nav.nav-tabs.mbot15 > li.active > a:focus {
+    background-color: #ffffff !important;
+    color: #1565C0 !important;
+    font-weight: bold !important;
+    border: none !important;
+    border-bottom: 3px solid #ffffff !important;
+}
+
+/* Active Tab Bottom Indicator */
+.nav.nav-tabs > li.active,
+.nav.nav-tabs.mbot15 > li.active {
+    border-bottom: 3px solid #ffffff !important;
+}

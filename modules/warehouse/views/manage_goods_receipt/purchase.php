@@ -28,20 +28,20 @@
 
 						<!-- start-->
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-2">
 								<?php $goods_receipt_code =isset($goods_receipt) ? $goods_receipt->goods_receipt_code : (isset($goods_code) ? $goods_code : '');?>
 								<?php echo render_input('goods_receipt_code', 'stock_received_docket_number',$goods_receipt_code,'',array('disabled' => 'true')) ?>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<?php $date_c =  isset($goods_receipt) ? $goods_receipt->date_c : $current_day?>
 								<?php echo render_date_input('date_c','accounting_date', _d($date_c)) ?>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<?php $date_add =  isset($goods_receipt) ? $goods_receipt->date_add : $current_day?>
 								<?php echo render_date_input('date_add','day_vouchers', _d($date_add)) ?>
 							</div>
 
-							<div class="col-md-6 <?php if($pr_orders_status == false){ echo 'hide';} ;?>" >
+							<div class="col-md-3 <?php if($pr_orders_status == false){ echo 'hide';} ;?>" >
 								<div class="form-group">
 									<label for="pr_order_id"><?php echo _l('reference_purchase_order'); ?></label>
 									<select name="pr_order_id" id="pr_order_id" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
@@ -53,7 +53,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-6 <?php if($pr_orders_status == false){ echo 'hide';} ;?>" >
+							<div class="col-md-3 <?php if($pr_orders_status == false){ echo 'hide';} ;?>" >
 								<div class="form-group">
 									<label for="supplier_code"><?php echo _l('supplier_name'); ?></label>
 									<select  name="supplier_code" id="supplier_code" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
@@ -69,7 +69,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-6 <?php if($pr_orders_status == true){ echo 'hide';} ;?>" >
+							<div class="col-md-3 <?php if($pr_orders_status == true){ echo 'hide';} ;?>" >
 
 								<?php $supplier_name =  isset($goods_receipt) ? $goods_receipt->supplier_name : ''?>
 								<?php 
@@ -139,19 +139,19 @@
 
 							<?php } ?>
 
-							<div class=" col-md-3">
+							<div class=" col-md-2">
 								<?php $deliver_name = (isset($goods_receipt) ? $goods_receipt->deliver_name : '');
 								echo render_input('deliver_name','deliver_name',$deliver_name) ?>
 							</div>
 
-							<div class="col-md-3 ">
+							<div class="col-md-2 ">
 								<?php $warehouse_id_value = (isset($goods_receipt) ? $goods_receipt->warehouse_id : '');?>
 								<a href="#" class="pull-right display-block input_method"><i class="fa fa-question-circle skucode-tooltip"  data-toggle="tooltip" title="" data-original-title="<?php echo _l('goods_receipt_warehouse_tooltip'); ?>"></i></a>
 								<?php echo render_select('warehouse_id_m',$warehouses,array('warehouse_id','warehouse_name'),'warehouse_name', $warehouse_id_value); ?>
 							</div>
 
 							<?php if(ACTIVE_PROPOSAL == true){ ?>
-								<div class="col-md-3 <?php if($pr_orders_status == false){ echo 'hide';} ;?>">
+								<div class="col-md-2 <?php if($pr_orders_status == false){ echo 'hide';} ;?>">
 									<?php $expiry_date =  isset($goods_receipt) ? $goods_receipt->expiry_date : $current_day?>
 									<?php echo render_date_input('expiry_date_m','expiry_date', _d($expiry_date)) ?>
 								</div>
@@ -173,7 +173,7 @@
 							</div>
 						</div>
 
-						<div class="table-responsive s_table ">
+						<div class="table-responsive ">
 							<table class="table invoice-items-table items table-main-invoice-edit has-calculations no-mtop">
 								<thead>
 									<tr>
