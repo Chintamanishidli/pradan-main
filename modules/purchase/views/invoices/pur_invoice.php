@@ -26,7 +26,7 @@
                   <input type="hidden" name="additional_discount" value="<?php echo pur_html_entity_decode($additional_discount); ?>">
             	<div class="col-md-6">
             		<?php echo form_hidden('id', (isset($pur_invoice) ? $pur_invoice->id : '') ); ?>
-	            	<div class="col-md-6 pad_left_0">
+	            	<div class="col-md-4 pad_left_0">
 	            		<label for="invoice_number"><span class="text-danger">* </span><?php echo _l('invoice_code'); ?></label>
 		            	<?php
 	                    $prefix = get_purchase_option('pur_inv_prefix');
@@ -38,12 +38,12 @@
 	                    echo render_input('invoice_number','',$invoice_number ,'text',array('readonly' => '', 'required' => 'true')); ?>
 	                </div>
 
-	                <div class="col-md-6 pad_right_0">
+	                <div class="col-md-4 pad_right_0">
 	                	<?php $vendor_invoice_number = ( (isset($pur_invoice) && $pur_invoice->vendor_invoice_number != '') ? $pur_invoice->vendor_invoice_number : $invoice_number);
 	                    echo render_input('vendor_invoice_number','invoice_number',$vendor_invoice_number ,'text',array()); ?>
 	                </div>
 
-	                <div class="col-md-6 pad_left_0 form-group">
+	                <div class="col-md-4 pad_left_0 form-group">
 	                	<label for="vendor"><span class="text-danger">* </span><?php echo _l('pur_vendor'); ?></label>
 	                    <select name="vendor" id="vendor" class="selectpicker" onchange="pur_vendor_change(this); return false;" required="true" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
 	                        <option value=""></option>
@@ -53,7 +53,7 @@
 	                    </select>
 	                </div>
 
-	                <div class="col-md-6 form-group pad_right_0">
+	                <div class="col-md-4 form-group pad_right_0">
 	                	<label for="contract"><?php echo _l('contract'); ?></label>
 	                    <select name="contract" id="contract" class="selectpicker" onchange="contract_change(this); return false;" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
 	                        <option value=""></option>
@@ -63,7 +63,7 @@
 	                    </select>
 	                </div>
 	              
-	                <div class="col-md-6 form-group pad_left_0">
+	                <div class="col-md-4 form-group pad_left_0">
 	                	<label for="pur_order"><?php echo _l('pur_order'); ?></label>
 	                    <select name="pur_order" id="pur_order" class="selectpicker" onchange="pur_order_change(this); return false;" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
 	                        <option value=""></option>
@@ -73,13 +73,13 @@
 	                    </select>
 	                </div>
 
-	                <div class="col-md-6 pad_right_0">
+	                <div class="col-md-4 pad_right_0">
 	                	<label for="invoice_date"><span class="text-danger">* </span><?php echo _l('invoice_date'); ?></label>
 	                	<?php $invoice_date = ( isset($pur_invoice) ? _d($pur_invoice->invoice_date) : _d(date('Y-m-d')) );
 	                	 echo render_date_input('invoice_date','',$invoice_date,array( 'required' => 'true')); ?>
 	                </div>
 
-	                <div class="col-md-6 pad_left_0">
+	                <div class="col-md-4 pad_left_0">
 	                	<label for="invoice_date"><?php echo _l('pur_due_date'); ?></label>
 	                	<?php $duedate = ( isset($pur_invoice) ? _d($pur_invoice->duedate) : _d(date('Y-m-d')) );
 	                	 echo render_date_input('duedate','',$duedate); ?>
@@ -87,7 +87,7 @@
 
 	                <div id="recurring_div" class="<?php if(isset($pur_invoice) && $pur_invoice->pur_order != null){ echo 'hide';} ?>">
 
-	                <div class="form-group col-md-12 pad_left_0 pad_right_0">
+	                <div class="form-group col-md-4 pad_left_0 pad_right_0">
 	                	<label for="recurring"><?php echo _l('invoice_add_edit_recurring'); ?></label>
 	                    <select name="recurring" id="recurring" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
 	                        <?php for($i = 0; $i <=12; $i++){ ?>
@@ -114,7 +114,7 @@
 	                </div>
 
 	                <div id="cycles_wrapper" class="<?php if(!isset($pur_invoice) || (isset($pur_invoice) && $pur_invoice->recurring == 0)){echo ' hide';}?>">
-	                     <div class="col-md-12 pad_left_0 pad_right_0">
+	                     <div class="col-md-4 pad_left_0 pad_right_0">
 	                        <?php $value = (isset($pur_invoice) ? $pur_invoice->cycles : 0); ?>
 	                        <div class="form-group recurring-cycles">
 	                          <label for="cycles"><?php echo _l('recurring_total_cycles'); ?>
@@ -142,7 +142,7 @@
 	            </div>
 
 	            <div class="col-md-6">
-	            	<div class="col-md-6 pad_left_0">
+	            	<!-- <div class="col-md-6 pad_left_0">
                      <?php
                         $currency_attr = array('data-show-subtext'=>true, 'required' => true);
 
@@ -162,24 +162,24 @@
                         ?>
                         <label for="currency"><span class="text-danger">* </span><?php echo _l('invoice_add_edit_currency') ?></label>
                      <?php echo render_select('currency', $currencies, array('id','name','symbol'), '', $selected, $currency_attr); ?>
-                  	</div>
-	                <div class="col-md-6 form-group">
+                  	</div> -->
+	                <!-- <div class="col-md-6 form-group">
 	                    <div id="inputTagsWrapper">
 	                       <label for="tags" class="control-label"><i class="fa fa-tag" aria-hidden="true"></i> <?php echo _l('tags'); ?></label>
 	                       <input type="text" class="tagsinput" id="tags" name="tags" value="<?php echo (isset($pur_invoice) ? prep_tags_input(get_tags_in($pur_invoice->id,'pur_invoice')) : ''); ?>" data-role="tagsinput">
 	                    </div>
-	                </div>
-	                <div class="col-md-6 pad_left_0">
+	                </div> -->
+	                <div class="col-md-4 pad_left_0">
 	                	<?php $transactionid = ( isset($pur_invoice) ? $pur_invoice->transactionid : '');
 	                	echo render_input('transactionid','transaction_id',$transactionid); ?>
 	                </div>
-	                <div class="col-md-6 pad_right_0">
+	                <div class="col-md-4 pad_right_0">
 	                	<?php $transaction_date = ( isset($pur_invoice) ? $pur_invoice->transaction_date : '');
 	                	echo render_date_input('transaction_date','transaction_date',$transaction_date); ?>
 	                </div>
 
 
-                    <div class="col-md-12  pad_left_0 pad_right_0">
+                    <div class="col-md-4  pad_left_0 pad_right_0">
                        <div class="form-group select-placeholder">
                           <label for="discount_type"
                               class="control-label"><?php echo _l('discount_type'); ?></label>
@@ -204,7 +204,7 @@
                     </div>
                 
 	                
-	                <div class="col-md-12 pad_left_0 pad_right_0">
+	                <div class="col-md-4 pad_left_0 pad_right_0">
 				        <div class="attachments">
 				          <div class="attachment">
 				            <div class="mbot15">
@@ -268,15 +268,15 @@
 		        </div> 
 		        <div class="row">
 		          <div class="col-md-12">
-		            <div class="table-responsive s_table ">
+		            <div class="table-responsive">
 		              <table class="table invoice-items-table items table-main-invoice-edit has-calculations no-mtop">
 		                <thead>
 		                  <tr>
 		                    <th></th>
 		                    <th width="12%" align="left"><i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-title="<?php echo _l('item_description_new_lines_notice'); ?>"></i> <?php echo _l('invoice_table_item_heading'); ?></th>
-		                    <th width="15%" align="left"><?php echo _l('item_description'); ?></th>
 		                    <th width="10%" align="right"><?php echo _l('unit_price'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>
 		                    <th width="10%" align="right" class="qty"><?php echo _l('quantity'); ?></th>
+                    		<th width="8%" align="left"><?php echo _l('unit'); ?></th>
 		                    <th width="12%" align="right"><?php echo _l('invoice_table_tax_heading'); ?></th>
 		                    <th width="10%" align="right"><?php echo _l('tax_value'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>
 		                    <th width="10%" align="right"><?php echo _l('pur_subtotal_after_tax'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>

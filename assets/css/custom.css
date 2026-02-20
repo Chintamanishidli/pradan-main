@@ -53,14 +53,6 @@ table tbody tr:nth-child(even),
     color: #000000 !important;
 }
 
-/* Row Hover - Blue Highlight */
-table tbody tr:hover,
-.table tbody tr:hover {
-    background-color: #1565C0 !important;
-    color: #ffffff !important;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
 
 /* Table Cell Borders */
 table td, table th,
@@ -119,4 +111,37 @@ table td, table th,
 .nav.nav-tabs > li.active,
 .nav.nav-tabs.mbot15 > li.active {
     border-bottom: 3px solid #ffffff !important;
+}
+
+/* ============================
+   Remove Input Border Colors in Tables
+   ============================ */
+table td input,
+table td textarea,
+table td select,
+.table td input,
+.table td textarea,
+.table td select,
+.invoice-items-table td input,
+.invoice-items-table td textarea,
+.invoice-items-table td select {
+    border: 1px solid transparent !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+}
+
+table td input:focus,
+table td textarea:focus,
+table td select:focus,
+.table td input:focus,
+.table td textarea:focus,
+.table td select:focus,
+.invoice-items-table td input:focus,
+.invoice-items-table td textarea:focus,
+.invoice-items-table td select:focus {
+    border: 1px solid #1565C0 !important;
+    box-shadow: 0 0 0 2px rgba(21,101,192,0.15) !important;
+    background-color: #fff !important;
+    outline: none !important;
 }
