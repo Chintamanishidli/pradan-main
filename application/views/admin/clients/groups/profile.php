@@ -139,13 +139,7 @@
                         <?php } ?>
                     </div>
 
-                    <!-- Row 2: VAT, Groups, Currency -->
-                    <?php if (get_option('company_requires_vat_number_field') == 1) { ?>
-                    <div class="col-md-3">
-                        <?php $value = (isset($client) ? $client->vat : '');
-                        echo render_input('vat', 'client_vat_number', $value); ?>
-                    </div>
-                    <?php } ?>
+                    <!-- Row 2: Groups, Currency -->
                     <div class="col-md-3">
                         <?php
                         $selected = [];
@@ -161,7 +155,7 @@
                         }
                         ?>
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <i class="fa-regular fa-circle-question pull-left tw-mt-0.5 tw-mr-1"
                             data-toggle="tooltip"
                             data-title="<?= _l('customer_currency_change_notice'); ?>"></i>
@@ -180,10 +174,10 @@
                         }
                         echo render_select('default_currency', $currencies, ['id', 'name', 'symbol'], 'invoice_add_edit_currency', $selected, $s_attrs);
                         ?>
-                    </div>
+                    </div> -->
 
                     <!-- Row 3: Language (if enabled) -->
-                    <?php if (! is_language_disabled()) { ?>
+                    <!-- <?php if (! is_language_disabled()) { ?>
                     <div class="col-md-3">
                         <div class="form-group select-placeholder">
                             <label for="default_language" class="control-label"><?= _l('localization_default_language'); ?></label>
@@ -205,7 +199,55 @@
                             </select>
                         </div>
                     </div>
-                    <?php } ?>
+                    <?php } ?> -->
+
+                    <!-- Row 3b: GST Number, GST Status, GST Type, GST State, PAN No, Aadhar No -->
+                    <div class="col-md-3">
+                        <?php $gst_number_value = isset($client) ? $client->gst_number : '';
+                        echo render_input('gst_number', 'client_gst_number', $gst_number_value, 'text'); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $gst_status_value = isset($client) ? $client->gst_status : ''; ?>
+                        <div class="form-group">
+                            <label for="gst_status"><?= _l('client_gst_status'); ?></label>
+                            <select name="gst_status" id="gst_status" class="selectpicker" data-width="100%"
+                                data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>">
+                                <option value=""><?= _l('dropdown_non_selected_tex'); ?></option>
+                                <option value="Active" <?php if($gst_status_value == 'Active') echo 'selected'; ?>>Active</option>
+                                <option value="Inactive" <?php if($gst_status_value == 'Inactive') echo 'selected'; ?>>Inactive</option>
+                                <option value="Cancelled" <?php if($gst_status_value == 'Cancelled') echo 'selected'; ?>>Cancelled</option>
+                                <option value="Suspended" <?php if($gst_status_value == 'Suspended') echo 'selected'; ?>>Suspended</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $gst_type_value = isset($client) ? $client->gst_type : ''; ?>
+                        <div class="form-group">
+                            <label for="gst_type"><?= _l('client_gst_type'); ?></label>
+                            <select name="gst_type" id="gst_type" class="selectpicker" data-width="100%"
+                                data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>">
+                                <option value=""><?= _l('dropdown_non_selected_tex'); ?></option>
+                                <option value="Regular" <?php if($gst_type_value == 'Regular') echo 'selected'; ?>>Regular</option>
+                                <option value="Composition" <?php if($gst_type_value == 'Composition') echo 'selected'; ?>>Composition</option>
+                                <option value="Unregistered" <?php if($gst_type_value == 'Unregistered') echo 'selected'; ?>>Unregistered</option>
+                                <option value="Consumer" <?php if($gst_type_value == 'Consumer') echo 'selected'; ?>>Consumer</option>
+                                <option value="Overseas" <?php if($gst_type_value == 'Overseas') echo 'selected'; ?>>Overseas</option>
+                                <option value="SEZ" <?php if($gst_type_value == 'SEZ') echo 'selected'; ?>>SEZ</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $gst_state_value = isset($client) ? $client->gst_state : '';
+                        echo render_input('gst_state', 'client_gst_state', $gst_state_value, 'text'); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $pan_no_value = isset($client) ? $client->pan_no : '';
+                        echo render_input('pan_no', 'client_pan_no', $pan_no_value, 'text'); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $aadhar_no_value = isset($client) ? $client->aadhar_no : '';
+                        echo render_input('aadhar_no', 'client_aadhar_no', $aadhar_no_value, 'text'); ?>
+                    </div>
 
                     <!-- Row 4: Address Section -->
                     <div class="col-md-12">

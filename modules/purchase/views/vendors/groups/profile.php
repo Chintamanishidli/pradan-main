@@ -66,7 +66,7 @@
                      <label for="show_primary_contact"><?php echo _l('show_primary_contact',_l('invoices').', '._l('estimates').', '._l('payments').', '._l('credit_notes')); ?></label>
                   </div>
                </div>
-                  <!-- Row 1: Vendor Code, Company, VAT Number -->
+                  <!-- Row 1: Vendor Code, Company, GST Number -->
                   <div class="col-md-3">
                      <?php $vendor_code = ( isset($client) ? $client->vendor_code : '');
                      echo render_input('vendor_code','vendor_code',$vendor_code,'text'); ?>
@@ -88,8 +88,46 @@
                      <?php $value=( isset($client) ? $client->phonenumber : ''); ?>
                      <?php echo render_input( 'phonenumber', 'client_phonenumber',$value); ?>
                   </div>
-                  
+
                   <div class="clearfix"></div>
+
+                  <!-- Row 1b: GST Status, GST Type, GST State -->
+                  <div class="col-md-4">
+                     <?php
+                        $gst_status_value = isset($client) ? $client->gst_status : '';
+                     ?>
+                     <div class="form-group">
+                        <label for="gst_status"><?php echo _l('gst_status'); ?></label>
+                        <select name="gst_status" id="gst_status" class="selectpicker" data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>">
+                           <option value=""><?php echo _l('dropdown_non_selected_tex'); ?></option>
+                           <option value="Active" <?php if($gst_status_value == 'Active') echo 'selected'; ?>>Active</option>
+                           <option value="Inactive" <?php if($gst_status_value == 'Inactive') echo 'selected'; ?>>Inactive</option>
+                           <option value="Cancelled" <?php if($gst_status_value == 'Cancelled') echo 'selected'; ?>>Cancelled</option>
+                           <option value="Suspended" <?php if($gst_status_value == 'Suspended') echo 'selected'; ?>>Suspended</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <?php
+                        $gst_type_value = isset($client) ? $client->gst_type : '';
+                     ?>
+                     <div class="form-group">
+                        <label for="gst_type"><?php echo _l('gst_type'); ?></label>
+                        <select name="gst_type" id="gst_type" class="selectpicker" data-width="100%" data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>">
+                           <option value=""><?php echo _l('dropdown_non_selected_tex'); ?></option>
+                           <option value="Regular" <?php if($gst_type_value == 'Regular') echo 'selected'; ?>>Regular</option>
+                           <option value="Composition" <?php if($gst_type_value == 'Composition') echo 'selected'; ?>>Composition</option>
+                           <option value="Unregistered" <?php if($gst_type_value == 'Unregistered') echo 'selected'; ?>>Unregistered</option>
+                           <option value="Consumer" <?php if($gst_type_value == 'Consumer') echo 'selected'; ?>>Consumer</option>
+                           <option value="Overseas" <?php if($gst_type_value == 'Overseas') echo 'selected'; ?>>Overseas</option>
+                           <option value="SEZ" <?php if($gst_type_value == 'SEZ') echo 'selected'; ?>>SEZ</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <?php $gst_state_value = isset($client) ? $client->gst_state : '';
+                     echo render_input('gst_state', 'gst_state', $gst_state_value, 'text'); ?>
+                  </div>
 
                   <!-- Row 2: Address, City, State -->
                   <div class="col-md-3">

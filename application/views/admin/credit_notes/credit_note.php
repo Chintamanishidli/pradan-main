@@ -216,31 +216,31 @@ $data_original_number = isset($credit_note) ? $credit_note->number : 'false';
                             <div class="col-md-6">
                                 <div class="tw-ml-3">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <?php
 
-         $credit_note_currency_attr = ['disabled' => true, 'data-show-subtext' => true];
-$credit_note_currency_attr          = apply_filters_deprecated('credit_note_currency_disabled', [$credit_note_currency_attr], '2.3.0', 'credit_note_currency_attributes');
+                                                    $credit_note_currency_attr = ['disabled' => true, 'data-show-subtext' => true];
+                                            $credit_note_currency_attr          = apply_filters_deprecated('credit_note_currency_disabled', [$credit_note_currency_attr], '2.3.0', 'credit_note_currency_attributes');
 
-foreach ($currencies as $currency) {
-    if ($currency['isdefault'] == 1) {
-        $credit_note_currency_attr['data-base'] = $currency['id'];
-    }
-    if (isset($credit_note)) {
-        if ($currency['id'] == $credit_note->currency) {
-            $selected = $currency['id'];
-        }
-    } else {
-        if ($currency['isdefault'] == 1) {
-            $selected = $currency['id'];
-        }
-    }
-}
-$credit_note_currency_attr = hooks()->apply_filters('credit_note_currency_attributes', $credit_note_currency_attr);
-?>
+                                            foreach ($currencies as $currency) {
+                                                if ($currency['isdefault'] == 1) {
+                                                    $credit_note_currency_attr['data-base'] = $currency['id'];
+                                                }
+                                                if (isset($credit_note)) {
+                                                    if ($currency['id'] == $credit_note->currency) {
+                                                        $selected = $currency['id'];
+                                                    }
+                                                } else {
+                                                    if ($currency['isdefault'] == 1) {
+                                                        $selected = $currency['id'];
+                                                    }
+                                                }
+                                            }
+                                            $credit_note_currency_attr = hooks()->apply_filters('credit_note_currency_attributes', $credit_note_currency_attr);
+                                            ?>
                                             <?= render_select('currency', $currencies, ['id', 'name', 'symbol'], 'currency', $selected, $credit_note_currency_attr); ?>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group select-placeholder">
                                                 <label for="discount_type"
                                                     class="control-label"><?= _l('discount_type'); ?></label>
@@ -250,11 +250,11 @@ $credit_note_currency_attr = hooks()->apply_filters('credit_note_currency_attrib
                                                         <?= _l('no_discount'); ?>
                                                     </option>
                                                     <option value="before_tax" <?php
- if (isset($credit_note)) {
-     if ($credit_note->discount_type == 'before_tax') {
-         echo 'selected';
-     }
- } ?>><?= _l('discount_type_before_tax'); ?>
+                                                        if (isset($credit_note)) {
+                                                            if ($credit_note->discount_type == 'before_tax') {
+                                                                echo 'selected';
+                                                            }
+                                                        } ?>><?= _l('discount_type_before_tax'); ?>
                                                     </option>
                                                     <option value="after_tax" <?php if (isset($credit_note)) {
                                                         if ($credit_note->discount_type == 'after_tax') {
@@ -266,12 +266,20 @@ $credit_note_currency_attr = hooks()->apply_filters('credit_note_currency_attrib
                                             </div>
                                         </div>
                                     </div>
-                                    <?php $value = (isset($credit_note) ? $credit_note->reference_no : ''); ?>
-                                    <?= render_input('reference_no', 'reference_no', $value); ?>
-                                    <?php $value = (isset($credit_note) ? $credit_note->adminnote : ''); ?>
-                                    <?= render_textarea('adminnote', 'credit_note_admin_note', $value); ?>
-                                    <?php $rel_id = (isset($credit_note) ? $credit_note->id : false); ?>
-                                    <?= render_custom_fields('credit_note', $rel_id); ?>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <?php $value = (isset($credit_note) ? $credit_note->reference_no : ''); ?>
+                                            <?= render_input('reference_no', 'reference_no', $value); ?>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <?php $value = (isset($credit_note) ? $credit_note->adminnote : ''); ?>
+                                            <?= render_textarea('adminnote', 'credit_note_admin_note', $value); ?>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <?php $rel_id = (isset($credit_note) ? $credit_note->id : false); ?>
+                                            <?= render_custom_fields('credit_note', $rel_id); ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -318,7 +326,7 @@ $credit_note_currency_attr = hooks()->apply_filters('credit_note_currency_attrib
                                 </div>
                             </div>
                         </div>
-                        <div class="table-responsive s_table">
+                        <div class="table-responsive">
                             <table
                                 class="table credite-note-items-table items table-main-credit-note-edit has-calculations no-mtop">
                                 <thead>
@@ -333,18 +341,18 @@ $credit_note_currency_attr = hooks()->apply_filters('credit_note_currency_attrib
                                             <?= _l('credit_note_table_item_description'); ?>
                                         </th>
                                         <?php
-    $custom_fields = get_custom_fields('items');
+                                            $custom_fields = get_custom_fields('items');
 
-foreach ($custom_fields as $cf) {
-    echo '<th width="15%" align="left" class="custom_field">' . e($cf['name']) . '</th>';
-}
-$qty_heading = _l('credit_note_table_quantity_heading');
-if (isset($credit_note) && $credit_note->show_quantity_as == 2 || isset($hours_quantity)) {
-    $qty_heading = _l('credit_note_table_hours_heading');
-} elseif (isset($credit_note) && $credit_note->show_quantity_as == 3) {
-    $qty_heading = _l('credit_note_table_quantity_heading') . '/' . _l('credit_note_table_hours_heading');
-}
-?>
+                                        foreach ($custom_fields as $cf) {
+                                            echo '<th width="15%" align="left" class="custom_field">' . e($cf['name']) . '</th>';
+                                        }
+                                        $qty_heading = _l('credit_note_table_quantity_heading');
+                                        if (isset($credit_note) && $credit_note->show_quantity_as == 2 || isset($hours_quantity)) {
+                                            $qty_heading = _l('credit_note_table_hours_heading');
+                                        } elseif (isset($credit_note) && $credit_note->show_quantity_as == 3) {
+                                            $qty_heading = _l('credit_note_table_quantity_heading') . '/' . _l('credit_note_table_hours_heading');
+                                        }
+                                        ?>
                                         <th width="10%" class="qty" align="right">
                                             <?= e($qty_heading); ?>
                                         </th>

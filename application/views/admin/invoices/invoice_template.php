@@ -350,7 +350,7 @@ $data_original_number = isset($invoice) ? $invoice->number : 'false';
                             value="<?= isset($invoice) ? prep_tags_input(get_tags_in($invoice->id, 'invoice')) : ''; ?>"
                             data-role="tagsinput">
                     </div> -->
-                     <div class="col-md-4">
+                    <div class="col-md-4">
                             <?php
                                      $currency_attr = ['disabled' => true, 'data-show-subtext' => true];
                                 $currency_attr                                      = apply_filters_deprecated('invoice_currency_disabled', [$currency_attr], '2.3.0', 'invoice_currency_attributes');
@@ -372,8 +372,90 @@ $data_original_number = isset($invoice) ? $invoice->number : 'false';
                                 $currency_attr = hooks()->apply_filters('invoice_currency_attributes', $currency_attr);
                                 ?>
                             <?= render_select('currency', $currencies, ['id', 'name', 'symbol'], 'invoice_add_edit_currency', $selected, $currency_attr); ?>
+                    </div>
+                    <div class="col-md-4">
+                            <div class="form-group select-placeholder">
+                                <label for="discount_type"
+                                    class="control-label"><?= _l('discount_type'); ?></label>
+                                <select name="discount_type" class="selectpicker" data-width="100%"
+                                    data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>">
+                                    <option value="" selected>
+                                        <?= _l('no_discount'); ?>
+                                    </option>
+                                    <option value="before_tax" <?= isset($invoice) && $invoice->discount_type == 'before_tax' ? 'selected' : ''; ?>>
+                                        <?= _l('discount_type_before_tax'); ?>
+                                    </option>
+                                    <option value="after_tax" <?= isset($invoice) && $invoice->discount_type == 'after_tax' ? 'selected' : ''; ?>>
+                                        <?= _l('discount_type_after_tax'); ?>
+                                    </option>
+
+                                </select>
+                            </div>
+                    </div>
+                    
+                    <div class="row">
+                       
+                        <div class="col-md-4">
+                            <?php
+                                $selected = isset($invoice) ? $invoice->sale_agent : (get_option('automatically_set_logged_in_staff_sales_agent') == '1' ? get_staff_user_id() : '');
+
+                            foreach ($staff as $member) {
+                                if (isset($invoice) && $invoice->sale_agent == $member['staffid']) {
+                                    $selected = $member['staffid'];
+                                    break;
+                                }
+                            }
+
+                            echo render_select('sale_agent', $staff, ['staffid', ['firstname', 'lastname']], 'sale_agent_string', $selected);
+                            ?>
+
                         </div>
-                    <div
+                        
+                        <div class="col-md-4">
+                            <div class="form-group select-placeholder" <?php if (isset($invoice) && ! empty($invoice->is_recurring_from)) { ?>
+                                data-toggle="tooltip"
+                                data-title="<?= _l('create_recurring_from_child_error_message', [_l('invoice_lowercase'), _l('invoice_lowercase'), _l('invoice_lowercase')]); ?>"
+                                <?php } ?>>
+                                <label for="recurring" class="control-label">
+                                    <?= _l('invoice_add_edit_recurring'); ?>
+                                </label>
+                                <select class="selectpicker" data-width="100%" name="recurring"
+                                    data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>"
+                                    <?php
+                            // The problem is that this invoice was generated from previous recurring invoice
+                            // Then this new invoice you set it as recurring but the next invoice date was still taken from the previous invoice.
+                            if (isset($invoice) && ! empty($invoice->is_recurring_from)) {
+                                echo 'disabled';
+                            } ?>>
+                                    <?php for ($i = 0; $i <= 12; $i++) { ?>
+                                    <?php
+                                        $selected = '';
+                                        if (isset($invoice)) {
+                                            if ($invoice->custom_recurring == 0) {
+                                                if ($invoice->recurring == $i) {
+                                                    $selected = 'selected';
+                                                }
+                                            }
+                                        }
+                                        if ($i == 0) {
+                                            $reccuring_string = _l('invoice_add_edit_recurring_no');
+                                        } elseif ($i == 1) {
+                                            $reccuring_string = _l('invoice_add_edit_recurring_month', $i);
+                                        } else {
+                                            $reccuring_string = _l('invoice_add_edit_recurring_months', $i);
+                                        }
+                                        ?>
+                                    <option value="<?= e($i); ?>" <?= e($selected); ?>>
+                                        <?= e($reccuring_string); ?>
+                                    </option>
+                                    <?php } ?>
+                                    <option value="custom" <?= isset($invoice) && $invoice->recurring != 0 && $invoice->custom_recurring == 1 ? 'selected' : ''; ?>>
+                                        <?= _l('recurring_custom'); ?>
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div
                         class="form-group col-md-6 mbot15<?= count($payment_modes) > 0 ? ' select-placeholder' : ''; ?>">
                         <label for="allowed_payment_modes"
                             class="control-label"><?= _l('invoice_add_edit_allowed_payment_modes'); ?></label>
@@ -420,86 +502,6 @@ $data_original_number = isset($invoice) ? $invoice->number : 'false';
                         <?php } ?>
                     </div>
 
-                    <div class="row">
-                       
-                        <div class="col-md-4">
-                            <?php
-                                $selected = isset($invoice) ? $invoice->sale_agent : (get_option('automatically_set_logged_in_staff_sales_agent') == '1' ? get_staff_user_id() : '');
-
-                            foreach ($staff as $member) {
-                                if (isset($invoice) && $invoice->sale_agent == $member['staffid']) {
-                                    $selected = $member['staffid'];
-                                    break;
-                                }
-                            }
-
-                            echo render_select('sale_agent', $staff, ['staffid', ['firstname', 'lastname']], 'sale_agent_string', $selected);
-                            ?>
-
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group select-placeholder" <?php if (isset($invoice) && ! empty($invoice->is_recurring_from)) { ?>
-                                data-toggle="tooltip"
-                                data-title="<?= _l('create_recurring_from_child_error_message', [_l('invoice_lowercase'), _l('invoice_lowercase'), _l('invoice_lowercase')]); ?>"
-                                <?php } ?>>
-                                <label for="recurring" class="control-label">
-                                    <?= _l('invoice_add_edit_recurring'); ?>
-                                </label>
-                                <select class="selectpicker" data-width="100%" name="recurring"
-                                    data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>"
-                                    <?php
-                            // The problem is that this invoice was generated from previous recurring invoice
-                            // Then this new invoice you set it as recurring but the next invoice date was still taken from the previous invoice.
-                            if (isset($invoice) && ! empty($invoice->is_recurring_from)) {
-                                echo 'disabled';
-                            } ?>>
-                                    <?php for ($i = 0; $i <= 12; $i++) { ?>
-                                    <?php
-                                        $selected = '';
-                                        if (isset($invoice)) {
-                                            if ($invoice->custom_recurring == 0) {
-                                                if ($invoice->recurring == $i) {
-                                                    $selected = 'selected';
-                                                }
-                                            }
-                                        }
-                                        if ($i == 0) {
-                                            $reccuring_string = _l('invoice_add_edit_recurring_no');
-                                        } elseif ($i == 1) {
-                                            $reccuring_string = _l('invoice_add_edit_recurring_month', $i);
-                                        } else {
-                                            $reccuring_string = _l('invoice_add_edit_recurring_months', $i);
-                                        }
-                                        ?>
-                                    <option value="<?= e($i); ?>" <?= e($selected); ?>>
-                                        <?= e($reccuring_string); ?>
-                                    </option>
-                                    <?php } ?>
-                                    <option value="custom" <?= isset($invoice) && $invoice->recurring != 0 && $invoice->custom_recurring == 1 ? 'selected' : ''; ?>>
-                                        <?= _l('recurring_custom'); ?>
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group select-placeholder">
-                                <label for="discount_type"
-                                    class="control-label"><?= _l('discount_type'); ?></label>
-                                <select name="discount_type" class="selectpicker" data-width="100%"
-                                    data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>">
-                                    <option value="" selected>
-                                        <?= _l('no_discount'); ?>
-                                    </option>
-                                    <option value="before_tax" <?= isset($invoice) && $invoice->discount_type == 'before_tax' ? 'selected' : ''; ?>>
-                                        <?= _l('discount_type_before_tax'); ?>
-                                    </option>
-                                    <option value="after_tax" <?= isset($invoice) && $invoice->discount_type == 'after_tax' ? 'selected' : ''; ?>>
-                                        <?= _l('discount_type_after_tax'); ?>
-                                    </option>
-
-                                </select>
-                            </div>
-                        </div>
                         <div
                             class="recurring_custom <?= (isset($invoice) && $invoice->custom_recurring != 1) || (! isset($invoice)) ? ' hide' : ''; ?>">
                             <div class="col-md-6">
