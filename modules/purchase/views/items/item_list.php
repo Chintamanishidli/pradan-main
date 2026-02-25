@@ -146,6 +146,7 @@
                         _l('_images'),
                         _l('commodity_code'),
                         _l('commodity_name'),
+                        'HSN Code',
                         _l('groups'),
                         _l('unit_name'),
                         _l('rate'),
@@ -260,6 +261,15 @@
                               </div>
                               <div class="col-md-4">
                                 <?php echo render_input('sku_name', 'sku_name'); ?>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="hsn_code" class="control-label"><?= _l('HSN Code'); ?></label>
+                                  <input type="text" id="hsn_code" name="hsn_code" class="form-control" placeholder="HSN Code" value="">
+                                </div>
                               </div>
                             </div>
 

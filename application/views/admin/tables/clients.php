@@ -91,23 +91,6 @@ return App_table::find('clients')
 
             $company = '<a href="' . $url . '" class="tw-font-medium">' . $company . '</a>';
 
-            $company .= '<div class="row-options">';
-            $company .= '<a href="' . admin_url('clients/client/' . $aRow['userid'] . ($isPerson && $aRow['contact_id'] ? '?group=contacts' : '')) . '">' . _l('view') . '</a>';
-
-            if ($aRow['registration_confirmed'] == 0 && is_admin()) {
-                $company .= ' | <a href="' . admin_url('clients/confirm_registration/' . $aRow['userid']) . '" class="text-success bold">' . _l('confirm_registration') . '</a>';
-            }
-
-            if (! $isPerson) {
-                $company .= ' | <a href="' . admin_url('clients/client/' . $aRow['userid'] . '?group=contacts') . '">' . _l('customer_contacts') . '</a>';
-            }
-
-            if ($hasPermissionDelete) {
-                $company .= ' | <a href="' . admin_url('clients/delete/' . $aRow['userid']) . '" class="_delete">' . _l('delete') . '</a>';
-            }
-
-            $company .= '</div>';
-
             $row[] = $company;
 
             // Primary contact
@@ -129,6 +112,7 @@ return App_table::find('clients')
             $toggleActive .= '<span class="hide">' . ($aRow[db_prefix() . 'clients.active'] == 1 ? _l('is_active_export') : _l('is_not_active_export')) . '</span>';
 
             $row[] = $toggleActive;
+
 
             // Customer groups parsing (hidden)
             // $groupsRow = '';

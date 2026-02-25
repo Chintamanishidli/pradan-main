@@ -274,12 +274,13 @@
 		                  <tr>
 		                    <th></th>
 		                    <th width="12%" align="left"><i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-title="<?php echo _l('item_description_new_lines_notice'); ?>"></i> <?php echo _l('invoice_table_item_heading'); ?></th>
+		                    <th width="10%" align="left">HSN Code</th>
 		                    <th width="10%" align="right"><?php echo _l('unit_price'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>
 		                    <th width="10%" align="right" class="qty"><?php echo _l('quantity'); ?></th>
-                    		<th width="8%" align="left"><?php echo _l('unit'); ?></th>
-		                    <th width="12%" align="right"><?php echo _l('invoice_table_tax_heading'); ?></th>
-		                    <th width="10%" align="right"><?php echo _l('tax_value'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>
-		                    <th width="10%" align="right"><?php echo _l('pur_subtotal_after_tax'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>
+                    		<th width="5%" align="left"><?php echo _l('unit'); ?></th>
+		                    <th width="10%" align="right"><?php echo _l('invoice_table_tax_heading'); ?></th>
+		                    <th width="8%" align="right"><?php echo _l('tax_value'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>
+		                    <th width="8%" align="right"><?php echo _l('pur_subtotal_after_tax'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>
 		                    <th width="7%" align="right"><?php echo _l('discount').'(%)'; ?></th>
 		                    <th width="10%" align="right"><?php echo _l('discount(money)'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>
 		                    <th width="10%" align="right"><?php echo _l('total'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>

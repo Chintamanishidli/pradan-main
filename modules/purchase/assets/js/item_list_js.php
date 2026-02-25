@@ -249,6 +249,7 @@ function edit_commodity_item(invoker){
 
       $('#commodity_list-add-edit input[name="origin"]').val($(invoker).data('origin'));
       $('#commodity_list-add-edit input[name="rate"]').val($(invoker).data('rate'));
+      $('#commodity_list-add-edit input[name="hsn_code"]').val($(invoker).data('hsn_code') || '');
       $('#commodity_list-add-edit input[name="type_product"]').val($(invoker).data('type_product'));
 
       $('#commodity_list-add-edit select[name="style_id"]').val($(invoker).data('style_id')).change();
@@ -317,6 +318,7 @@ function edit_commodity_item(invoker){
 
       $('#commodity_list-add-edit input[name="origin"]').val('');
       $('#commodity_list-add-edit input[name="rate"]').val('');
+      $('#commodity_list-add-edit input[name="hsn_code"]').val('');
       $('#commodity_list-add-edit input[name="type_product"]').val('');
 
       $('#commodity_list-add-edit select[name="style_id"]').val('').change();

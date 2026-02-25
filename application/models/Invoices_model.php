@@ -1062,6 +1062,10 @@ class Invoices_model extends App_Model
                 $updated = true;
             }
 
+            if (update_sales_item_post($item['itemid'], $item, 'hsn_code')) {
+                $updated = true;
+            }
+
             if (update_sales_item_post($item['itemid'], $item, 'description')) {
                 $this->log_invoice_activity($id, 'invoice_estimate_activity_updated_item_short_description', false, serialize([
                     $original_item->description,

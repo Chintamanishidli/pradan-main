@@ -207,7 +207,10 @@ function pur_add_item_to_preview(id) {
     $('.main input[name="unit_price"]').val(response.purchase_price);
     $('.main input[name="unit_name"]').val(response.unit_name);
     $('.main input[name="unit_id"]').val(response.unit_id);
-    $('.main input[name="quantity"]').val();
+    $('.main input[name="quantity"]').val(1);
+    $('.main input[name="hsn_code"]').val(response.hsn_code);
+    $('.main textarea[name="description"]').val(response.long_description);
+    $('.main input[name="discount_percent"]').val(0);
 
     var taxSelectedArray = [];
     if (response.taxname && response.taxrate) {
@@ -256,7 +259,7 @@ function tax_rate_by_id(tax_id){
   return tax_rate;
 }
 
-function pur_get_item_row_template(name, item_code, item_text, unit_price, quantity, unit_name, unit_id, into_money, item_key, tax_value, total, taxname, currency_rate, to_currency)  {
+function pur_get_item_row_template(name, item_code, item_text, unit_price, quantity, unit_name, unit_id, into_money, item_key, tax_value, total, taxname, currency_rate, to_currency, hsn_code, discount_percent, description)  {
   "use strict";
 
   jQuery.ajaxSetup({
@@ -277,7 +280,10 @@ function pur_get_item_row_template(name, item_code, item_text, unit_price, quant
     total : total,
     item_code : item_code,
     currency_rate: currency_rate,
-    to_currency: to_currency
+    to_currency: to_currency,
+    hsn_code: hsn_code,
+    discount_percent: discount_percent,
+    description: description
   });
   jQuery.ajaxSetup({
     async: true
@@ -302,7 +308,7 @@ function pur_add_item_to_table(data, itemid) {
   var item_key = lastAddedItemKey ? lastAddedItemKey += 1 : $("body").find('.invoice-items-table tbody .item').length + 1;
   lastAddedItemKey = item_key;
   $("body").append('<div class="dt-loader"></div>');
-  pur_get_item_row_template('newitems[' + item_key + ']', data.item_code, data.item_text,data.unit_price,data.quantity, data.unit_name, data.unit_id, data.into_money, item_key, data.tax_value, data.total, data.taxname, currency_rate, to_currency).done(function(output){
+  pur_get_item_row_template('newitems[' + item_key + ']', data.item_code, data.item_text,data.unit_price,data.quantity, data.unit_name, data.unit_id, data.into_money, item_key, data.tax_value, data.total, data.taxname, currency_rate, to_currency, data.hsn_code, data.discount_percent, data.description).done(function(output){
     table_row += output;
 
     $('.invoice-item table.invoice-items-table.items tbody').append(table_row);
@@ -358,6 +364,9 @@ function pur_get_item_preview_values() {
   response.tax_value = $('.invoice-item .main input[name="tax_value"]').val();
   response.into_money = $('.invoice-item .main input[name="into_money"]').val();
   response.total = $('.invoice-item .main input[name="total"]').val();
+  response.hsn_code = $('.invoice-item .main input[name="hsn_code"]').val();
+  response.discount_percent = $('.invoice-item .main input[name="discount_percent"]').val();
+  response.description = $('.invoice-item .main textarea[name="description"]').val();
 
   return response;
 }
@@ -404,6 +413,12 @@ function pur_calculate_total(){
 
     _amount = accounting.toFixed($(this).find('td.rate input').val() * quantity, app.options.decimal_places);
     _amount = parseFloat(_amount);
+
+    var discount_percent = $(this).find('input[name*="[discount_percent]"]').val() || 0;
+    if (discount_percent > 0) {
+        _amount = _amount - (_amount * discount_percent / 100);
+    }
+
     var tax_value = 0;
     var row_total = _amount;
 

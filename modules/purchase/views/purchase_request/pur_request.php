@@ -199,10 +199,14 @@
     <thead style="background: #465a6f; color: #fff;">
       <tr>
         <th></th>
-        <th width="30%" align="left"><i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-title="<?php echo _l('item_description_new_lines_notice'); ?>"></i> <?php echo _l('item_description'); ?></th>
+        <th width="15%" align="left"><?php echo _l('Description'); ?></th>
+        <th width="15%" align="left"><?php echo _l('item_description'); ?></th>
+        <th width="10%" align="left"><?php echo _l('HSN Code'); ?></th>
         <th width="10%" align="right" class="qty"><?php echo _l('pur_qty'); ?></th>
+        <th width="10%" align="right"><?php echo _l('unit'); ?></th>
+        <th width="10%" align="right"><?php echo _l('Discount (%)'); ?></th>
         <th width="10%" align="right"><?php echo _l('pur_rate'); ?><span class="th_currency"><?php echo '('.$pur_request_currency->name.')'; ?></span></th>
-        <th width="15%" align="right"><?php echo _l('tax'); ?></th>
+        <th width="10%" align="right"><?php echo _l('tax'); ?></th>
         <th width="10%" align="right"><?php echo _l('amount'); ?><span class="th_currency"><?php echo '('.$pur_request_currency->name.')'; ?></span></th>
         <th align="right"><i class="fa fa-cog"></i></th>
       </tr>

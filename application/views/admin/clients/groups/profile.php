@@ -1,45 +1,48 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-
-<style>
-/* Scoped single-column, three-row grid for this view only */
-.profile-grid-wrapper {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-  gap: 1rem;
-}
-.profile-grid-row { padding: 0; }
-</style>
-<!-- <style>
-/* Remove horizontal scroller arrows and force tabs to wrap on this page */
-.horizontal-scrollable-tabs .scroller { display: none !important; }
-.horizontal-scrollable-tabs { overflow: visible !important; }
-.horizontal-scrollable-tabs .horizontal-tabs { overflow: visible !important; }
-.horizontal-scrollable-tabs .horizontal-tabs .nav { display: flex !important; flex-wrap: wrap !important; }
-</style> -->
-
-<div class="profile-grid-wrapper" style="display:grid;grid-template-columns:1fr;grid-template-rows:auto 1fr auto;gap:1rem;">
-
-    <div class="profile-grid-row profile-grid-row-1">
-        <?php if (isset($client)) { ?>
-        <h4 class="customer-profile-group-heading">
-            <?= _l('client_add_edit_profile'); ?>
-        </h4>
-        <?php } ?>
-    </div>
-
-    <div class="profile-grid-row profile-grid-row-2">
-        <div class="row">
+<div class="row">
     <?= form_open($this->uri->uri_string(), ['class' => 'client-form', 'autocomplete' => 'off']); ?>
     <div class="additional"></div>
+
+    <!-- Header Summary Section: Only Customer Code -->
+    <div class="customer-info-header" style="background-color: #adc8e6; padding: 15px; margin-bottom: 20px; border: 1px solid #999; color: #000;">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="border: 1px solid #fff; padding: 2px 8px; font-weight: 500;">Customer Code</span>
+                    <?php 
+                        $id_to_show = 'NEW';
+                        if (isset($client)) {
+                            $id_to_show = $client->userid;
+                        } else {
+                            $next_id_query = $this->db->select_max('userid')->get(db_prefix() . 'clients')->row();
+                            $id_to_show = $next_id_query ? ($next_id_query->userid + 1) : 1;
+                        }
+                    ?>
+                    <span style="background-color: #fff; border: 1px solid #fff; padding: 2px 15px; min-width: 140px;"><?= $id_to_show; ?></span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-md-12">
         <div class="horizontal-scrollable-tabs panel-full-width-tabs">
+            <div class="scroller arrow-left"><i class="fa fa-angle-left"></i></div>
+            <div class="scroller arrow-right"><i class="fa fa-angle-right"></i></div>
             <div class="horizontal-tabs">
                 <ul class="nav nav-tabs customer-profile-tabs nav-tabs-horizontal" role="tablist">
-                    <li role="presentation"
-                        class="<?= ! $this->input->get('tab') ? 'active' : ''; ?>">
+                    <li role="presentation" class="<?= ! $this->input->get('tab') || $this->input->get('tab') == 'contact_info' ? 'active' : ''; ?>">
                         <a href="#contact_info" aria-controls="contact_info" role="tab" data-toggle="tab">
                             <?= _l('customer_profile_details'); ?>
+                        </a>
+                    </li>
+                    <li role="presentation" class="<?= $this->input->get('tab') == 'gst_details' ? 'active' : ''; ?>">
+                        <a href="#gst_details" aria-controls="gst_details" role="tab" data-toggle="tab">
+                            GST Details
+                        </a>
+                    </li>
+                    <li role="presentation" class="<?= $this->input->get('tab') == 'billing_and_shipping' ? 'active' : ''; ?>">
+                        <a href="#billing_and_shipping" aria-controls="billing_and_shipping" role="tab"
+                            data-toggle="tab">
+                            <?= _l('billing_shipping'); ?>
                         </a>
                     </li>
                     <?php
@@ -53,20 +56,13 @@
                             </a>
                         </li>
                     <?php } ?>
-                    <li role="presentation">
-                        <a href="#billing_and_shipping" aria-controls="billing_and_shipping" role="tab"
-                            data-toggle="tab">
-                            <?= _l('billing_shipping'); ?>
-                        </a>
-                    </li>
                     <?php hooks()->do_action('after_customer_billing_and_shipping_tab', $client ?? false); ?>
                     <?php if (isset($client)) { ?>
                     <li role="presentation">
                         <a href="#customer_admins" aria-controls="customer_admins" role="tab" data-toggle="tab">
                             <?= _l('customer_admins'); ?>
                             <?php if (count($customer_admins) > 0) { ?>
-                            <span
-                                class="badge bg-default"><?= count($customer_admins) ?></span>
+                            <span class="badge bg-default"><?= count($customer_admins) ?></span>
                             <?php } ?>
                         </a>
                     </li>
@@ -89,8 +85,10 @@
                 </div>
             </div>
             <?php } ?>
+
+            <!-- CUSTOMER DETAILS TAB -->
             <div role="tabpanel"
-                class="tab-pane<?= ! $this->input->get('tab') ? ' active' : ''; ?>"
+                class="tab-pane<?= ! $this->input->get('tab') || $this->input->get('tab') == 'contact_info' ? ' active' : ''; ?>"
                 id="contact_info">
                 <div class="row">
                     <div class="col-md-12<?= isset($client) && (! is_empty_customer_company($client->userid) && total_rows(db_prefix() . 'contacts', ['userid' => $client->userid, 'is_primary' => 1]) > 0) ? '' : ' hide'; ?>"
@@ -103,8 +101,21 @@
                                 for="show_primary_contact"><?= _l('show_primary_contact', _l('invoices') . ', ' . _l('estimates') . ', ' . _l('payments') . ', ' . _l('credit_notes')); ?></label>
                         </div>
                     </div>
-                    <!-- Row 1: Company, Phone, Website -->
-                    <div class="col-md-3">
+                    <!-- Row 1: Title, Company, Phone, Website -->
+                    <div class="col-md-2">
+                        <?php $title_value = isset($client) ? $client->title : ''; ?>
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <select name="title" id="title" class="selectpicker" data-width="100%"
+                                data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>">
+                                <option value="">Select Title</option>
+                                <option value="Mr" <?php if($title_value == 'Mr') echo 'selected'; ?>>Mr</option>
+                                <option value="Mrs" <?php if($title_value == 'Mrs') echo 'selected'; ?>>Mrs</option>
+                                <option value="M/s" <?php if($title_value == 'M/s') echo 'selected'; ?>>M/s</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <?php hooks()->do_action('before_customer_profile_company_field', $client ?? null); ?>
                         <?php $value = (isset($client) ? $client->company : ''); ?>
                         <?php $attrs = (isset($client) ? [] : ['autofocus' => true]); ?>
@@ -139,7 +150,7 @@
                         <?php } ?>
                     </div>
 
-                    <!-- Row 2: Groups, Currency -->
+                    <!-- Row 2: Groups -->
                     <div class="col-md-3">
                         <?php
                         $selected = [];
@@ -155,53 +166,42 @@
                         }
                         ?>
                     </div>
-                    <!-- <div class="col-md-3">
-                        <i class="fa-regular fa-circle-question pull-left tw-mt-0.5 tw-mr-1"
-                            data-toggle="tooltip"
-                            data-title="<?= _l('customer_currency_change_notice'); ?>"></i>
-                        <?php
-                        $s_attrs  = ['data-none-selected-text' => _l('system_default_string')];
-                        $selected = '';
-                        if (isset($client) && client_have_transactions($client->userid)) {
-                            $s_attrs['disabled'] = true;
-                        }
-                        foreach ($currencies as $currency) {
-                            if (isset($client)) {
-                                if ($currency['id'] == $client->default_currency) {
-                                    $selected = $currency['id'];
-                                }
-                            }
-                        }
-                        echo render_select('default_currency', $currencies, ['id', 'name', 'symbol'], 'invoice_add_edit_currency', $selected, $s_attrs);
-                        ?>
-                    </div> -->
 
-                    <!-- Row 3: Language (if enabled) -->
-                    <!-- <?php if (! is_language_disabled()) { ?>
-                    <div class="col-md-3">
-                        <div class="form-group select-placeholder">
-                            <label for="default_language" class="control-label"><?= _l('localization_default_language'); ?></label>
-                            <select name="default_language" id="default_language"
-                                class="form-control selectpicker"
-                                data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>">
-                                <option value=""><?= _l('system_default_string'); ?></option>
-                                <?php foreach ($this->app->get_available_languages() as $availableLanguage) {
-                                    $selected = '';
-                                    if (isset($client)) {
-                                        if ($client->default_language == $availableLanguage) {
-                                            $selected = 'selected';
-                                        }
-                                    } ?>
-                                <option value="<?= e($availableLanguage); ?>" <?= e($selected); ?>>
-                                    <?= e(ucfirst($availableLanguage)); ?>
-                                </option>
-                                <?php } ?>
-                            </select>
-                        </div>
+                    <!-- Row 4: Address Section -->
+                    <div class="col-md-12">
+                        <hr />
                     </div>
-                    <?php } ?> -->
+                    <div class="col-md-6">
+                        <?php $value = (isset($client) ? $client->address : ''); ?>
+                        <?= render_textarea('address', 'client_address', $value); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $value = (isset($client) ? $client->city : ''); ?>
+                        <?= render_input('city', 'client_city', $value); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $value = (isset($client) ? $client->state : ''); ?>
+                        <?= render_input('state', 'client_state', $value); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $value = (isset($client) ? $client->zip : ''); ?>
+                        <?= render_input('zip', 'client_postal_code', $value); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $countries = get_all_countries();
+                        $customer_default_country = get_option('customer_default_country');
+                        $selected = (isset($client) ? $client->country : $customer_default_country);
+                        echo render_select('country', $countries, ['country_id', ['short_name']], 'clients_country', $selected, ['data-none-selected-text' => _l('dropdown_non_selected_tex')]);
+                        ?>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- Row 3b: GST Number, GST Status, GST Type, GST State, PAN No, Aadhar No -->
+            <!-- GST DETAILS TAB -->
+            <div role="tabpanel"
+                class="tab-pane<?= $this->input->get('tab') == 'gst_details' ? ' active' : ''; ?>"
+                id="gst_details">
+                <div class="row">
                     <div class="col-md-3">
                         <?php $gst_number_value = isset($client) ? $client->gst_number : '';
                         echo render_input('gst_number', 'client_gst_number', $gst_number_value, 'text'); ?>
@@ -248,38 +248,12 @@
                         <?php $aadhar_no_value = isset($client) ? $client->aadhar_no : '';
                         echo render_input('aadhar_no', 'client_aadhar_no', $aadhar_no_value, 'text'); ?>
                     </div>
-
-                    <!-- Row 4: Address Section -->
-                    <div class="col-md-12">
-                        <hr />
-                    </div>
-                    <div class="col-md-6">
-                        <?php $value = (isset($client) ? $client->address : ''); ?>
-                        <?= render_textarea('address', 'client_address', $value); ?>
-                    </div>
-                    <div class="col-md-3">
-                        <?php $value = (isset($client) ? $client->city : ''); ?>
-                        <?= render_input('city', 'client_city', $value); ?>
-                    </div>
-                    <div class="col-md-3">
-                        <?php $value = (isset($client) ? $client->state : ''); ?>
-                        <?= render_input('state', 'client_state', $value); ?>
-                    </div>
-                    <div class="col-md-3">
-                        <?php $value = (isset($client) ? $client->zip : ''); ?>
-                        <?= render_input('zip', 'client_postal_code', $value); ?>
-                    </div>
-                    <div class="col-md-3">
-                        <?php $countries = get_all_countries();
-                        $customer_default_country = get_option('customer_default_country');
-                        $selected = (isset($client) ? $client->country : $customer_default_country);
-                        echo render_select('country', $countries, ['country_id', ['short_name']], 'clients_country', $selected, ['data-none-selected-text' => _l('dropdown_non_selected_tex')]);
-                        ?>
-                    </div>
                 </div>
             </div>
+
             <?php if (isset($client)) { ?>
-            <div role="tabpanel" class="tab-pane" id="customer_admins">
+            <!-- CUSTOMER ADMINS TAB -->
+            <div role="tabpanel" class="tab-pane<?= $this->input->get('tab') == 'customer_admins' ? ' active' : ''; ?>" id="customer_admins">
                 <?php if (staff_can('create', 'customers') || staff_can('edit', 'customers')) { ?>
                 <a href="#" data-toggle="modal" data-target="#customer_admins_assign"
                     class="btn btn-primary mbot30"><?= _l('assign_admin'); ?></a>
@@ -287,30 +261,23 @@
                 <table class="table dt-table">
                     <thead>
                         <tr>
-                            <th><?= _l('staff_member'); ?>
-                            </th>
-                            <th><?= _l('customer_admin_date_assigned'); ?>
-                            </th>
+                            <th><?= _l('staff_member'); ?></th>
+                            <th><?= _l('customer_admin_date_assigned'); ?></th>
                             <?php if (staff_can('create', 'customers') || staff_can('edit', 'customers')) { ?>
-                            <th class="options">
-                                <?= _l('options'); ?>
-                            </th>
+                            <th class="options"><?= _l('options'); ?></th>
                             <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($customer_admins as $c_admin) { ?>
                         <tr>
-                            <td><a
-                                    href="<?= admin_url('profile/' . $c_admin['staff_id']); ?>">
-                                    <?= staff_profile_image($c_admin['staff_id'], [
-                                        'staff-profile-image-small',
-                                        'mright5',
-                                    ]);
-                            echo e(get_staff_full_name($c_admin['staff_id'])); ?></a>
+                            <td>
+                                <a href="<?= admin_url('profile/' . $c_admin['staff_id']); ?>">
+                                    <?= staff_profile_image($c_admin['staff_id'], ['staff-profile-image-small', 'mright5']); ?>
+                                    <?= e(get_staff_full_name($c_admin['staff_id'])); ?>
+                                </a>
                             </td>
-                            <td
-                                data-order="<?= e($c_admin['date_assigned']); ?>">
+                            <td data-order="<?= e($c_admin['date_assigned']); ?>">
                                 <?= e(_dt($c_admin['date_assigned'])); ?>
                             </td>
                             <?php if (staff_can('create', 'customers') || staff_can('edit', 'customers')) { ?>
@@ -327,20 +294,21 @@
                 </table>
             </div>
             <?php } ?>
-            <div role="tabpanel" class="tab-pane" id="billing_and_shipping">
+
+            <!-- BILLING & SHIPPING TAB -->
+            <div role="tabpanel" class="tab-pane<?= $this->input->get('tab') == 'billing_and_shipping' ? ' active' : ''; ?>" id="billing_and_shipping">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6">
                                 <h4
-                                    class="tw-font-semibold tw-text-base tw-text-neutral-700 tw-flex tw-justify-between tw-items-center tw-mt-0 tw-mb-6">
+                                    class="tw-font-semibold tw-text-base tw-text-white tw-flex tw-justify-between tw-items-center tw-mt-0 tw-mb-6">
                                     <?= _l('billing_address'); ?>
                                     <a href="#"
-                                        class="billing-same-as-customer tw-text-sm tw-text-neutral-500 hover:tw-text-neutral-700 active:tw-text-neutral-700">
+                                        class="billing-same-as-customer tw-text-sm tw-text-white hover:tw-text-neutral-200 active:tw-text-neutral-200">
                                         <?= _l('customer_billing_same_as_profile'); ?>
                                     </a>
                                 </h4>
-
                                 <?php $value = (isset($client) ? $client->billing_street : ''); ?>
                                 <?= render_textarea('billing_street', 'billing_street', $value); ?>
                                 <?php $value = (isset($client) ? $client->billing_city : ''); ?>
@@ -354,19 +322,17 @@
                             </div>
                             <div class="col-md-6">
                                 <h4
-                                    class="tw-font-semibold tw-text-base tw-text-neutral-700 tw-flex tw-justify-between tw-items-center tw-mt-0 tw-mb-6">
+                                    class="tw-font-semibold tw-text-base tw-text-white tw-flex tw-justify-between tw-items-center tw-mt-0 tw-mb-6">
                                     <span>
                                         <i class="fa-regular fa-circle-question tw-mr-1" data-toggle="tooltip"
                                             data-title="<?= _l('customer_shipping_address_notice'); ?>"></i>
-
                                         <?= _l('shipping_address'); ?>
                                     </span>
                                     <a href="#"
-                                        class="customer-copy-billing-address tw-text-sm tw-text-neutral-500 hover:tw-text-neutral-700 active:tw-text-neutral-700">
+                                        class="customer-copy-billing-address tw-text-sm tw-text-white hover:tw-text-neutral-200 active:tw-text-neutral-200">
                                         <?= _l('customer_billing_copy'); ?>
                                     </a>
                                 </h4>
-
                                 <?php $value = (isset($client) ? $client->shipping_street : ''); ?>
                                 <?= render_textarea('shipping_street', 'shipping_street', $value); ?>
                                 <?php $value = (isset($client) ? $client->shipping_city : ''); ?>
@@ -409,9 +375,7 @@
         </div>
     </div>
     <?= form_close(); ?>
-        </div>
-    </div>
-    <div class="profile-grid-row profile-grid-row-3">
+</div>
 <?php if (isset($client)) { ?>
 <?php if (staff_can('create', 'customers') || staff_can('edit', 'customers')) { ?>
 <div class="modal fade" id="customer_admins_assign" tabindex="-1" role="dialog">
@@ -421,24 +385,19 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">
-                    <?= _l('assign_admin'); ?>
-                </h4>
+                <h4 class="modal-title"><?= _l('assign_admin'); ?></h4>
             </div>
             <div class="modal-body">
                 <?php
                $selected = [];
-
-    foreach ($customer_admins as $c_admin) {
-        array_push($selected, $c_admin['staff_id']);
-    }
-    echo render_select('customer_admins[]', $staff, ['staffid', ['firstname', 'lastname']], '', $selected, ['multiple' => true], [], '', '', false); ?>
+               foreach ($customer_admins as $c_admin) {
+                   array_push($selected, $c_admin['staff_id']);
+               }
+               echo render_select('customer_admins[]', $staff, ['staffid', ['firstname', 'lastname']], '', $selected, ['multiple' => true], [], '', '', false); ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                    data-dismiss="modal"><?= _l('close'); ?></button>
-                <button type="submit"
-                    class="btn btn-primary"><?= _l('submit'); ?></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?= _l('close'); ?></button>
+                <button type="submit" class="btn btn-primary"><?= _l('submit'); ?></button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -450,5 +409,3 @@
 <?php } ?>
 <?php } ?>
 <?php $this->load->view('admin/clients/client_group'); ?>
-    </div>
-</div>

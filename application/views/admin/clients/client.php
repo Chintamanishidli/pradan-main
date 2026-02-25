@@ -96,6 +96,16 @@
                 <?php } ?>
 
                 <div class="panel_s">
+                    <?php if (isset($client) && $group == 'profile') { ?>
+                    <div class="panel-heading" style="display:flex;justify-content:flex-end;padding:10px 15px;">
+                        <button type="button" class="btn btn-info btn-sm" id="btn-edit-client" onclick="enableClientEditMode();">
+                            <i class="fa fa-pencil"></i> Edit
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" id="btn-cancel-edit-client" style="display:none;margin-left:5px;" onclick="disableClientEditMode();">
+                            <i class="fa fa-times"></i> Cancel
+                        </button>
+                    </div>
+                    <?php } ?>
                     <div class="panel-body">
                         <?php if (isset($client)) { ?>
                         <?= form_hidden('isedit'); ?>
@@ -109,7 +119,7 @@
                         </div>
                     </div>
                     <?php if ($group == 'profile') { ?>
-                    <div class="panel-footer text-right tw-space-x-1" id="profile-save-section">
+                    <div class="panel-footer text-right tw-space-x-1" id="profile-save-section" <?php if (isset($client)) { ?>style="display:none;"<?php } ?>>
                         <?php if (! isset($client)) { ?>
                         <button class="btn btn-default save-and-add-contact customer-form-submiter">
                             <?= _l('save_customer_and_add_contact'); ?>
@@ -132,7 +142,34 @@
     $(function() {
         init_rel_tasks_table( <?= e($client->userid); ?> ,
             'customer');
+
+        // Start in view mode for existing clients on profile tab
+        <?php if ($group == 'profile') { ?>
+        disableClientEditMode();
+        <?php } ?>
     });
+
+    function enableClientEditMode() {
+        var $form = $('.client-form');
+        $form.find('input:not([type=hidden]), textarea, select').prop('disabled', false);
+        // Re-initialize selectpicker dropdowns after enabling
+        $form.find('select.selectpicker').selectpicker('refresh');
+
+        $('#profile-save-section').slideDown(200);
+        $('#btn-edit-client').hide();
+        $('#btn-cancel-edit-client').show();
+    }
+
+    function disableClientEditMode() {
+        var $form = $('.client-form');
+        $form.find('input:not([type=hidden]), textarea, select').prop('disabled', true);
+        // Re-initialize selectpicker dropdowns after disabling
+        $form.find('select.selectpicker').selectpicker('refresh');
+
+        $('#profile-save-section').slideUp(200);
+        $('#btn-edit-client').show();
+        $('#btn-cancel-edit-client').hide();
+    }
 </script>
 <?php } ?>
 <?php $this->load->view('admin/clients/client_js'); ?>

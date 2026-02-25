@@ -68,6 +68,10 @@
                     <td><?php echo pur_html_entity_decode($item->sku_name) ; ?></td>
                  </tr>
                  <tr class="project-overview">
+                    <td class="bold">HSN Code</td>
+                    <td><?php echo pur_html_entity_decode(isset($item->hsn_code) ? $item->hsn_code : ''); ?></td>
+                 </tr>
+                 <tr class="project-overview">
                     <td class="bold"><?php echo _l('item_group'); ?></td>
                     <td><?php echo get_group_name_item(pur_html_entity_decode($item->group_id)) != null ? get_group_name_item(pur_html_entity_decode($item->group_id))->name : '' ; ?></td>
                  </tr>

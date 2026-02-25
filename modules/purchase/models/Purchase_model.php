@@ -1146,6 +1146,9 @@ class Purchase_model extends App_Model
         unset($data['unit_name']);
         unset($data['request_detail']);
         unset($data['unit_id']);
+        unset($data['hsn_code']);
+        unset($data['discount_percent']);
+        unset($data['description']);
   
 
         if(isset($data['send_to_vendors']) && count($data['send_to_vendors']) > 0){
@@ -1197,6 +1200,9 @@ class Purchase_model extends App_Model
                     $dt_data['total'] = $rqd['total'];
                     $dt_data['tax_value'] = $rqd['tax_value'];
                     $dt_data['item_text'] = nl2br($rqd['item_text']);
+                    $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
+                    $dt_data['discount_percent'] = isset($rqd['discount_percent']) ? $rqd['discount_percent'] : 0;
+                    $dt_data['description'] = isset($rqd['description']) ? nl2br($rqd['description']) : '';
 
                     $tax_money = 0;
                     $tax_rate_value = 0;
@@ -1291,6 +1297,9 @@ class Purchase_model extends App_Model
         unset($data['request_detail']);
         unset($data['isedit']);
         unset($data['unit_id']);
+        unset($data['hsn_code']);
+        unset($data['discount_percent']);
+        unset($data['description']);
 
         if(isset($data['send_to_vendors']) && count($data['send_to_vendors']) > 0){
             $data['send_to_vendors'] = implode(',', $data['send_to_vendors']);
@@ -1328,6 +1337,9 @@ class Purchase_model extends App_Model
                 $dt_data['total'] = $rqd['total'];
                 $dt_data['tax_value'] = $rqd['tax_value'];
                 $dt_data['item_text'] = nl2br($rqd['item_text']);
+                $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
+                $dt_data['discount_percent'] = isset($rqd['discount_percent']) ? $rqd['discount_percent'] : 0;
+                $dt_data['description'] = isset($rqd['description']) ? nl2br($rqd['description']) : '';
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -1381,6 +1393,9 @@ class Purchase_model extends App_Model
                 $dt_data['total'] = $rqd['total'];
                 $dt_data['tax_value'] = $rqd['tax_value'];
                 $dt_data['item_text'] = nl2br($rqd['item_text']);
+                $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
+                $dt_data['discount_percent'] = isset($rqd['discount_percent']) ? $rqd['discount_percent'] : 0;
+                $dt_data['description'] = isset($rqd['description']) ? nl2br($rqd['description']) : '';
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -1731,6 +1746,7 @@ class Purchase_model extends App_Model
                     $dt_data['total_money'] = $rqd['total_money'];
                     $dt_data['discount_money'] = $rqd['discount_money'];
                     $dt_data['discount_%'] = $rqd['discount'];
+                    $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
 
                     $tax_money = 0;
                     $tax_rate_value = 0;
@@ -1896,6 +1912,7 @@ class Purchase_model extends App_Model
                 $dt_data['total_money'] = $rqd['total_money'];
                 $dt_data['discount_money'] = $rqd['discount_money'];
                 $dt_data['discount_%'] = $rqd['discount'];
+                $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -1941,6 +1958,7 @@ class Purchase_model extends App_Model
                 $dt_data['total_money'] = $rqd['total_money'];
                 $dt_data['discount_money'] = $rqd['discount_money'];
                 $dt_data['discount_%'] = $rqd['discount'];
+                $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -2319,6 +2337,7 @@ class Purchase_model extends App_Model
                     $dt_data['total_money'] = $rqd['total_money'];
                     $dt_data['discount_money'] = $rqd['discount_money'];
                     $dt_data['discount_%'] = $rqd['discount'];
+                    $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
 
                     $tax_money = 0;
                     $tax_rate_value = 0;
@@ -2504,6 +2523,7 @@ class Purchase_model extends App_Model
                 $dt_data['discount_money'] = $rqd['discount_money'];
                 $dt_data['discount_%'] = $rqd['discount'];
                 $dt_data['description'] = nl2br($rqd['item_description']);
+                $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -2550,6 +2570,7 @@ class Purchase_model extends App_Model
                 $dt_data['discount_money'] = $rqd['discount_money'];
                 $dt_data['discount_%'] = $rqd['discount'];
                 $dt_data['description'] = nl2br($rqd['item_description']);
+                $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -6163,6 +6184,7 @@ class Purchase_model extends App_Model
                     $dt_data['total_money'] = $rqd['total_money'];
                     $dt_data['discount_money'] = $rqd['discount_money'];
                     $dt_data['discount_percent'] = $rqd['discount'];
+                    $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
 
                     $tax_money = 0;
                     $tax_rate_value = 0;
@@ -6321,6 +6343,7 @@ class Purchase_model extends App_Model
                 $dt_data['discount_money'] = $rqd['discount_money'];
                 $dt_data['discount_percent'] = $rqd['discount'];
                 $dt_data['description'] = nl2br($rqd['item_description']);
+                $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -6367,6 +6390,7 @@ class Purchase_model extends App_Model
                 $dt_data['discount_money'] = $rqd['discount_money'];
                 $dt_data['discount_percent'] = $rqd['discount'];
                 $dt_data['description'] = nl2br($rqd['item_description']);
+                $dt_data['hsn_code'] = isset($rqd['hsn_code']) ? $rqd['hsn_code'] : '';
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -10028,12 +10052,15 @@ class Purchase_model extends App_Model
      * @param      array   $unit_data  The unit data
      * @param      string  $name       The name
      */
-    public function create_purchase_request_row_template($name = '', $item_code = '', $item_text = '', $unit_price = '', $quantity = '', $unit_name = '', $unit_id = '', $into_money = '', $item_key = '', $tax_value = '', $total = '', $tax_name = '', $tax_rate = '', $tax_id = '', $is_edit = false, $currency_rate = 1, $to_currency = ''){
+    public function create_purchase_request_row_template($name = '', $item_code = '', $item_text = '', $unit_price = '', $quantity = '', $unit_name = '', $unit_id = '', $into_money = '', $item_key = '', $tax_value = '', $total = '', $tax_name = '', $tax_rate = '', $tax_id = '', $is_edit = false, $currency_rate = 1, $to_currency = '', $hsn_code = '', $discount_percent = 0, $description = ''){
         $this->load->model('invoice_items_model');
         $row = '';
 
         $name_item_code = 'item_code';
         $name_item_text = 'item_text';
+        $name_hsn_code = 'hsn_code';
+        $name_discount_percent = 'discount_percent';
+        $name_description = 'description';
         $name_unit_id = 'unit_id';
         $name_unit_name = 'unit_name';
         $name_unit_price = 'unit_price';
@@ -10068,6 +10095,9 @@ class Purchase_model extends App_Model
                     <td class="dragger"><input type="hidden" class="order" name="' . $name . '[order]"><input type="hidden" class="ids" name="' . $name . '[id]" value="' . $item_key . '"></td>';
             $name_item_code = $name . '[item_code]';
             $name_item_text = $name . '[item_text]';
+            $name_hsn_code = $name . '[hsn_code]';
+            $name_discount_percent = $name . '[discount_percent]';
+            $name_description = $name . '[description]';
             $name_unit_id = $name . '[unit_id]';
             $name_unit_name = $name . '[unit_name]';
             $name_unit_price = $name . '[unit_price]';
@@ -10114,7 +10144,20 @@ class Purchase_model extends App_Model
         }
 
 
+        $row .= '<td class="">' . render_textarea($name_description, '', $description, ['rows' => 2, 'placeholder' => _l('Description')] ) . '</td>';
         $row .= '<td class="">' . render_textarea($name_item_text, '', $item_text, ['rows' => 2, 'placeholder' => _l('pur_item_name')] ) . '</td>';
+        $row .= '<td class="">' . render_input($name_hsn_code, '', $hsn_code, 'text', ['placeholder' => 'HSN Code'], [], 'no-margin') . '</td>';
+
+        $row .= '<td class="quantities">' . 
+        render_input($name_quantity, '', $quantity, 'number', $array_qty_attr, [], 'no-margin', $text_right_class) . 
+        '</td>';
+
+        $row .= '<td class="">' . 
+        render_input($name_unit_name, '', $unit_name, 'text', ['placeholder' => _l('unit'), 'readonly' => true], [], 'no-margin', 'input-transparent text-right pur_input_none').
+        '</td>';
+
+        $row .= '<td class="">' . render_input($name_discount_percent, '', $discount_percent, 'number', ['min' => 0, 'max' => 100, 'onblur' => 'pur_calculate_total();', 'onchange' => 'pur_calculate_total();'], [], 'no-margin', $text_right_class) . '</td>';
+
         $row .= '<td class="rate">' . render_input($name_unit_price, '', $unit_price, 'number', $array_rate_attr, [], 'no-margin', $text_right_class) ;
         if( $unit_price != ''){
             $original_price = round( ($unit_price/$currency_rate), 2);
@@ -10128,17 +10171,13 @@ class Purchase_model extends App_Model
 
         $row .=  '</td>';
 
-        $row .= '<td class="quantities">' . 
-        render_input($name_quantity, '', $quantity, 'number', $array_qty_attr, [], 'no-margin', $text_right_class) . 
-        render_input($name_unit_name, '', $unit_name, 'text', ['placeholder' => _l('unit'), 'readonly' => true], [], 'no-margin', 'input-transparent text-right pur_input_none').
-        '</td>';
-
-        $row .= '<td class="into_money">' . render_input($name_into_money, '', $into_money, 'number', $array_subtotal_attr, [], '', $text_right_class) . '</td>';
         $row .= '<td class="taxrate">' . $this->get_taxes_dropdown_template($name_tax_id_select, $invoice_item_taxes, 'invoice', $item_key, true, $manual) . '</td>';
-        $row .= '<td class="tax_value">' . render_input($name_tax_value, '', $tax_value, 'number', $array_subtotal_attr, [], '', $text_right_class) . '</td>';
+        $row .= '<td class="_total">' . render_input($name_total, '', $total, 'number', $array_subtotal_attr, [], '', $text_right_class) . '</td>';
+        
+        $row .= '<td class="hide into_money">' . render_input($name_into_money, '', $into_money, 'number', $array_subtotal_attr, [], '', $text_right_class) . '</td>';
+        $row .= '<td class="hide tax_value">' . render_input($name_tax_value, '', $tax_value, 'number', $array_subtotal_attr, [], '', $text_right_class) . '</td>';
         $row .= '<td class="hide item_code">' . render_input($name_item_code, '', $item_code, 'text', ['placeholder' => _l('item_code')]) . '</td>';
         $row .= '<td class="hide unit_id">' . render_input($name_unit_id, '', $unit_id, 'text', ['placeholder' => _l('unit_id')]) . '</td>';
-        $row .= '<td class="_total">' . render_input($name_total, '', $total, 'number', $array_subtotal_attr, [], '', $text_right_class) . '</td>';
 
         if ($name == '') {
             $row .= '<td><button type="button" onclick="pur_add_item_to_table(\'undefined\',\'undefined\'); return false;" class="btn pull-right btn-info"><i class="fa fa-check"></i></button></td>';
@@ -10411,7 +10450,7 @@ class Purchase_model extends App_Model
         $this->db->select($rateCurrencyColumns . '' . db_prefix() . 'items.id as itemid,rate,
             t1.taxrate as taxrate,t1.id as taxid,t1.name as taxname,
             t2.taxrate as taxrate_2,t2.id as taxid_2,t2.name as taxname_2,
-            CONCAT(commodity_code,"_",description) as code_description,long_description,group_id,' . db_prefix() . 'items_groups.name as group_name,unit,'.db_prefix().'ware_unit_type.unit_name as unit_name, purchase_price, unit_id, guarantee');
+            CONCAT(commodity_code,"_",description) as code_description,long_description,group_id,' . db_prefix() . 'items_groups.name as group_name,unit,'.db_prefix().'ware_unit_type.unit_name as unit_name, purchase_price, unit_id, guarantee, hsn_code, sku_code, commodity_code, commodity_barcode');
         $this->db->from(db_prefix() . 'items');
         $this->db->join('' . db_prefix() . 'taxes t1', 't1.id = ' . db_prefix() . 'items.tax', 'left');
         $this->db->join('' . db_prefix() . 'taxes t2', 't2.id = ' . db_prefix() . 'items.tax2', 'left');
@@ -10476,12 +10515,13 @@ class Purchase_model extends App_Model
      *
      * @return     string      
      */
-    public function create_quotation_row_template($name = '', $item_name = '', $quantity = '', $unit_name = '', $unit_price = '', $taxname = '',  $item_code = '', $unit_id = '', $tax_rate = '', $total_money = '', $discount = '', $discount_money = '', $total = '', $into_money = '', $tax_id = '', $tax_value = '', $item_key = '',$is_edit = false, $currency_rate = 1, $to_currency = '') {
+    public function create_quotation_row_template($name = '', $item_name = '', $quantity = '', $unit_name = '', $unit_price = '', $taxname = '',  $item_code = '', $unit_id = '', $tax_rate = '', $total_money = '', $discount = '', $discount_money = '', $total = '', $into_money = '', $tax_id = '', $tax_value = '', $item_key = '',$is_edit = false, $currency_rate = 1, $to_currency = '', $hsn_code = '') {
         
         $this->load->model('invoice_items_model');
         $row = '';
 
         $name_item_code = 'item_code';
+        $name_hsn_code = 'hsn_code';
         $name_item_name = 'item_name';
         $name_unit_id = 'unit_id';
         $name_unit_name = 'unit_name';
@@ -10525,6 +10565,7 @@ class Purchase_model extends App_Model
             $row .= '<tr class="sortable item">
                     <td class="dragger"><input type="hidden" class="order" name="' . $name . '[order]"><input type="hidden" class="ids" name="' . $name . '[id]" value="' . $item_key . '"></td>';
             $name_item_code = $name . '[item_code]';
+            $name_hsn_code = $name . '[hsn_code]';
             $name_item_name = $name . '[item_name]';
             $name_unit_id = $name . '[unit_id]';
             $name_unit_name = '[unit_name]';
@@ -10583,6 +10624,7 @@ class Purchase_model extends App_Model
  
 
         $row .= '<td class="">' . render_textarea($name_item_name, '', $item_name, ['rows' => 2, 'placeholder' => _l('pur_item_name'), 'readonly' => true] ) . '</td>';
+        $row .= '<td class="">' . render_input($name_hsn_code, '', $hsn_code, 'text', ['placeholder' => 'HSN Code'], [], 'no-margin') . '</td>';
 
         $row .= '<td class="rate">' . render_input($name_unit_price, '', $unit_price, 'number', $array_rate_attr, [], 'no-margin', $text_right_class);
         if( $unit_price != ''){
@@ -10660,12 +10702,13 @@ class Purchase_model extends App_Model
      *
      * @return     string      
      */
-    public function create_purchase_order_row_template($name = '', $item_name = '', $item_description = '', $quantity = '', $unit_name = '', $unit_price = '', $taxname = '',  $item_code = '', $unit_id = '', $tax_rate = '', $total_money = '', $discount = '', $discount_money = '', $total = '', $into_money = '', $tax_id = '', $tax_value = '', $item_key = '',$is_edit = false, $currency_rate = 1, $to_currency = '') {
+    public function create_purchase_order_row_template($name = '', $item_name = '', $item_description = '', $quantity = '', $unit_name = '', $unit_price = '', $taxname = '',  $item_code = '', $unit_id = '', $tax_rate = '', $total_money = '', $discount = '', $discount_money = '', $total = '', $into_money = '', $tax_id = '', $tax_value = '', $item_key = '',$is_edit = false, $currency_rate = 1, $to_currency = '', $hsn_code = '') {
         
         $this->load->model('invoice_items_model');
         $row = '';
 
         $name_item_code = 'item_code';
+        $name_hsn_code = 'hsn_code';
         $name_item_name = 'item_name';
         $name_item_description = 'description';
         $name_unit_id = 'unit_id';
@@ -10770,6 +10813,7 @@ class Purchase_model extends App_Model
  
 
         $row .= '<td class="">' . render_textarea($name_item_name, '', $item_name, ['rows' => 2, 'placeholder' => _l('pur_item_name'), 'readonly' => true] ) . '</td>';
+        $row .= '<td class="">' . render_input($name_hsn_code, '', $hsn_code, 'text', ['placeholder' => 'HSN Code']) . '</td>';
 
         $row .= '<td class="rate">' . render_input($name_unit_price, '', $unit_price, 'number', $array_rate_attr, [], 'no-margin', $text_right_class);
 
@@ -11490,12 +11534,13 @@ class Purchase_model extends App_Model
         return $this->db->get(db_prefix().'files')->result_array();
     }
 
-    public function create_order_return_row_template($rel_type, $rel_type_detail_id = '', $name = '', $commodity_name = '', $quantities = '', $unit_name = '', $unit_price = '', $taxname = '',  $commodity_code = '', $unit_id = '', $tax_rate = '', $total_amount = '', $discount = '', $discount_total = '', $total_after_discount = '', $reason_return = '', $sub_total = '', $tax_name = '', $tax_id = '', $item_key = '',$is_edit = false, $max_qty = false, $return_type = 'fully') {
+    public function create_order_return_row_template($rel_type, $rel_type_detail_id = '', $name = '', $commodity_name = '', $quantities = '', $unit_name = '', $unit_price = '', $taxname = '',  $commodity_code = '', $unit_id = '', $tax_rate = '', $total_amount = '', $discount = '', $discount_total = '', $total_after_discount = '', $reason_return = '', $sub_total = '', $tax_name = '', $tax_id = '', $item_key = '',$is_edit = false, $max_qty = false, $return_type = 'fully', $hsn_code = '') {
         
         $this->load->model('invoice_items_model');
         $row = '';
 
         $name_commodity_code = 'commodity_code';
+        $name_hsn_code = 'hsn_code';
         $name_commodity_name = 'commodity_name';
         $name_unit_id = 'unit_id';
         $name_unit_name = 'unit_name';
@@ -11543,6 +11588,7 @@ class Purchase_model extends App_Model
             $row .= '<tr class="sortable item">
                     <td class="dragger"><input type="hidden" class="order" name="' . $name . '[order]"><input type="hidden" class="ids" name="' . $name . '[id]" value="' . $item_key . '"></td>';
             $name_commodity_code = $name . '[commodity_code]';
+            $name_hsn_code = $name . '[hsn_code]';
             $name_commodity_name = $name . '[commodity_name]';
             $name_unit_id = $name . '[unit_id]';
             $name_unit_name = '[unit_name]';
@@ -11625,6 +11671,7 @@ class Purchase_model extends App_Model
         }
 
         $row .= '<td class="">' . render_textarea($name_commodity_name, '', $commodity_name, ['rows' => 2, 'placeholder' => _l('item_description_placeholder'), 'readonly' => true] ) . '</td>';
+        $row .= '<td class="">' . render_input($name_hsn_code, '', $hsn_code, 'text', ['placeholder' => 'HSN Code'], [], 'no-margin') . '</td>';
 
         $row .= '<td class="quantities">' . 
         render_input($name_quantities, '', $quantities, 'number', $array_qty_attr, [], 'no-margin').
@@ -12729,12 +12776,13 @@ class Purchase_model extends App_Model
      *
      * @return     string      
      */
-    public function create_purchase_invoice_row_template($name = '', $item_name = '', $item_description = '', $quantity = '', $unit_name = '', $unit_price = '', $taxname = '',  $item_code = '', $unit_id = '', $tax_rate = '', $total_money = '', $discount = '', $discount_money = '', $total = '', $into_money = '', $tax_id = '', $tax_value = '', $item_key = '',$is_edit = false, $currency_rate = 1, $to_currency = '') {
+    public function create_purchase_invoice_row_template($name = '', $item_name = '', $item_description = '', $quantity = '', $unit_name = '', $unit_price = '', $taxname = '',  $item_code = '', $unit_id = '', $tax_rate = '', $total_money = '', $discount = '', $discount_money = '', $total = '', $into_money = '', $tax_id = '', $tax_value = '', $item_key = '',$is_edit = false, $currency_rate = 1, $to_currency = '', $hsn_code = '') {
         
         $this->load->model('invoice_items_model');
         $row = '';
 
         $name_item_code = 'item_code';
+        $name_hsn_code = 'hsn_code';
         $name_item_name = 'item_name';
         $name_item_description = 'description';
         $name_unit_id = 'unit_id';
@@ -12779,6 +12827,7 @@ class Purchase_model extends App_Model
             $row .= '<tr class="sortable item">
                     <td class="dragger"><input type="hidden" class="order" name="' . $name . '[order]"><input type="hidden" class="ids" name="' . $name . '[id]" value="' . $item_key . '"></td>';
             $name_item_code = $name . '[item_code]';
+            $name_hsn_code = $name . '[hsn_code]';
             $name_item_name = $name . '[item_name]';
             $name_item_description = $name . '[item_description]';
             $name_unit_id = $name . '[unit_id]';
@@ -12839,6 +12888,7 @@ class Purchase_model extends App_Model
  
 
         $row .= '<td class="">' . render_textarea($name_item_name, '', $item_name, ['rows' => 2, 'placeholder' => _l('pur_item_name')] ) . '</td>';
+        $row .= '<td class="">' . render_input($name_hsn_code, '', $hsn_code, 'text', ['placeholder' => 'HSN Code']) . '</td>';
 
         $row .= '<td class="rate">' . render_input($name_unit_price, '', $unit_price, 'number', $array_rate_attr, [], 'no-margin', $text_right_class);
         if( $unit_price != ''){

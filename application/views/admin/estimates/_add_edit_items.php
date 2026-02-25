@@ -147,16 +147,25 @@ if (isset($estimate) && $estimate->show_quantity_as == 2) {
     $qty_heading = _l('estimate_table_quantity_heading') . '/' . _l('estimate_table_hours_heading');
 }
 ?>
-                    <th width="10%" class="qty" align="right">
+                    <th width="8%" align="left" class="hsn_code">
+                        HSN Code
+                    </th>
+                    <th width="6%" class="qty" align="right">
                         <?= e($qty_heading); ?>
                     </th>
-                    <th width="15%" align="right">
+                    <th width="6%" align="right">
+                        <?= _l('unit'); ?>
+                    </th>
+                    <th width="8%" align="right">
+                        Discount (%)
+                    </th>
+                    <th width="8%" align="right">
                         <?= _l('estimate_table_rate_heading'); ?>
                     </th>
-                    <th width="20%" align="right">
+                    <th width="15%" align="right">
                         <?= _l('estimate_table_tax_heading'); ?>
                     </th>
-                    <th width="10%" align="right">
+                    <th width="8%" align="right">
                         <?= _l('estimate_table_amount_heading'); ?>
                     </th>
                     <th align="center"><i class="fa fa-cog"></i></th>
@@ -172,6 +181,8 @@ if (isset($estimate) && $estimate->show_quantity_as == 2) {
                     <td>
                         <textarea name="description" rows="2" class="form-control"
                             placeholder="<?= _l('item_description_placeholder'); ?>"></textarea>
+                        <input type="hidden" name="itemid">
+                        <div class="item_id_display" style="font-size: 11px; color: #777;"></div>
                         <div class="tw-mt-1.5">
                             <div class="checkbox checkbox-info">
                                 <input value="1" id="main-optional" type="checkbox" />
@@ -187,12 +198,22 @@ if (isset($estimate) && $estimate->show_quantity_as == 2) {
                     </td>
                     <?= render_custom_fields_items_table_add_edit_preview(); ?>
                     <td>
+                        <input type="text" name="hsn_code" class="form-control"
+                            placeholder="HSN Code">
+                    </td>
+                    <td>
                         <input type="number" name="quantity" min="0" value="1" class="form-control"
                             placeholder="<?= _l('item_quantity_placeholder'); ?>">
+                    </td>
+                    <td>
                         <input type="text"
                             placeholder="<?= _l('unit'); ?>"
-                            data-toggle="tooltip" 612 data-title="e.q kg, lots, packs" name="unit"
+                            data-toggle="tooltip" data-title="e.g kg, lots, packs" name="unit"
                             class="form-control input-transparent text-right">
+                    </td>
+                    <td>
+                        <input type="number" name="discount_item" min="0" max="100" class="form-control est-discount"
+                            placeholder="0">
                     </td>
                     <td>
                         <input type="number" name="rate" class="form-control"
@@ -261,6 +282,7 @@ if (isset($estimate)) {
                         $table_row .= '</td>';
                         $table_row .= '<td><textarea name="' . $items_indicator . '[' . $i . '][long_description]" class="form-control" rows="5">' . clear_textarea_breaks($item['long_description']) . '</textarea></td>';
                         $table_row .= '<td class="bold description"><textarea name="' . $items_indicator . '[' . $i . '][description]" class="form-control" rows="5">' . clear_textarea_breaks($item['description']) . '</textarea>';
+                        $table_row .= '<div class="item_id_display" style="font-size: 11px; color: #777;">ID: ' . $item['itemid'] . '</div>';
 
                         $table_row .= '<div class="tw-mt-1.5">';
                         $table_row .= '<div class="checkbox checkbox-info">';
@@ -278,14 +300,19 @@ if (isset($estimate)) {
 
                         $table_row .= '</td>';
                         $table_row .= render_custom_fields_items_table_in($item, $items_indicator . '[' . $i . ']');
-                        $table_row .= '<td><input type="number" min="0" onblur="calculate_total();" onchange="calculate_total();" data-quantity name="' . $items_indicator . '[' . $i . '][qty]" value="' . $item['qty'] . '" class="form-control">';
+                        // HSN Code column
+                        $hsn_code_val    = isset($item['hsn_code']) ? $item['hsn_code'] : '';
+                        $mrp_val         = isset($item['mrp']) ? $item['mrp'] : $item['rate'];
+                        $discount_val    = isset($item['discount_item']) ? $item['discount_item'] : 0;
                         $unit_placeholder = '';
                         if (! $item['unit']) {
                             $unit_placeholder = _l('unit');
                             $item['unit']     = '';
                         }
-                        $table_row .= '<input type="text" placeholder="' . $unit_placeholder . '" name="' . $items_indicator . '[' . $i . '][unit]" class="form-control input-transparent text-right" value="' . $item['unit'] . '">';
-                        $table_row .= '</td>';
+                        $table_row .= '<td><input type="text" placeholder="HSN Code" name="' . $items_indicator . '[' . $i . '][hsn_code]" class="form-control" value="' . e($hsn_code_val) . '"></td>';
+                        $table_row .= '<td><input type="number" min="0" onblur="calculate_total();" onchange="calculate_total();" data-quantity name="' . $items_indicator . '[' . $i . '][qty]" value="' . $item['qty'] . '" class="form-control"></td>';
+                        $table_row .= '<td><input type="text" placeholder="' . $unit_placeholder . '" name="' . $items_indicator . '[' . $i . '][unit]" class="form-control input-transparent text-right" value="' . $item['unit'] . '"></td>';
+                        $table_row .= '<td><input type="number" min="0" max="100" name="' . $items_indicator . '[' . $i . '][discount_item]" value="' . $discount_val . '" class="form-control est-discount" placeholder="0"></td>';
                         $table_row .= '<td class="rate"><input type="number" data-toggle="tooltip" title="' . _l('numbers_not_formatted_while_editing') . '" onblur="calculate_total();" onchange="calculate_total();" name="' . $items_indicator . '[' . $i . '][rate]" value="' . $item['rate'] . '" class="form-control"></td>';
                         $table_row .= '<td class="taxrate">' . $this->misc_model->get_taxes_dropdown_template('' . $items_indicator . '[' . $i . '][taxname][]', $estimate_item_taxes, (isset($is_proposal) ? 'proposal' : 'estimate'), $item['id'], true, $manual) . '</td>';
                         $table_row .= '<td class="amount" align="right">' . $amount . '</td>';

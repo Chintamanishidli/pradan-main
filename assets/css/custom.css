@@ -1,22 +1,22 @@
 /* Custom CSS for Perfex CRM - Pradan Project */
 body {
-    background-color: #E3F2FD !important;
+    background-color: #ADC8E6 !important;
     color: #000000 !important;
 }
 #wrapper {
-    background-color: #E3F2FD !important;
+    background-color: #ADC8E6 !important;
 }
 body.styled {
-    background-color: #E3F2FD !important;
+    background-color: #ADC8E6 !important;
     color: #000000 !important;
 }
 .panel-body {
-    background-color: #E3F2FD !important;
+    background-color: #ADC8E6 !important;
 }
 
 /* Global Heading Styles - Blue Background, Black Font, Bold, No Margin */
 h1, h2, h3, h4, h5, h6 {
-    color: #000000 !important;
+    color: #ffffff !important;
     background-color: #1565C0 !important;
     font-weight: bold !important;
     margin: 0 !important;
@@ -144,4 +144,85 @@ table td select:focus,
     box-shadow: 0 0 0 2px rgba(21,101,192,0.15) !important;
     background-color: #fff !important;
     outline: none !important;
+}
+
+/* ============================
+   Global Input / Textarea / Select Styles
+   ============================ */
+
+/* All form inputs - pure white background, dark black text */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="date"],
+textarea,
+select,
+.form-control,
+.selectpicker,
+.bootstrap-select .dropdown-toggle {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    border: 1px solid #b0c4d8 !important;
+    border-radius: 4px !important;
+}
+
+/* Dropdown option text */
+select option {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+}
+
+/* Bootstrap-select dropdown menu */
+.bootstrap-select .dropdown-menu li a,
+.bootstrap-select .dropdown-menu li a span.text {
+    color: #111111 !important;
+    background-color: #ffffff !important;
+}
+.bootstrap-select .dropdown-menu li.active > a,
+.bootstrap-select .dropdown-menu li > a:hover,
+.bootstrap-select .dropdown-menu li > a:focus {
+    background-color: #1565C0 !important;
+    color: #ffffff !important;
+}
+
+/* Input focus state */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus,
+.form-control:focus {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    border-color: #1565C0 !important;
+    box-shadow: 0 0 0 2px rgba(21,101,192,0.15) !important;
+    outline: none !important;
+}
+
+/* Placeholder text - muted but readable */
+input::placeholder,
+textarea::placeholder {
+    color: #888888 !important;
+    opacity: 1 !important;
+}
+
+/* Form labels */
+.form-group label,
+label {
+    color: #1a3a5c !important;
+    font-weight: 600 !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    margin-bottom: 5px !important;
+    font-size: 13px !important;
+    border-radius: 0 !important;
 }

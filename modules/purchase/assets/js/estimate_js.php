@@ -619,6 +619,7 @@ function pur_add_item_to_preview(id) {
     $('.main input[name="unit_price"]').val(response.purchase_price);
     $('.main input[name="unit_name"]').val(response.unit_name);
     $('.main input[name="unit_id"]').val(response.unit_id);
+    $('.main input[name="hsn_code"]').val(response.hsn_code);
     $('.main input[name="quantity"]').val(1);
 
     $('.selectpicker').selectpicker('refresh');
@@ -674,7 +675,7 @@ function pur_add_item_to_table(data, itemid) {
   var item_key = lastAddedItemKey ? lastAddedItemKey += 1 : $("body").find('.invoice-items-table tbody .item').length + 1;
   lastAddedItemKey = item_key;
   $("body").append('<div class="dt-loader"></div>');
-  pur_get_item_row_template('newitems[' + item_key + ']',data.item_name, data.quantity, data.unit_name, data.unit_price, data.taxname, data.item_code, data.unit_id, data.tax_rate, data.discount, itemid, currency_rate, to_currency).done(function(output){
+  pur_get_item_row_template('newitems[' + item_key + ']',data.item_name, data.quantity, data.unit_name, data.unit_price, data.taxname, data.item_code, data.unit_id, data.tax_rate, data.discount, itemid, currency_rate, to_currency, data.hsn_code).done(function(output){
     table_row += output;
 
     $('.invoice-item table.invoice-items-table.items tbody').append(table_row);
@@ -708,6 +709,7 @@ function pur_get_item_preview_values() {
   response.unit_id = $('.invoice-item .main input[name="unit_id"]').val();
   response.tax_rate = $('.invoice-item .main input[name="tax_rate"]').val();
   response.discount = $('.invoice-item .main input[name="discount"]').val();
+  response.hsn_code = $('.invoice-item .main input[name="hsn_code"]').val();
 
 
   return response;
@@ -748,7 +750,7 @@ function pur_delete_item(row, itemid,parent) {
   }
 }
 
-function pur_get_item_row_template(name, item_name, quantity, unit_name, unit_price, taxname,  item_code, unit_id, tax_rate, discount, item_key, currency_rate, to_currency)  {
+function pur_get_item_row_template(name, item_name, quantity, unit_name, unit_price, taxname,  item_code, unit_id, tax_rate, discount, item_key, currency_rate, to_currency, hsn_code)  {
   "use strict";
 
   jQuery.ajaxSetup({
@@ -768,7 +770,8 @@ function pur_get_item_row_template(name, item_name, quantity, unit_name, unit_pr
     discount : discount,
     item_key : item_key,
     currency_rate: currency_rate,
-    to_currency: to_currency
+    to_currency: to_currency,
+    hsn_code: hsn_code
   });
   jQuery.ajaxSetup({
     async: true

@@ -10,64 +10,67 @@
             </h4>
             <div class="panel_s">
                 <div class="panel-body">
-                    <div class="horizontal-scrollable-tabs panel-full-width-tabs">
-                        <div class="scroller arrow-left"><i class="fa fa-angle-left"></i></div>
-                        <div class="scroller arrow-right"><i class="fa fa-angle-right"></i></div>
-                        <div class="horizontal-tabs">
-                            <ul class="nav nav-tabs nav-tabs-horizontal" role="tablist">
-                                <li role="presentation" class="active">
-                                    <a href="#tab_project" aria-controls="tab_project" role="tab" data-toggle="tab">
-                                        <?= _l('project'); ?>
-                                    </a>
-                                </li>
-                                <li role="presentation">
-                                    <a href="#tab_settings" aria-controls="tab_settings" role="tab" data-toggle="tab">
-                                        <?= _l('project_settings'); ?>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="panel-full-width-tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#tab_project" aria-controls="tab_project" role="tab" data-toggle="tab">
+                                    <?= _l('project'); ?>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#tab_settings" aria-controls="tab_settings" role="tab" data-toggle="tab">
+                                    <?= _l('project_settings'); ?>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                     <div class="tab-content tw-mt-3">
                         <div role="tabpanel" class="tab-pane active" id="tab_project">
-
-
                             <?php
-                        $disable_type_edit = '';
-if (isset($project)) {
-    if ($project->billing_type != 1) {
-        if (total_rows(db_prefix() . 'tasks', ['rel_id' => $project->id, 'rel_type' => 'project', 'billable' => 1, 'billed' => 1]) > 0) {
-            $disable_type_edit = 'disabled';
-        }
-    }
-}
-?>
-                            <?php $value = (isset($project) ? $project->name : ''); ?>
-                            <?= render_input('name', 'project_name', $value); ?>
-                            <div class="form-group select-placeholder">
-                                <label for="clientid"
-                                    class="control-label"><?= _l('project_customer'); ?></label>
-                                <select id="clientid" name="clientid" data-live-search="true" data-width="100%"
-                                    class="ajax-search"
-                                    data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>">
-                                    <?php $selected = (isset($project) ? $project->clientid : '');
-if ($selected == '') {
-    $selected = ($customer_id ?? '');
-}
-if ($selected != '') {
-    $rel_data = get_relation_data('customer', $selected);
-    $rel_val  = get_relation_values($rel_data, 'customer');
-    echo '<option value="' . $rel_val['id'] . '" selected>' . $rel_val['name'] . '</option>';
-} ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <div class="checkbox">
-                                    <input type="checkbox" <?php if ((isset($project) && $project->progress_from_tasks == 1) || ! isset($project)) {
-                                        echo 'checked';
-                                    } ?> name="progress_from_tasks" id="progress_from_tasks">
-                                    <label
-                                        for="progress_from_tasks"><?= _l('calculate_progress_through_tasks'); ?></label>
+                                $disable_type_edit = '';
+                                if (isset($project)) {
+                                    if ($project->billing_type != 1) {
+                                        if (total_rows(db_prefix() . 'tasks', ['rel_id' => $project->id, 'rel_type' => 'project', 'billable' => 1, 'billed' => 1]) > 0) {
+                                            $disable_type_edit = 'disabled';
+                                        }
+                                    }
+                                }
+                            ?>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <?php $value = (isset($project) ? $project->name : ''); ?>
+                                    <?= render_input('name', 'project_name', $value); ?>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group select-placeholder">
+                                        <label for="clientid"
+                                            class="control-label"><?= _l('project_customer'); ?></label>
+                                        <select id="clientid" name="clientid" data-live-search="true" data-width="100%"
+                                            class="ajax-search"
+                                            data-none-selected-text="<?= _l('dropdown_non_selected_tex'); ?>">
+                                            <?php $selected = (isset($project) ? $project->clientid : '');
+                                            if ($selected == '') {
+                                                $selected = ($customer_id ?? '');
+                                            }
+                                            if ($selected != '') {
+                                                $rel_data = get_relation_data('customer', $selected);
+                                                $rel_val  = get_relation_values($rel_data, 'customer');
+                                                echo '<option value="' . $rel_val['id'] . '" selected>' . $rel_val['name'] . '</option>';
+                                            } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="progress_from_tasks"><?= _l('calculate_progress_through_tasks'); ?></label>
+                                        <div class="checkbox">
+                                            <input type="checkbox" <?php if ((isset($project) && $project->progress_from_tasks == 1) || ! isset($project)) {
+                                                echo 'checked';
+                                            } ?> name="progress_from_tasks" id="progress_from_tasks">
+                                            <label
+                                                for="progress_from_tasks"></label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <?php
@@ -79,14 +82,17 @@ if ($selected != '') {
                         $value = 0;
                     }
 ?>
-                            <label
-                                for=""><?= _l('project_progress'); ?>
-                                <span
-                                    class="label_progress"><?= e($value); ?>%</span></label>
-                            <?= form_hidden('progress', $value); ?>
-                            <div class="project_progress_slider project_progress_slider_horizontal mbot15"></div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
+                                    <label for=""><?= _l('project_progress'); ?>
+                                        <span class="label_progress"><?= e($value); ?>%</span>
+                                    </label>
+                                    <?= form_hidden('progress', $value); ?>
+                                    <div class="project_progress_slider project_progress_slider_horizontal mbot15"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
                                     <div class="form-group select-placeholder">
                                         <label
                                             for="billing_type"><?= _l('project_billing_type'); ?></label>
@@ -116,7 +122,7 @@ if ($selected != '') {
                                         } ?>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group select-placeholder">
                                         <label
                                             for="status"><?= _l('project_status'); ?></label>
@@ -134,12 +140,22 @@ if ($selected != '') {
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                     <div id="project_cost" class="<?= e($input_field_hide_class_total_cost); ?>">
+                                        <?php $value = (isset($project) ? $project->project_cost : ''); ?>
+                                        <?= render_input('project_cost', 'project_total_cost', $value, 'number'); ?>
+                                    </div>
+                                    <div id="project_rate_per_hour" class="<?= e($input_field_hide_class_rate_per_hour); ?>">
+                                        <?php $value = (isset($project) ? $project->project_rate_per_hour : ''); ?>
+                                        <?= render_input('project_rate_per_hour', 'project_rate_per_hour', $value, 'number', $input_disable); ?>
+                                    </div>
+                                </div>
                             </div>
                             <?php if (isset($project) && project_has_recurring_tasks($project->id)) { ?>
                             <div class="alert alert-warning recurring-tasks-notice hide"></div>
                             <?php } ?>
                             <?php if (is_email_template_active('project-finished-to-customer')) { ?>
-                            <div class="form-group project_marked_as_finished hide">
+                            <div class="form-group  project_marked_as_finished hide">
                                 <div class="checkbox checkbox-primary">
                                     <input type="checkbox" name="project_marked_as_finished_email_to_contacts"
                                         id="project_marked_as_finished_email_to_contacts">
@@ -177,70 +193,49 @@ if (! isset($project)) {
     $input_field_hide_class_total_cost = 'hide';
 }
 ?>
-                            <div id="project_cost"
-                                class="<?= e($input_field_hide_class_total_cost); ?>">
-                                <?php $value = (isset($project) ? $project->project_cost : ''); ?>
-                                <?= render_input('project_cost', 'project_total_cost', $value, 'number'); ?>
-                            </div>
-                            <?php
-$input_field_hide_class_rate_per_hour = '';
-if (! isset($project)) {
-    if ($auto_select_billing_type && $auto_select_billing_type->billing_type != 2 || ! $auto_select_billing_type) {
-        $input_field_hide_class_rate_per_hour = 'hide';
-    }
-} elseif (isset($project) && $project->billing_type != 2) {
-    $input_field_hide_class_rate_per_hour = 'hide';
-}
-?>
-                            <div id="project_rate_per_hour"
-                                class="<?= e($input_field_hide_class_rate_per_hour); ?>">
-                                <?php $value = (isset($project) ? $project->project_rate_per_hour : ''); ?>
-                                <?php
-    $input_disable = [];
-if ($disable_type_edit != '') {
-    $input_disable['disabled'] = true;
-}
-?>
-                                <?= render_input('project_rate_per_hour', 'project_rate_per_hour', $value, 'number', $input_disable); ?>
-                            </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <?= render_input('estimated_hours', 'estimated_hours', isset($project) ? $project->estimated_hours : '', 'number'); ?>
                                 </div>
-                                <div class="col-md-6">
-                                    <?php
- $selected = [];
-if (isset($project_members)) {
-    foreach ($project_members as $member) {
-        array_push($selected, $member['staff_id']);
-    }
-} else {
-    array_push($selected, get_staff_user_id());
-}
-echo render_select('project_members[]', $staff, ['staffid', ['firstname', 'lastname']], 'project_members', $selected, ['multiple' => true, 'data-actions-box' => true], [], '', '', false);
-?>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <?php $value = (isset($project) ? _d($project->start_date) : _d(date('Y-m-d'))); ?>
                                     <?= render_date_input('start_date', 'project_start_date', $value); ?>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <?php $value = (isset($project) ? _d($project->deadline) : ''); ?>
                                     <?= render_date_input('deadline', 'project_deadline', $value); ?>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <?php
+                                     $selected = [];
+                                    if (isset($project_members)) {
+                                        foreach ($project_members as $member) {
+                                            array_push($selected, $member['staff_id']);
+                                        }
+                                    } else {
+                                        array_push($selected, get_staff_user_id());
+                                    }
+                                    echo render_select('project_members[]', $staff, ['staffid', ['firstname', 'lastname']], 'project_members', $selected, ['multiple' => true, 'data-actions-box' => true], [], '', '', false);
+                                    ?>
+                                </div>
+                                <div class="col-md-4">
+                            </div>
                             <?php if (isset($project) && $project->date_finished != null && $project->status == 4) { ?>
-                            <?= render_datetime_input('date_finished', 'project_completed_date', _dt($project->date_finished)); ?>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <?= render_datetime_input('date_finished', 'project_completed_date', _dt($project->date_finished)); ?>
+                                </div>
+                            </div>
                             <?php } ?>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="tags" class="control-label"><i class="fa fa-tag" aria-hidden="true"></i>
                                     <?= _l('tags'); ?></label>
                                 <input type="text" class="tagsinput" id="tags" name="tags"
                                     value="<?= isset($project) ? prep_tags_input(get_tags_in($project->id, 'project')) : ''; ?>"
                                     data-role="tagsinput">
-                            </div>
+                            </div> -->
                             <?php $rel_id_custom_field = (isset($project) ? $project->id : false); ?>
                             <?= render_custom_fields('projects', $rel_id_custom_field); ?>
                             <p class="bold">

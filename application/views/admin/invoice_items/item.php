@@ -81,6 +81,10 @@
                         </div>
                         <div class="clearfix mbot15"></div>
                         <?= render_input('unit', 'unit'); ?>
+                        <div class="form-group">
+                            <label for="hsn_code" class="control-label"><?= _l('HSN Code'); ?></label>
+                            <input type="text" id="hsn_code" name="hsn_code" class="form-control" placeholder="HSN Code" value="">
+                        </div>
                         <div id="custom_fields_items">
                             <?= render_custom_fields('items'); ?>
                         </div>
@@ -206,6 +210,7 @@
                         .replace(/(<|<)br\s*\/*(>|>)/g, " "));
                     $itemModal.find('input[name="rate"]').val(response.rate);
                     $itemModal.find('input[name="unit"]').val(response.unit);
+                    $itemModal.find('input[name="hsn_code"]').val(response.hsn_code || '');
                     $('select[name="tax"]').selectpicker('val', response.taxid).change();
                     $('select[name="tax2"]').selectpicker('val', response.taxid_2).change();
                     $itemModal.find('#group_id').selectpicker('val', response.group_id);

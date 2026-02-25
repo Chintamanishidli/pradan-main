@@ -78,7 +78,7 @@ $("body").on("loaded.bs.select change", "select.ajax-search", function (e) {
     dropdownToggle.after(
       '<span class="pointer ajax-clear-values" onclick="deselect_ajax_search(this); return false;" data-id="' +
         id +
-        '"></span>'
+        '"></span>',
     );
   }
 });
@@ -116,7 +116,7 @@ $(window).on("load resize", function (e) {
     function () {
       mainWrapperHeightFix();
     },
-    e.type == "load" ? 150 : 0
+    e.type == "load" ? 150 : 0,
   );
 });
 
@@ -153,7 +153,7 @@ $(function () {
       if (totalErrorsHeight > 0) {
         $("#menu, #setup-menu-wrapper").css(
           "top",
-          totalErrorsHeight + 70 + "px"
+          totalErrorsHeight + 70 + "px",
         );
       }
     })();
@@ -206,7 +206,7 @@ $(function () {
         $("a[lead-edit]").click();
       } else if ($taskModal.is(":visible")) {
         edit_task(
-          $taskModal.find("[data-task-single-id]").attr("data-task-single-id")
+          $taskModal.find("[data-task-single-id]").attr("data-task-single-id"),
         );
       }
     }
@@ -245,11 +245,11 @@ $(function () {
           "tasks/task?rel_id=" +
           $newTaskRelationBtn.attr("data-rel-id") +
           "&rel_type=" +
-          $newTaskRelationBtn.attr("data-rel-type")
+          $newTaskRelationBtn.attr("data-rel-type"),
       );
     } else if ($("body").hasClass("project")) {
       new_task(
-        admin_url + "tasks/task?rel_id=" + project_id + "&rel_type=project"
+        admin_url + "tasks/task?rel_id=" + project_id + "&rel_type=project",
       );
     } else {
       new_task();
@@ -346,7 +346,11 @@ $(function () {
 
   /** TinyMCE modal fix */
   $(document).on("focusin", function (e) {
-    if ($(e.target).closest(".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root").length) {
+    if (
+      $(e.target).closest(
+        ".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root",
+      ).length
+    ) {
       e.stopImmediatePropagation();
     }
   });
@@ -363,7 +367,7 @@ $(function () {
         setTimeout(function () {
           setup_menu_item.css("display", "none");
         }, 1000);
-      }
+      },
     );
   }
 
@@ -396,7 +400,7 @@ $(function () {
     "#started-timers-top,.popover-top-timer-note",
     function (e) {
       e.stopPropagation();
-    }
+    },
   );
   // Init inputs used for tags
   init_tags_inputs();
@@ -447,7 +451,7 @@ $(function () {
             parent.removeClass("has-error");
           }
         }
-      }
+      },
     );
   });
 
@@ -477,7 +481,7 @@ $(function () {
   // Check for setu menu active class
   if (setup_menu.hasClass("display-block")) {
     var $linkSetupSidebarActive = setup_menu.find(
-      'li > a[href="' + location + '"]'
+      'li > a[href="' + location + '"]',
     );
     if ($linkSetupSidebarActive.length) {
       $linkSetupSidebarActive.parents("li").addClass("active");
@@ -625,7 +629,7 @@ $(function () {
           set_search_history(data.history);
         });
       }, 700);
-    }
+    },
   );
 
   var qAdminSearchURL = get_url_param("q");
@@ -698,7 +702,7 @@ $(function () {
       .find("form")
       .attr(
         "action",
-        admin_url + "misc/add_reminder/" + rel_id + "/" + rel_type
+        admin_url + "misc/add_reminder/" + rel_id + "/" + rel_type,
       );
     $this.find("form").removeAttr("data-edit");
     $this.find(":input:not([type=hidden]), textarea").val("");
@@ -739,7 +743,7 @@ $(function () {
         });
         return false;
       }
-    }
+    },
   );
 
   /* Update tasks checklist items when focusing out */
@@ -748,18 +752,18 @@ $(function () {
     'textarea[name="checklist-description"]',
     function () {
       update_task_checklist_item($(this));
-    }
+    },
   );
 
   $("body").on(
     "show.bs.select",
     "select.checklist-items-template-select",
-    _make_task_checklist_items_deletable
+    _make_task_checklist_items_deletable,
   );
   $("body").on(
     "refreshed.bs.select",
     "select.checklist-items-template-select",
-    _make_task_checklist_items_deletable
+    _make_task_checklist_items_deletable,
   );
 
   // trigger jquery validation validate
@@ -777,7 +781,7 @@ $(function () {
         .find('option[value=""]')
         .prop("selected", val.length === 0 ? true : false);
       $(this).selectpicker("refresh");
-    }
+    },
   );
 
   // Task single modal inline changes, eq start date, due date...
@@ -821,7 +825,7 @@ $(function () {
       var $taskModal = $("#task-modal");
       add_task_checklist_item(
         $taskModal.find("[data-task-single-id]").attr("data-task-single-id"),
-        valTemplate
+        valTemplate,
       );
       $(this).selectpicker("val", "");
     }
@@ -832,7 +836,7 @@ $(function () {
     e.preventDefault();
     var task_comment_temp = $(this).attr("href").split("#");
     var comment_position = $(
-      "#" + task_comment_temp[task_comment_temp.length - 1]
+      "#" + task_comment_temp[task_comment_temp.length - 1],
     ).position();
     $("#task-modal").scrollTop(comment_position.top);
   });
@@ -848,7 +852,7 @@ $(function () {
         .search($(this).find(".tag").text())
         .draw();
       $("div.dataTables_filter input").focus();
-    }
+    },
   );
 
   // Search by customer groups from the tables for any group clicked.
@@ -858,7 +862,7 @@ $(function () {
     function () {
       $(this).parents("table").DataTable().search($(this).text()).draw();
       $("div.dataTables_filter input").focus();
-    }
+    },
   );
 
   // Permissions change, apply necessary action to disable OWN or VIEW OWN
@@ -871,7 +875,7 @@ $(function () {
           (typeof is_own_attr !== typeof undefined && is_own_attr !== false
             ? "data-can-view"
             : "data-can-view-own") +
-          "]"
+          "]",
       );
 
     if (view_chk_selector.data("not-applicable") == true) {
@@ -894,7 +898,7 @@ $(function () {
         "tasks/checkbox_action/" +
         $(this).parents(".checklist").data("checklist-id") +
         "/" +
-        ($(this).prop("checked") === true ? 1 : 0)
+        ($(this).prop("checked") === true ? 1 : 0),
     );
     recalculate_checklist_items_progress();
     if (
@@ -911,7 +915,7 @@ $(function () {
     "textarea[name='checklist-description']",
     function (e) {
       do_task_checklist_items_height($(this));
-    }
+    },
   );
 
   // On click on task comment textarea make it tinymce, by default is plain textarea
@@ -944,7 +948,7 @@ $(function () {
       ) {
         $(this).parents(".form-group").removeClass("has-error");
       }
-    }
+    },
   );
 
   // New timesheet add manually from task single modal
@@ -952,13 +956,13 @@ $(function () {
     e.preventDefault();
 
     var start_time_input = $("body").find(
-      '#task-modal input[name="timesheet_start_time"]'
+      '#task-modal input[name="timesheet_start_time"]',
     );
     var end_time_input = $("body").find(
-      '#task-modal input[name="timesheet_end_time"]'
+      '#task-modal input[name="timesheet_end_time"]',
     );
     var duration_input = $("body").find(
-      '#task-modal input[name="timesheet_duration"]'
+      '#task-modal input[name="timesheet_duration"]',
     );
 
     var start_time = start_time_input.val();
@@ -1043,7 +1047,7 @@ $(function () {
         "tasks/task?rel_type=project&rel_id=" +
         project_id +
         "&milestone_id=" +
-        milestone_id
+        milestone_id,
     );
     $('body [data-toggle="popover"]').popover("hide");
   });
@@ -1176,14 +1180,14 @@ $(function () {
     data.assignee = $('select[name="select-assignees"]').val();
     if (data.assignee !== "") {
       data.taskid = $(this).attr("data-task-id");
-      $.post(admin_url + "tasks/add_task_assignees", data).done(function (
-        response
-      ) {
-        $("body").find(".dt-loader").remove();
-        response = JSON.parse(response);
-        reload_tasks_tables();
-        _task_append_html(response.taskHtml);
-      });
+      $.post(admin_url + "tasks/add_task_assignees", data).done(
+        function (response) {
+          $("body").find(".dt-loader").remove();
+          response = JSON.parse(response);
+          reload_tasks_tables();
+          _task_append_html(response.taskHtml);
+        },
+      );
     }
   });
 
@@ -1194,13 +1198,13 @@ $(function () {
     if (data.follower !== "") {
       data.taskid = $(this).attr("data-task-id");
       $("body").append('<div class="dt-loader"></div>');
-      $.post(admin_url + "tasks/add_task_followers", data).done(function (
-        response
-      ) {
-        response = JSON.parse(response);
-        $("body").find(".dt-loader").remove();
-        _task_append_html(response.taskHtml);
-      });
+      $.post(admin_url + "tasks/add_task_followers", data).done(
+        function (response) {
+          response = JSON.parse(response);
+          $("body").find(".dt-loader").remove();
+          _task_append_html(response.taskHtml);
+        },
+      );
     }
   });
 
@@ -1264,7 +1268,7 @@ $(function () {
         .eq(0)
         .css(
           "height",
-          $("#sync_data_proposal_data .modal-content").height() + 80 + "px"
+          $("#sync_data_proposal_data .modal-content").height() + 80 + "px",
         )
         .css("overflow-x", "hidden");
     }
@@ -1314,7 +1318,7 @@ $(function () {
     var status_id = $(this).parents(".kan-ban-col").data("col-status-id");
     init_lead_modal_data(
       undefined,
-      admin_url + "leads/lead?status_id=" + status_id
+      admin_url + "leads/lead?status_id=" + status_id,
     );
     $('body [data-toggle="popover"]').popover("hide");
   });
@@ -1383,7 +1387,7 @@ $(function () {
             $.extend({}, params, {
               start: info.startStr,
               end: info.endStr,
-            })
+            }),
           ).then(function (data) {
             successCallback(
               data.map(function (e) {
@@ -1391,7 +1395,7 @@ $(function () {
                   start: e.start || e.date,
                   end: e.end || e.date,
                 });
-              })
+              }),
             );
           });
         },
@@ -1431,7 +1435,7 @@ $(function () {
           (vformat =
             app.options.time_format == 24
               ? app.options.date_format + " H:i"
-              : app.options.date_format + " g:i A")
+              : app.options.date_format + " g:i A"),
         );
 
         $("input[name='start'].datetimepicker").val(d1);
@@ -1477,7 +1481,7 @@ $(function () {
             }
           } else {
             console.error(
-              "You have setup Google Calendar IDs but you dont have specified Google API key. To setup Google API key navigate to Setup->Settings->Google"
+              "You have setup Google Calendar IDs but you dont have specified Google API key. To setup Google API key navigate to Setup->Settings->Google",
             );
           }
         }
@@ -1486,7 +1490,7 @@ $(function () {
 
     var calendar = new FullCalendar.Calendar(
       calendar_selector[0],
-      calendar_settings
+      calendar_settings,
     );
     calendar.render();
 
@@ -1523,7 +1527,7 @@ $(function () {
       $m.modal("show");
       $m.find("#confirm-invoice-credit-note").attr(
         "href",
-        $(this).attr("href")
+        $(this).attr("href"),
       );
       e.preventDefault();
     }
@@ -1558,8 +1562,8 @@ $(function () {
             id: "credits-alert",
             class: "alert alert-danger",
           }).html(
-            app.lang.credit_amount_bigger_then_credit_note_remaining_credits
-          )
+            app.lang.credit_amount_bigger_then_credit_note_remaining_credits,
+          ),
         );
         $applyCredits.find('[type="submit"]').prop("disabled", true);
       } else {
@@ -1568,27 +1572,27 @@ $(function () {
           .html(format_money(creditsRemaining - total));
         $applyCredits.find('[type="submit"]').prop("disabled", false);
       }
-    }
+    },
   );
 
-  $('body').on('change', '#main-optional', function(e){
-    if(e.target.checked){
-      $('#main-optional-choosen').parent().css('display', "block");
+  $("body").on("change", "#main-optional", function (e) {
+    if (e.target.checked) {
+      $("#main-optional-choosen").parent().css("display", "block");
     } else {
-      $('#main-optional-choosen').parent().css('display', "none");
+      $("#main-optional-choosen").parent().css("display", "none");
     }
   });
 
-  $('body').on('change', '.optional-item-checkbox', function(e){
-    if(e.target.checked){
-      $(e.target).parent().next().css('display', "block")
+  $("body").on("change", ".optional-item-checkbox", function (e) {
+    if (e.target.checked) {
+      $(e.target).parent().next().css("display", "block");
     } else {
-       $(e.target).parent().next().css('display', "none")
+      $(e.target).parent().next().css("display", "none");
     }
     calculate_total();
   });
 
-  $('body').on('change', '.optional-choose-item-checkbox', function(e){
+  $("body").on("change", ".optional-choose-item-checkbox", function (e) {
     calculate_total();
   });
 
@@ -1620,7 +1624,7 @@ $(function () {
           $("<div/>", {
             id: "credits-alert",
             class: "alert alert-danger",
-          }).html(app.lang.credit_amount_bigger_then_invoice_balance)
+          }).html(app.lang.credit_amount_bigger_then_invoice_balance),
         );
         $applyCredits.find('[type="submit"]').prop("disabled", true);
       } else {
@@ -1629,7 +1633,7 @@ $(function () {
           .html(format_money(invoiceBalanceDue - total));
         $applyCredits.find('[type="submit"]').prop("disabled", false);
       }
-    }
+    },
   );
 
   // Leads integrations notify type
@@ -1679,7 +1683,7 @@ $(function () {
       history.pushState(
         "",
         document.title,
-        window.location.pathname + window.location.search
+        window.location.pathname + window.location.search,
       );
     }
     $("body #lead-modal .datetimepicker").datetimepicker("destroy");
@@ -1710,7 +1714,7 @@ $(function () {
       history.pushState(
         "",
         document.title,
-        window.location.pathname + window.location.search
+        window.location.pathname + window.location.search,
       );
     }
     // Lead modal backdrop is showing some issues with index, is fixed after triggering document resize
@@ -1778,7 +1782,7 @@ $(function () {
       leadsTableNotSearchable,
       leadsTableNotSortable,
       LeadsServerParams,
-      [table_leads.find("th.date-created").index(), "desc"]
+      [table_leads.find("th.date-created").index(), "desc"],
     );
 
     if (_table_api && tableLeadsConsentHeading.length > 0) {
@@ -1820,14 +1824,14 @@ $(function () {
       ".reminder-modal-" +
         $(this).data("rel-type") +
         "-" +
-        $(this).data("rel-id")
+        $(this).data("rel-id"),
     ).modal("hide");
   });
 
   // Init are you sure on forms
   $("form")
     .not(
-      "#single-ticket-form,#calendar-event-form,#proposal-form, #department-form"
+      "#single-ticket-form,#calendar-event-form,#proposal-form, #department-form",
     )
     .areYouSure();
 
@@ -1859,7 +1863,7 @@ $(function () {
     var selectWrapper = $(".items-wrapper .items-select-wrapper");
     $(".items-wrapper .bootstrap-select").css(
       "max-width",
-      selectWrapper.width() + "px"
+      selectWrapper.width() + "px",
     );
     $(".items-wrapper .bootstrap-select").css("width", "100%");
   });
@@ -1885,13 +1889,13 @@ $(function () {
           response = JSON.parse(response);
           if (response.success == true) {
             errorContainer.html(
-              '<div class="alert alert-success no-mbot mtop15">SMS Sent Successfully!</div>'
+              '<div class="alert alert-success no-mbot mtop15">SMS Sent Successfully!</div>',
             );
           } else {
             errorContainer.html(
               '<div class="alert alert-warning no-mbot mtop15">' +
                 response.error +
-                "</div>"
+                "</div>",
             );
           }
         })
@@ -1961,7 +1965,7 @@ $(function () {
     function (e) {
       e.stopPropagation();
       e.preventDefault();
-    }
+    },
   );
 
   // On shown for all modals
@@ -2014,7 +2018,7 @@ $(function () {
         $("body").find("#cycles_wrapper #cycles").val(0);
         $("#unlimited_cycles").prop("checked", true).change();
       }
-    }
+    },
   );
 
   // On mass_select all select all the availble rows in the tables.
@@ -2059,7 +2063,7 @@ $(function () {
     }
 
     setup_menu.addClass(
-      "display-block " + (isRTL == "true" ? "fadeInRight" : "fadeInLeft")
+      "display-block " + (isRTL == "true" ? "fadeInRight" : "fadeInLeft"),
     );
     // Set session that the setup menu is open in case of reload
     if (!is_mobile()) {
@@ -2150,7 +2154,7 @@ $(function () {
           window.location.href = not_href_array;
         }, 50);
       }
-    }
+    },
   );
 
   // Set notifications to read when notifictions dropdown is opened
@@ -2159,15 +2163,15 @@ $(function () {
       .find(".notifications")
       .attr("data-total-unread");
     if (total > 0) {
-      $.post(admin_url + "misc/set_notifications_read").done(function (
-        response
-      ) {
-        response = JSON.parse(response);
-        if (response.success === true || response.success == "true") {
-          document.title = doc_initial_title;
-          $(".icon-notifications").addClass("hide");
-        }
-      });
+      $.post(admin_url + "misc/set_notifications_read").done(
+        function (response) {
+          response = JSON.parse(response);
+          if (response.success === true || response.success == "true") {
+            document.title = doc_initial_title;
+            $(".icon-notifications").addClass("hide");
+          }
+        },
+      );
     }
   });
 
@@ -2187,7 +2191,7 @@ $(function () {
       "undefined",
       "undefined",
       ActivityLogServerParams,
-      [1, "desc"]
+      [1, "desc"],
     );
   }
 
@@ -2219,7 +2223,7 @@ $(function () {
               [3, "desc"],
               [0, "desc"],
             ]
-          : [table_invoices.find("th.next-recurring-date").index(), "asc"]
+          : [table_invoices.find("th.next-recurring-date").index(), "asc"],
       );
     }
 
@@ -2234,7 +2238,7 @@ $(function () {
         [
           [3, "desc"],
           [0, "desc"],
-        ]
+        ],
       );
     }
   }
@@ -2263,7 +2267,7 @@ $(function () {
       tasksTableNotSortable,
       tasksTableNotSortable,
       TasksServerParams,
-      [table_tasks.find("th.duedate").index(), "asc"]
+      [table_tasks.find("th.duedate").index(), "asc"],
     );
 
     if (_table_api && $("body").hasClass("dashboard")) {
@@ -2450,7 +2454,7 @@ $(function () {
       $itemsTable.before(
         '<div class="alert alert-warning mbot20" id="items-warning">' +
           app.lang.item_forgotten_in_preview +
-          '<i class="fa fa-angle-double-down pointer pull-right fa-2x" style="margin-top:-4px;" onclick="add_item_to_table(\'undefined\',\'undefined\',undefined); return false;"></i></div>'
+          '<i class="fa fa-angle-double-down pointer pull-right fa-2x" style="margin-top:-4px;" onclick="add_item_to_table(\'undefined\',\'undefined\',undefined); return false;"></i></div>',
       );
 
       $("html,body").animate({
@@ -2463,7 +2467,7 @@ $(function () {
         $itemsTable.before(
           '<div class="alert alert-warning mbot20" id="items-warning">' +
             app.lang.no_items_warning +
-            "</div>"
+            "</div>",
         );
         $("html,body").animate({
           scrollTop: $("#items-warning").offset().top,
@@ -2572,7 +2576,7 @@ $(function () {
           }
         });
       }
-    }
+    },
   );
 
   $("#sales_attach_file").on("hidden.bs.modal", function (e) {
@@ -2589,7 +2593,7 @@ $(function () {
           },
           linkType: "preview",
           extensions: app.options.allowed_files.split(","),
-        })
+        }),
       );
     }
   }
@@ -2601,11 +2605,11 @@ $(function () {
         sending: function (file, xhr, formData) {
           formData.append(
             "rel_id",
-            $("body").find('input[name="_attachment_sale_id"]').val()
+            $("body").find('input[name="_attachment_sale_id"]').val(),
           );
           formData.append(
             "type",
-            $("body").find('input[name="_attachment_sale_type"]').val()
+            $("body").find('input[name="_attachment_sale_type"]').val(),
           );
         },
         success: function (files, response) {
@@ -2661,7 +2665,7 @@ $(function () {
             $("#sales_uploaded_files_preview").append(data);
           }
         },
-      })
+      }),
     );
   }
 
@@ -2751,7 +2755,7 @@ $(function () {
           {
             scrollTop: 0,
           },
-          "slow"
+          "slow",
         );
         $("#wrapper").highlight($('label[for="discount_type"]').text());
         setTimeout(function () {
@@ -2762,7 +2766,7 @@ $(function () {
       if ($(this).valid() === true) {
         calculate_total();
       }
-    }
+    },
   );
 
   $("body").on("change", ".invoice #project_id", function () {
@@ -2771,13 +2775,13 @@ $(function () {
       requestGetJSON("tasks/get_billable_tasks_by_project/" + project_id).done(
         function (tasks) {
           _init_tasks_billable_select(tasks, project_id);
-        }
+        },
       );
     } else {
       var client_id = $("#clientid").selectpicker("val");
       if (client_id !== "") {
         requestGetJSON(
-          "tasks/get_billable_tasks_by_customer_id/" + client_id
+          "tasks/get_billable_tasks_by_customer_id/" + client_id,
         ).done(function (tasks) {
           _init_tasks_billable_select(tasks);
         });
@@ -2828,7 +2832,7 @@ $(function () {
       typeof currentInvoiceID == "undefined" ? "" : currentInvoiceID;
 
     requestGetJSON(
-      "invoices/client_change_data/" + val + "/" + currentInvoiceID
+      "invoices/client_change_data/" + val + "/" + currentInvoiceID,
     ).done(function (response) {
       $("#merge").html(response.merge_info);
       var $billExpenses = $("#expenses_to_bill");
@@ -2844,19 +2848,19 @@ $(function () {
         if (billingAndShippingFields[f].indexOf("billing") > -1) {
           if (billingAndShippingFields[f].indexOf("country") > -1) {
             $(
-              'select[name="' + billingAndShippingFields[f] + '"]'
+              'select[name="' + billingAndShippingFields[f] + '"]',
             ).selectpicker(
               "val",
-              response["billing_shipping"][0][billingAndShippingFields[f]]
+              response["billing_shipping"][0][billingAndShippingFields[f]],
             );
           } else {
             if (billingAndShippingFields[f].indexOf("billing_street") > -1) {
               $('textarea[name="' + billingAndShippingFields[f] + '"]').val(
-                response["billing_shipping"][0][billingAndShippingFields[f]]
+                response["billing_shipping"][0][billingAndShippingFields[f]],
               );
             } else {
               $('input[name="' + billingAndShippingFields[f] + '"]').val(
-                response["billing_shipping"][0][billingAndShippingFields[f]]
+                response["billing_shipping"][0][billingAndShippingFields[f]],
               );
             }
           }
@@ -2871,19 +2875,19 @@ $(function () {
         if (billingAndShippingFields[fsd].indexOf("shipping") > -1) {
           if (billingAndShippingFields[fsd].indexOf("country") > -1) {
             $(
-              'select[name="' + billingAndShippingFields[fsd] + '"]'
+              'select[name="' + billingAndShippingFields[fsd] + '"]',
             ).selectpicker(
               "val",
-              response["billing_shipping"][0][billingAndShippingFields[fsd]]
+              response["billing_shipping"][0][billingAndShippingFields[fsd]],
             );
           } else {
             if (billingAndShippingFields[fsd].indexOf("shipping_street") > -1) {
               $('textarea[name="' + billingAndShippingFields[fsd] + '"]').val(
-                response["billing_shipping"][0][billingAndShippingFields[fsd]]
+                response["billing_shipping"][0][billingAndShippingFields[fsd]],
               );
             } else {
               $('input[name="' + billingAndShippingFields[fsd] + '"]').val(
-                response["billing_shipping"][0][billingAndShippingFields[fsd]]
+                response["billing_shipping"][0][billingAndShippingFields[fsd]],
               );
             }
           }
@@ -2894,7 +2898,7 @@ $(function () {
 
       var client_currency = response["client_currency"];
       var s_currency = $("body").find(
-        '.accounting-template select[name="currency"]'
+        '.accounting-template select[name="currency"]',
       );
       client_currency = parseInt(client_currency);
       client_currency != 0
@@ -2902,7 +2906,7 @@ $(function () {
         : s_currency.val(s_currency.data("base"));
       _init_tasks_billable_select(
         response["billable_tasks"],
-        projectAjax.selectpicker("val")
+        projectAjax.selectpicker("val"),
       );
       response.customer_has_projects === true
         ? projectsWrapper.removeClass("hide")
@@ -2929,7 +2933,7 @@ $(function () {
       return;
     }
     requestGetJSON(
-      "clients/get_customer_billing_and_shipping_details/" + clientid
+      "clients/get_customer_billing_and_shipping_details/" + clientid,
     ).done(function (response) {
       $('textarea[name="shipping_street"]').val(response[0]["shipping_street"]);
       $('input[name="shipping_city"]').val(response[0]["shipping_city"]);
@@ -2937,7 +2941,7 @@ $(function () {
       $('input[name="shipping_zip"]').val(response[0]["shipping_zip"]);
       $('select[name="shipping_country"]').selectpicker(
         "val",
-        response[0]["shipping_country"]
+        response[0]["shipping_country"],
       );
     });
   });
@@ -2959,25 +2963,25 @@ $(function () {
     var checked = $(this).prop("checked");
     var _id = $(this).val();
     if (checked === true) {
-      requestGetJSON("invoices/get_merge_data/" + _id).done(function (
-        response
-      ) {
-        $.each(response.items, function (i, obj) {
-          if (obj.rel_type !== "") {
-            if (obj.rel_type == "task") {
-              $('input[name="task_id"]').val(
-                obj.item_related_formatted_for_input
-              );
-            } else if (obj.rel_type == "expense") {
-              $('input[name="expense_id"]').val(
-                obj.item_related_formatted_for_input
-              );
+      requestGetJSON("invoices/get_merge_data/" + _id).done(
+        function (response) {
+          $.each(response.items, function (i, obj) {
+            if (obj.rel_type !== "") {
+              if (obj.rel_type == "task") {
+                $('input[name="task_id"]').val(
+                  obj.item_related_formatted_for_input,
+                );
+              } else if (obj.rel_type == "expense") {
+                $('input[name="expense_id"]').val(
+                  obj.item_related_formatted_for_input,
+                );
+              }
             }
-          }
-          _set_item_preview_custom_fields_array(obj.custom_fields);
-          add_item_to_table(obj, "undefined", _id);
-        });
-      });
+            _set_item_preview_custom_fields_array(obj.custom_fields);
+            add_item_to_table(obj, "undefined", _id);
+          });
+        },
+      );
     } else {
       // Remove the appended invoice to merge
       $("body")
@@ -2991,12 +2995,12 @@ $(function () {
     var checked = $(this).prop("checked");
     var _id = $(this).val();
     if (checked === true) {
-      requestGetJSON("invoices/get_bill_expense_data/" + _id).done(function (
-        response
-      ) {
-        $('input[name="expense_id"]').val(_id);
-        add_item_to_table(response, "undefined", "undefined", _id);
-      });
+      requestGetJSON("invoices/get_bill_expense_data/" + _id).done(
+        function (response) {
+          $('input[name="expense_id"]').val(_id);
+          add_item_to_table(response, "undefined", "undefined", _id);
+        },
+      );
     } else {
       // Remove the appended expenses
       $("body")
@@ -3018,7 +3022,7 @@ $(function () {
         desc_selector = $(
           "[data-bill-expense=" +
             $(this).attr("data-id") +
-            "] .item_long_description"
+            "] .item_long_description",
         );
       current_desc_val = desc_selector.val();
       current_desc_val = current_desc_val.trim();
@@ -3032,7 +3036,7 @@ $(function () {
           desc_selector.val(current_desc_val.replace(_data_content, ""));
         }
       }
-    }
+    },
   );
 });
 
@@ -3069,7 +3073,7 @@ function _make_task_checklist_items_deletable() {
           .after(
             '<small class="checklist-item-template-remove" onclick="remove_checklist_item_template(' +
               $item.attr("value") +
-              '); event.stopPropagation();"><i class="fa fa-remove"></i></small>'
+              '); event.stopPropagation();"><i class="fa fa-remove"></i></small>',
           );
       }
     });
@@ -3108,7 +3112,7 @@ function _init_tasks_billable_select(tasks, project_id) {
           option_data +
           ">" +
           obj.name +
-          "</option>"
+          "</option>",
       );
     });
 
@@ -3130,7 +3134,7 @@ function _init_tasks_billable_select(tasks, project_id) {
     tasks_help_wrapper.html(
       '<span class="pointer popover-invoker" data-container=".form-group-select-task_select" data-trigger="click" data-placement="top" data-toggle="popover" data-content="' +
         help_tooltip +
-        '"><i class="fa-regular fa-circle-question"></i></span>'
+        '"><i class="fa-regular fa-circle-question"></i></span>',
     );
 
     delay(function () {
@@ -3144,7 +3148,7 @@ function _init_tasks_billable_select(tasks, project_id) {
           "info-shown-count",
           typeof tasks_help_wrapper.attr("info-shown-count") == "undefined"
             ? 1
-            : parseInt(tasks_help_wrapper.attr("info-shown-count")) + 1
+            : parseInt(tasks_help_wrapper.attr("info-shown-count")) + 1,
         );
         tasks_help_wrapper.find(".popover-invoker").click();
       }
@@ -3162,15 +3166,15 @@ function mainWrapperHeightFix() {
   var contentH = $("#wrapper").find(".content").height();
   setup_menu.css(
     "min-height",
-    $(document).outerHeight(true) - headerH * 2 + "px"
+    $(document).outerHeight(true) - headerH * 2 + "px",
   );
   $("#menu").css("min-height", $(document).outerHeight(true) + "px");
 
   content_wrapper.css(
     "min-height",
-    $(document).outerHeight(true) - headerH + "px"
+    $(document).outerHeight(true) - headerH + "px",
   );
-  content_wrapper.css("height", '100%')
+  content_wrapper.css("height", "100%");
   // Set new height when content height is less then navigation
   if (contentH < navigationH) {
     content_wrapper.css("min-height", navigationH + "px");
@@ -3248,7 +3252,7 @@ function init_rel_tasks_table(rel_id, rel_type, selector) {
     TasksFilters;
 
   TasksFilters = $("body").find(
-    "._hidden_inputs._filters._tasks_filters input"
+    "._hidden_inputs._filters._tasks_filters input",
   );
 
   $.each(TasksFilters, function () {
@@ -3257,7 +3261,7 @@ function init_rel_tasks_table(rel_id, rel_type, selector) {
   });
 
   // Related task filter - used in customer profile
-  TasksServerParams['tasks_related_to'] = '[name="tasks_related_to"]'
+  TasksServerParams["tasks_related_to"] = '[name="tasks_related_to"]';
 
   var url = admin_url + "tasks/init_relation_tasks/" + rel_id + "/" + rel_type;
 
@@ -3271,7 +3275,7 @@ function init_rel_tasks_table(rel_id, rel_type, selector) {
     tasksRelationTableNotSortable,
     tasksRelationTableNotSortable,
     TasksServerParams,
-    [$selector.find("th.duedate").index(), "asc"]
+    [$selector.find("th.duedate").index(), "asc"],
   );
 }
 
@@ -3291,7 +3295,7 @@ function initDataTable(
   notsearchable,
   notsortable,
   fnserverparams,
-  defaultorder
+  defaultorder,
 ) {
   var table =
     typeof selector == "string" ? $("body").find("table" + selector) : selector;
@@ -3337,7 +3341,7 @@ function initDataTable(
   var length_options_names = [10, 25, 50, 100];
 
   app.options.tables_pagination_limit = parseFloat(
-    app.options.tables_pagination_limit
+    app.options.tables_pagination_limit,
   );
 
   if ($.inArray(app.options.tables_pagination_limit, length_options) == -1) {
@@ -3435,7 +3439,6 @@ function initDataTable(
       type: "POST",
       data: function (d) {
         if (Array.isArray(d.order)) {
-
           d.order = d.order.map(function (order) {
             var tHead = table.find("thead th:eq(" + order.column + ")");
             if (tHead.length > 0) {
@@ -3459,10 +3462,10 @@ function initDataTable(
           d["last_order_identifier"] = table.attr("data-last-order-identifier");
         }
 
-        var tId = table[0].getAttribute('id');
+        var tId = table[0].getAttribute("id");
 
-        if(tId && Object.hasOwn(app.dtFilters, tId)) {
-          d['filters'] = app.dtFilters[tId]
+        if (tId && Object.hasOwn(app.dtFilters, tId)) {
+          d["filters"] = app.dtFilters[tId];
         }
       },
     },
@@ -3860,15 +3863,15 @@ function logout() {
 
 // Init the media elfinder for tinymce browser
 function elFinderBrowser(callback, value, meta) {
-  tinymce.activeEditor.windowManager.elfinderCallback = callback
-  
+  tinymce.activeEditor.windowManager.elfinderCallback = callback;
+
   tinymce.activeEditor.windowManager.openUrl({
-      url: admin_url + "misc/tinymce_file_browser",
-      title: app.lang.media_files,
-      width: 900,
-      height: 450,
+    url: admin_url + "misc/tinymce_file_browser",
+    title: app.lang.media_files,
+    width: 900,
+    height: 450,
   });
-  
+
   return false;
 }
 
@@ -3893,13 +3896,13 @@ function init_editor(selector, settings) {
     promotion: false,
     selector: selector,
     browser_spellcheck: true,
-    cache_suffix: '?v='+app.version,
+    cache_suffix: "?v=" + app.version,
     height: 250,
     min_height: 250,
     statusbar: false,
     theme: "silver",
     paste_block_drop: true,
-    language: app.tinymce_lang || 'en',
+    language: app.tinymce_lang || "en",
     relative_urls: false,
     entity_encoding: "raw",
     autoresize_bottom_margin: 25,
@@ -3914,13 +3917,24 @@ function init_editor(selector, settings) {
       width: "100%",
     },
     plugins: [
-      "advlist", "autoresize", "autosave", "lists", "link", "image", "codesample",
-      "visualblocks", "code", "fullscreen",
-      "media", "save", "table",
+      "advlist",
+      "autoresize",
+      "autosave",
+      "lists",
+      "link",
+      "image",
+      "codesample",
+      "visualblocks",
+      "code",
+      "fullscreen",
+      "media",
+      "save",
+      "table",
     ],
-    toolbar: "fontfamily fontsize | forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | image link | bullist numlist | restoredraft",
+    toolbar:
+      "fontfamily fontsize | forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | image link | bullist numlist | restoredraft",
     contextmenu: "link image | paste copy",
-    file_picker_callback : elFinderBrowser,
+    file_picker_callback: elFinderBrowser,
     setup: function (ed) {
       // Default fontsize is 12
       ed.on("init", function () {
@@ -3930,9 +3944,9 @@ function init_editor(selector, settings) {
   };
 
   // Add the rtl to the settings if is true
-  if(isRTL == "true") {
-    _settings.directionality = "rtl"
-    _settings.plugins.push('directionality')
+  if (isRTL == "true") {
+    _settings.directionality = "rtl";
+    _settings.plugins.push("directionality");
   }
 
   // Possible settings passed to be overwrited or added
@@ -4053,7 +4067,7 @@ function new_task_reminder(id) {
       .find("#staff")
       .selectpicker(
         "val",
-        $container.find("#staff").attr("data-current-staff")
+        $container.find("#staff").attr("data-current-staff"),
       );
     $container.find("#notify_by_email").prop("checked", false);
     if ($container.attr("data-edit") != undefined) {
@@ -4064,7 +4078,7 @@ function new_task_reminder(id) {
         {
           scrollTop: $container.offset().top + "px",
         },
-        "fast"
+        "fast",
       );
     }
   } else {
@@ -4076,7 +4090,7 @@ function new_task_reminder(id) {
 function edit_reminder(id, e) {
   requestGetJSON("misc/get_reminder/" + id).done(function (response) {
     var $container = $(
-      ".reminder-modal-" + response.rel_type + "-" + response.rel_id
+      ".reminder-modal-" + response.rel_type + "-" + response.rel_id,
     );
     var actionURL = admin_url + "misc/edit_reminder/" + id;
     if ($container.length === 0 && $("body").hasClass("all-reminders")) {
@@ -4100,7 +4114,7 @@ function edit_reminder(id, e) {
             {
               scrollTop: $container.offset().top + "px",
             },
-            "fast"
+            "fast",
           );
         }
       }
@@ -4146,7 +4160,7 @@ function reminderFormHandler(form) {
       ".reminder-modal-" +
         form.find('[name="rel_type"]').val() +
         "-" +
-        form.find('[name="rel_id"]').val()
+        form.find('[name="rel_id"]').val(),
     ).modal("hide");
   }
 
@@ -4201,21 +4215,21 @@ function edit_note(id) {
 
 // Toggles sales file visibility for customer eq for invoices, estimates, proposals
 function toggle_file_visibility(attachment_id, rel_id, invoker) {
-  requestGet("misc/toggle_file_visibility/" + attachment_id).done(function (
-    response
-  ) {
-    if (response == 1) {
-      $(invoker)
-        .find("i")
-        .removeClass("fa fa-toggle-off")
-        .addClass("fa fa-toggle-on");
-    } else {
-      $(invoker)
-        .find("i")
-        .removeClass("fa fa-toggle-on")
-        .addClass("fa fa-toggle-off");
-    }
-  });
+  requestGet("misc/toggle_file_visibility/" + attachment_id).done(
+    function (response) {
+      if (response == 1) {
+        $(invoker)
+          .find("i")
+          .removeClass("fa fa-toggle-off")
+          .addClass("fa fa-toggle-on");
+      } else {
+        $(invoker)
+          .find("i")
+          .removeClass("fa fa-toggle-on")
+          .addClass("fa fa-toggle-off");
+      }
+    },
+  );
 }
 
 // Fixes kanban height to be compatible with content and screen height
@@ -4272,8 +4286,8 @@ function kanban_load_more(status_id, e, url, column_px, container_px) {
         $('[data-col-status-id="' + status_id + '"]').attr(
           "data-total",
           parseInt(
-            $('[data-col-status-id="' + status_id + '"]').attr("data-total")
-          ) + $("<ul></ul>").append(response).find("li").length
+            $('[data-col-status-id="' + status_id + '"]').attr("data-total"),
+          ) + $("<ul></ul>").append(response).find("li").length,
         );
         $(e).attr("data-page", page);
         fix_kanban_height(column_px, container_px);
@@ -4308,7 +4322,7 @@ function init_kanban(
   connect_with,
   column_px,
   container_px,
-  callback_after_load
+  callback_after_load,
 ) {
   if ($("#kan-ban").length === 0) {
     return;
@@ -4385,7 +4399,7 @@ function init_kanban(
           var scrollContainer = uiHash.placeholder[0].parentNode;
           // Get the scrolling parent container
           scrollContainer = $(scrollContainer).parents(
-            ".kan-ban-content-wrapper"
+            ".kan-ban-content-wrapper",
           )[0];
           var overflowOffset = $(scrollContainer).offset();
           if (
@@ -4458,7 +4472,7 @@ function init_kan_ban_sort_icon(sort, type) {
     .prepend(
       " <i class='kanban-sort-icon fa fa-sort-amount-" +
         sort.toLowerCase() +
-        "'></i>"
+        "'></i>",
     );
 }
 
@@ -4520,7 +4534,7 @@ function init_newsfeed_form() {
           this.removeAllFiles();
         }
       },
-    })
+    }),
   );
 }
 
@@ -4576,7 +4590,7 @@ function load_more_comments(link) {
     }).done(function (response) {
       $(link).data("track-load-comments", page);
       $('[data-comments-postid="' + postid + '"] .load-more-comments').before(
-        response
+        response,
       );
     });
     page++;
@@ -4615,12 +4629,12 @@ function load_newsfeed(postid) {
   }
   var total_pages = $('input[name="total_pages_newsfeed"]').val();
   if (newsfeed_posts_page <= total_pages) {
-    $.post(admin_url + "newsfeed/load_newsfeed", data).done(function (
-      response
-    ) {
-      newsfeed_posts_page++;
-      $("#newsfeed_data").append(response);
-    });
+    $.post(admin_url + "newsfeed/load_newsfeed", data).done(
+      function (response) {
+        newsfeed_posts_page++;
+        $("#newsfeed_data").append(response);
+      },
+    );
     if (newsfeed_posts_page >= total_pages - 1) {
       return;
     }
@@ -4652,7 +4666,7 @@ function like_comment(commentid, postid) {
       if (response.success === true || response.success == "true") {
         $('[data-commentid="' + commentid + '"]').replaceWith(response.comment);
       }
-    }
+    },
   );
 }
 
@@ -4663,7 +4677,7 @@ function unlike_comment(commentid, postid) {
       if (response.success === true || response.success == "true") {
         $('[data-commentid="' + commentid + '"]').replaceWith(response.comment);
       }
-    }
+    },
   );
 }
 
@@ -4698,14 +4712,14 @@ function remove_post_comment(id, postid) {
       if (response.success === true || response.success == "true") {
         $('.comment[data-commentid="' + id + '"]').remove();
       }
-    }
+    },
   );
 }
 
 // Refreshing only post likes
 function refresh_post_likes(postid) {
   requestGet(
-    "newsfeed/init_post_likes/" + postid + "?refresh_post_likes=true"
+    "newsfeed/init_post_likes/" + postid + "?refresh_post_likes=true",
   ).done(function (response) {
     $('[data-likes-postid="' + postid + '"]').html(response);
   });
@@ -4717,7 +4731,7 @@ function refresh_post_comments(postid) {
     admin_url +
       "newsfeed/init_post_comments/" +
       postid +
-      "?refresh_post_comments=true"
+      "?refresh_post_comments=true",
   ).done(function (response) {
     $('[data-comments-postid="' + postid + '"]').html(response);
   });
@@ -4733,7 +4747,7 @@ function delete_post(postid) {
           $('[data-main-postid="' + postid + '"]').remove();
         }
       },
-      "json"
+      "json",
     );
   }
 }
@@ -4749,13 +4763,13 @@ function pin_post(id) {
 
 // Unpin post from top
 function unpin_post(id) {
-  requestGetJSON("newsfeed/unpin_newsfeed_post/" + id).done(function (
-    response
-  ) {
-    if (response.success === true || response.success == "true") {
-      window.location.reload();
-    }
-  });
+  requestGetJSON("newsfeed/unpin_newsfeed_post/" + id).done(
+    function (response) {
+      if (response.success === true || response.success == "true") {
+        window.location.reload();
+      }
+    },
+  );
 }
 
 function _gen_lead_add_inline_on_select_field(type) {
@@ -4789,7 +4803,7 @@ function _gen_lead_add_inline_on_select_field(type) {
     .find("#new_" + type + "_name")
     .focus();
   $(
-    '.lead-save-btn,#form_info button[type="submit"],#leads-email-integration button[type="submit"],.btn-import-submit'
+    '.lead-save-btn,#form_info button[type="submit"],#leads-email-integration button[type="submit"],.btn-import-submit',
   ).prop("disabled", true);
   $(".inline-field-new").addClass("disabled").css("opacity", 0.5);
   $(".form-group-select-input-" + type).addClass("hide");
@@ -4821,7 +4835,7 @@ function lead_add_inline_select_submit(type) {
       if (response.success === true || response.success == "true") {
         var select = $("body").find("select#" + type);
         select.append(
-          '<option value="' + response.id + '">' + val + "</option>"
+          '<option value="' + response.id + '">' + val + "</option>",
         );
         select.selectpicker("val", response.id);
         select.selectpicker("refresh");
@@ -4833,7 +4847,7 @@ function lead_add_inline_select_submit(type) {
   $("#new_lead_" + type + "_inline").remove();
   $(".form-group-select-input-" + type).removeClass("hide");
   $(
-    '.lead-save-btn,#form_info button[type="submit"],#leads-email-integration button[type="submit"],.btn-import-submit'
+    '.lead-save-btn,#form_info button[type="submit"],#leads-email-integration button[type="submit"],.btn-import-submit',
   ).prop("disabled", false);
   $(".inline-field-new").removeClass("disabled").removeAttr("style");
 }
@@ -4897,7 +4911,7 @@ function validate_lead_form() {
     $("#lead_form"),
     validationObject,
     lead_profile_form_handler,
-    messages
+    messages,
   );
 }
 
@@ -4942,7 +4956,7 @@ function lead_profile_form_handler(form) {
   form = $(form);
   var data = form.serialize();
   var leadid = $("#lead-modal").find('input[name="leadid"]').val();
-  $(".lead-save-btn").addClass("disabled").attr('disabled', true);
+  $(".lead-save-btn").addClass("disabled").attr("disabled", true);
   $.post(form.attr("action"), data)
     .done(function (response) {
       response = JSON.parse(response);
@@ -4955,7 +4969,7 @@ function lead_profile_form_handler(form) {
           {
             scrollTop: 0,
           },
-          800
+          800,
         );
       } else {
         _lead_init_data(response, response.id);
@@ -5039,7 +5053,7 @@ function _lead_init_data(data, id) {
           },
           linkType: "preview",
           extensions: app.options.allowed_files.split(","),
-        })
+        }),
       );
     }
 
@@ -5065,7 +5079,7 @@ function _lead_init_data(data, id) {
             _lead_init_data(response, response.id);
           }
         },
-      })
+      }),
     );
 
     $leadModal
@@ -5126,14 +5140,20 @@ function print_lead_information() {
 
   $leadViewWrapper.find("h4").css("font-size", "100%");
 
-  $leadViewWrapper.find("dt").each(function() {
-      $(this).replaceWith("<p style='margin-bottom:5px; color:#777'><strong>" + $(this).text() + "</strong></p>");
+  $leadViewWrapper.find("dt").each(function () {
+    $(this).replaceWith(
+      "<p style='margin-bottom:5px; color:#777'><strong>" +
+        $(this).text() +
+        "</strong></p>",
+    );
   });
 
-  $leadViewWrapper.find("dd").each(function() {
-      $(this).replaceWith("<div='margin-bottom:10px;'>" + $(this).text() + "</div>");
+  $leadViewWrapper.find("dd").each(function () {
+    $(this).replaceWith(
+      "<div='margin-bottom:10px;'>" + $(this).text() + "</div>",
+    );
   });
-  
+
   $leadViewWrapper.find(".lead-field-heading + p").css("margin-bottom", "15px");
 
   var mywindow = _create_print_window(name);
@@ -5142,14 +5162,14 @@ function print_lead_information() {
   _add_print_window_default_styles(mywindow);
   mywindow.document.write("<style>");
   mywindow.document.write(
-    ".lead-information-col { " + "float: left; width: 33.33333333%;" + "}" + ""
+    ".lead-information-col { " + "float: left; width: 33.33333333%;" + "}" + "",
   );
   mywindow.document.write("</style>");
 
   mywindow.document.write("</head><body>");
   mywindow.document.write("<h1>" + name + "</h1>");
   mywindow.document.write(
-    '<div id="#leadViewWrapper">' + $leadViewWrapper.html() + "</div>"
+    '<div id="#leadViewWrapper">' + $leadViewWrapper.html() + "</div>",
   );
   mywindow.document.write("</body></html>");
 
@@ -5178,7 +5198,7 @@ function print_expense_information() {
   var mywindow = _create_print_window(name);
 
   mywindow.document.write(
-    "<html><head><title>" + app.lang.expense + "</title>"
+    "<html><head><title>" + app.lang.expense + "</title>",
   );
 
   _add_print_window_default_styles(mywindow);
@@ -5186,7 +5206,7 @@ function print_expense_information() {
   mywindow.document.write("</head><body>");
   mywindow.document.write("<h1>" + name + "</h1>");
   mywindow.document.write(
-    '<div id="#tab_expense">' + $expenseViewWrapper.html() + "</div>"
+    '<div id="#tab_expense">' + $expenseViewWrapper.html() + "</div>",
   );
   mywindow.document.write("</body></html>");
 
@@ -5247,12 +5267,12 @@ function leads_kanban_update(ui, object) {
   });
 
   setTimeout(function () {
-    $.post(admin_url + "leads/update_lead_status", data).done(function (
-      response
-    ) {
-      update_kan_ban_total_when_moving(ui, data.status);
-      leads_kanban();
-    });
+    $.post(admin_url + "leads/update_lead_status", data).done(
+      function (response) {
+        update_kan_ban_total_when_moving(ui, data.status);
+        leads_kanban();
+      },
+    );
   }, 200);
 }
 
@@ -5263,12 +5283,12 @@ function update_kan_ban_total_when_moving(ui, newStatus) {
       var newStatusCol = $('[data-col-status-id="' + newStatus + '"]');
       newStatusCol.attr(
         "data-total",
-        parseInt(newStatusCol.attr("data-total")) + 1
+        parseInt(newStatusCol.attr("data-total")) + 1,
       );
       var oldStatusCol = $(ui.sender.closest(".kan-ban-col"));
       oldStatusCol.attr(
         "data-total",
-        parseInt(oldStatusCol.attr("data-total")) - 1
+        parseInt(oldStatusCol.attr("data-total")) - 1,
       );
     }
   }
@@ -5301,7 +5321,7 @@ function leads_kanban(search) {
     ".leads-status",
     290,
     360,
-    init_leads_status_sortable
+    init_leads_status_sortable,
   );
 }
 
@@ -5395,11 +5415,11 @@ function lead_mark_as(status_id, lead_id) {
   var data = {};
   data.status = status_id;
   data.leadid = lead_id;
-  $.post(admin_url + "leads/update_lead_status", data).done(function (
-    response
-  ) {
-    table_leads.DataTable().ajax.reload(null, false);
-  });
+  $.post(admin_url + "leads/update_lead_status", data).done(
+    function (response) {
+      table_leads.DataTable().ajax.reload(null, false);
+    },
+  );
 }
 
 // Unmark lead as junk function
@@ -5503,15 +5523,14 @@ function leads_bulk_action(event) {
 function init_proposal_editor() {
   init_tinymce_inline_editor({
     saveUsing: save_proposal_content,
-    onSetup: function(editor) {
+    onSetup: function (editor) {
       editor.on("MouseDown ContextMenu", function () {
-        if (!is_mobile() && 
-          !$("#small-table").hasClass("hide")) {
+        if (!is_mobile() && !$("#small-table").hasClass("hide")) {
           small_table_full_view();
         }
       });
-    }
-  })
+    },
+  });
 }
 
 function update_comments_count() {
@@ -5533,40 +5552,40 @@ function add_proposal_comment() {
   data.content = comment;
   data.proposalid = proposal_id;
   $("body").append('<div class="dt-loader"></div>');
-  $.post(admin_url + "proposals/add_proposal_comment", data).done(function (
-    response
-  ) {
-    response = JSON.parse(response);
-    $("body").find(".dt-loader").remove();
-    if (response.success == true) {
-      $("#comment").val("");
-      get_proposal_comments();
-    }
-  });
+  $.post(admin_url + "proposals/add_proposal_comment", data).done(
+    function (response) {
+      response = JSON.parse(response);
+      $("body").find(".dt-loader").remove();
+      if (response.success == true) {
+        $("#comment").val("");
+        get_proposal_comments();
+      }
+    },
+  );
 }
 
 function get_proposal_comments() {
   if (typeof proposal_id == "undefined") {
     return;
   }
-  requestGet("proposals/get_proposal_comments/" + proposal_id).done(function (
-    response
-  ) {
-    $("body").find("#proposal-comments").html(response);
-    update_comments_count("proposal");
-  });
+  requestGet("proposals/get_proposal_comments/" + proposal_id).done(
+    function (response) {
+      $("body").find("#proposal-comments").html(response);
+      update_comments_count("proposal");
+    },
+  );
 }
 
 function remove_proposal_comment(commentid) {
   if (confirm_delete()) {
-    requestGetJSON("proposals/remove_comment/" + commentid).done(function (
-      response
-    ) {
-      if (response.success == true) {
-        $('[data-commentid="' + commentid + '"]').remove();
-        update_comments_count("proposal");
-      }
-    });
+    requestGetJSON("proposals/remove_comment/" + commentid).done(
+      function (response) {
+        if (response.success == true) {
+          $('[data-commentid="' + commentid + '"]').remove();
+          update_comments_count("proposal");
+        }
+      },
+    );
   }
 }
 
@@ -5611,7 +5630,7 @@ function proposal_convert_template(invoker) {
   }
 
   requestGet(
-    "proposals/get_" + html_helper_selector + "_convert_data/" + proposal_id
+    "proposals/get_" + html_helper_selector + "_convert_data/" + proposal_id,
   ).done(function (data) {
     if ($(".proposal-pipeline-modal").is(":visible")) {
       $(".proposal-pipeline-modal").modal("hide");
@@ -5676,7 +5695,7 @@ function init_table_announcements(manual) {
     undefined,
     undefined,
     "undefined",
-    [1, "desc"]
+    [1, "desc"],
   );
 }
 
@@ -5697,7 +5716,7 @@ function init_table_tickets(manual) {
   var TicketServerParams = {},
     Tickets_Filters = $("._hidden_inputs._filters.tickets_filters input");
   var tickets_date_created_index = $(
-    "table.tickets-table thead .ticket_created_column"
+    "table.tickets-table thead .ticket_created_column",
   ).index();
   $.each(Tickets_Filters, function () {
     TicketServerParams[$(this).attr("name")] =
@@ -5719,7 +5738,7 @@ function init_table_tickets(manual) {
     ticketsTableNotSortable,
     ticketsTableNotSortable,
     TicketServerParams,
-    [tickets_date_created_index, "desc"]
+    [tickets_date_created_index, "desc"],
   );
 
   if (_table_api && $("body").hasClass("dashboard")) {
@@ -5742,7 +5761,7 @@ function init_table_staff_projects(manual) {
 
   var staffProjectsParams = {},
     Staff_Projects_Filters = $(
-      "._hidden_inputs._filters.staff_projects_filter input"
+      "._hidden_inputs._filters.staff_projects_filter input",
     );
 
   $.each(Staff_Projects_Filters, function () {
@@ -5756,7 +5775,7 @@ function init_table_staff_projects(manual) {
     "undefined",
     "undefined",
     staffProjectsParams,
-    [2, "asc"]
+    [2, "asc"],
   );
 }
 
@@ -5764,7 +5783,7 @@ function init_table_staff_projects(manual) {
 function do_task_checklist_items_height(task_checklist_items) {
   if (typeof task_checklist_items == "undefined") {
     task_checklist_items = $("body").find(
-      "textarea[name='checklist-description']"
+      "textarea[name='checklist-description']",
     );
   }
 
@@ -5837,43 +5856,43 @@ function recalculate_checklist_items_progress() {
 
 // Remove task checklist items template
 function remove_checklist_item_template(id) {
-  requestGetJSON("tasks/remove_checklist_item_template/" + id).done(function (
-    response
-  ) {
-    if (response.success === true || response.success == "true") {
-      var itemsTemplateSelect = $("body").find(
-        "select.checklist-items-template-select"
-      );
-      var deletedItemDescription = itemsTemplateSelect
-        .find('option[value="' + id + '"]')
-        .html()
-        .trim();
-      var currentChecklists = $("#task-modal .checklist");
-      $.each(currentChecklists, function (i, area) {
-        var checkList = $(area);
-        if (
-          checkList
-            .find('textarea[name="checklist-description"]')
-            .val()
-            .trim() == deletedItemDescription
-        ) {
-          checkList.find(".save-checklist-template").removeClass("hide");
+  requestGetJSON("tasks/remove_checklist_item_template/" + id).done(
+    function (response) {
+      if (response.success === true || response.success == "true") {
+        var itemsTemplateSelect = $("body").find(
+          "select.checklist-items-template-select",
+        );
+        var deletedItemDescription = itemsTemplateSelect
+          .find('option[value="' + id + '"]')
+          .html()
+          .trim();
+        var currentChecklists = $("#task-modal .checklist");
+        $.each(currentChecklists, function (i, area) {
+          var checkList = $(area);
+          if (
+            checkList
+              .find('textarea[name="checklist-description"]')
+              .val()
+              .trim() == deletedItemDescription
+          ) {
+            checkList.find(".save-checklist-template").removeClass("hide");
+          }
+        });
+        itemsTemplateSelect.find('option[value="' + id + '"]').remove();
+        itemsTemplateSelect.selectpicker("refresh");
+        if (itemsTemplateSelect.find("option").length === 1) {
+          itemsTemplateSelect.selectpicker("destroy");
+          $(".checklist-templates-wrapper").addClass("hide");
         }
-      });
-      itemsTemplateSelect.find('option[value="' + id + '"]').remove();
-      itemsTemplateSelect.selectpicker("refresh");
-      if (itemsTemplateSelect.find("option").length === 1) {
-        itemsTemplateSelect.selectpicker("destroy");
-        $(".checklist-templates-wrapper").addClass("hide");
       }
-    }
-  });
+    },
+  );
 }
 
 // New task checklist items template
 function save_checklist_item_template(id, field) {
   var description = $(
-    '.checklist[data-checklist-id="' + id + '"] textarea'
+    '.checklist[data-checklist-id="' + id + '"] textarea',
   ).val();
   $.post(admin_url + "tasks/save_checklist_item_template", {
     description: description,
@@ -5888,7 +5907,7 @@ function save_checklist_item_template(id, field) {
           response.id +
           '">' +
           description.trim() +
-          "</option>"
+          "</option>",
       );
     singleChecklistTemplate.removeClass("hide");
     singleChecklistTemplate.find("select").selectpicker("refresh");
@@ -5996,7 +6015,7 @@ function _task_attachments_more_and_less_checks() {
   var att_wrap = $("body").find(".task_attachments_wrapper");
   var attachments = att_wrap.find(".task-attachment-col");
   var taskAttachmentsMore = $("body").find(
-    "#show-more-less-task-attachments-col .task-attachments-more"
+    "#show-more-less-task-attachments-col .task-attachments-more",
   );
   if (attachments.length === 0) {
     att_wrap.remove();
@@ -6019,17 +6038,17 @@ function _task_attachments_more_and_less_checks() {
 // Removes task single attachment
 function remove_task_attachment(link, id) {
   if (confirm_delete()) {
-    requestGetJSON("tasks/remove_task_attachment/" + id).done(function (
-      response
-    ) {
-      if (response.success === true || response.success == "true") {
-        $('[data-task-attachment-id="' + id + '"]').remove();
-      }
-      _task_attachments_more_and_less_checks();
-      if (response.comment_removed) {
-        $("#comment_" + response.comment_removed).remove();
-      }
-    });
+    requestGetJSON("tasks/remove_task_attachment/" + id).done(
+      function (response) {
+        if (response.success === true || response.success == "true") {
+          $('[data-task-attachment-id="' + id + '"]').remove();
+        }
+        _task_attachments_more_and_less_checks();
+        if (response.comment_removed) {
+          $("#comment_" + response.comment_removed).remove();
+        }
+      },
+    );
   }
 }
 
@@ -6060,15 +6079,15 @@ function add_task_comment(task_id) {
 // Deletes task comment from database
 function remove_task_comment(commentid) {
   if (confirm_delete()) {
-    requestGetJSON("tasks/remove_comment/" + commentid).done(function (
-      response
-    ) {
-      if (response.success === true || response.success == "true") {
-        $('[data-commentid="' + commentid + '"]').remove();
-        $('[data-comment-attachment="' + commentid + '"]').remove();
-        _task_attachments_more_and_less_checks();
-      }
-    });
+    requestGetJSON("tasks/remove_comment/" + commentid).done(
+      function (response) {
+        if (response.success === true || response.success == "true") {
+          $('[data-commentid="' + commentid + '"]').remove();
+          $('[data-comment-attachment="' + commentid + '"]').remove();
+          _task_attachments_more_and_less_checks();
+        }
+      },
+    );
   }
 }
 
@@ -6081,7 +6100,7 @@ function remove_assignee(id, task_id) {
           alert_float("success", response.message);
           _task_append_html(response.taskHtml);
         }
-      }
+      },
     );
   }
 }
@@ -6095,7 +6114,7 @@ function remove_follower(id, task_id) {
           alert_float("success", response.message);
           _task_append_html(response.taskHtml);
         }
-      }
+      },
     );
   }
 }
@@ -6174,7 +6193,7 @@ function delete_user_unfinished_timesheet(id) {
       function (response) {
         _init_timers_top_html(JSON.parse(response.timers));
         reload_tasks_tables();
-      }
+      },
     );
   }
 }
@@ -6330,7 +6349,7 @@ function task_form_handler(form) {
               .data("AjaxBootstrapSelect").list.cache = {};
             $("#timer_add_task_id").selectpicker("refresh");
             delete window._timer_id;
-          }
+          },
         );
         $("#_task_modal").modal("hide");
         $("#task-modal").modal("hide");
@@ -6458,7 +6477,7 @@ function timer_action(e, task_id, timer_id, adminStop) {
       "tasks",
       "#timer_add_task_id",
       undefined,
-      admin_url + "tasks/ajax_search_assign_task_to_timer"
+      admin_url + "tasks/ajax_search_assign_task_to_timer",
     );
     return false;
   }
@@ -6601,7 +6620,7 @@ function edit_task_comment(id) {
   tinymce.remove("#task_comment_" + id);
   var editorConfig = _simple_editor_config();
   editorConfig.auto_focus = "task_comment_" + id;
-  editorConfig.toolbar_sticky  = true;
+  editorConfig.toolbar_sticky = true;
   init_editor("#task_comment_" + id, editorConfig);
   tinymce.triggerSave();
 }
@@ -6645,7 +6664,7 @@ function fix_task_modal_left_col_height() {
       .find(".task-single-col-left")
       .css(
         "min-height",
-        $("body").find(".task-single-col-right").outerHeight(true) + "px"
+        $("body").find(".task-single-col-right").outerHeight(true) + "px",
       );
   }
 }
@@ -6703,12 +6722,17 @@ function edit_task_inline_description(e, id) {
     toolbar: false,
     menubar: false,
     inline: true,
-    cache_suffix: '?v='+app.version,
+    cache_suffix: "?v=" + app.version,
     selector: "#task_view_description",
     theme: "silver",
     directionality: isRTL == "true" ? "rtl" : "",
     auto_focus: "task_view_description",
-    plugins: ['quickbars', 'link', 'table', (isRTL == "true" ? " directionality" : "")],
+    plugins: [
+      "quickbars",
+      "link",
+      "table",
+      isRTL == "true" ? " directionality" : "",
+    ],
     contextmenu: "link table paste pastetext",
     quickbars_insert_toolbar: "quicktable",
     quickbars_selection_toolbar: "bold italic | quicklink h2 h3 blockquote",
@@ -6808,13 +6832,13 @@ function load_small_table_item(id, selector, input_name, url, table) {
   }
   $('input[name="' + input_name + '"]').val(id);
   do_hash_helper(id);
-  $(selector).load(admin_url + url + "/" + id)
+  $(selector).load(admin_url + url + "/" + id);
 
   $("html, body").animate(
     {
       scrollTop: $(selector).offset().top + (is_mobile() ? 150 : 0),
     },
-    600
+    600,
   );
 }
 
@@ -6825,7 +6849,7 @@ function init_invoice(id) {
     "#invoice",
     "invoiceid",
     "invoices/get_invoice_data_ajax",
-    ".table-invoices"
+    ".table-invoices",
   );
 }
 
@@ -6836,7 +6860,7 @@ function init_credit_note(id) {
     "#credit_note",
     "credit_note_id",
     "credit_notes/get_credit_note_data_ajax",
-    ".table-credit-notes"
+    ".table-credit-notes",
   );
 }
 
@@ -6847,7 +6871,7 @@ function init_estimate(id) {
     "#estimate",
     "estimateid",
     "estimates/get_estimate_data_ajax",
-    ".table-estimates"
+    ".table-estimates",
   );
 }
 
@@ -6858,7 +6882,7 @@ function init_proposal(id) {
     "#proposal",
     "proposal_id",
     "proposals/get_proposal_data_ajax",
-    ".table-proposals"
+    ".table-proposals",
   );
 }
 
@@ -6868,7 +6892,7 @@ function init_expense(id) {
     "#expense",
     "expenseid",
     "expenses/get_expense_data_ajax",
-    ".table-expenses"
+    ".table-expenses",
   );
 }
 
@@ -6878,7 +6902,7 @@ function clear_billing_and_shipping_details() {
     if (billingAndShippingFields[f].indexOf("country") > -1) {
       $('select[name="' + billingAndShippingFields[f] + '"]').selectpicker(
         "val",
-        ""
+        "",
       );
     } else {
       $('input[name="' + billingAndShippingFields[f] + '"]').val("");
@@ -6902,7 +6926,7 @@ function init_billing_and_shipping_details() {
     _f = "";
     if (billingAndShippingFields[f].indexOf("country") > -1) {
       _f = $("#" + billingAndShippingFields[f] + " option:selected").data(
-        "subtext"
+        "subtext",
       );
     } else if (
       billingAndShippingFields[f].indexOf("shipping_street") > -1 ||
@@ -6952,61 +6976,70 @@ function edit_invoice_scheduled_email(schedule_id) {
 
 function edit_estimate_scheduled_email(schedule_id) {
   $("#estimate").load(
-    admin_url + "email_schedule_estimate/edit/" + schedule_id
+    admin_url + "email_schedule_estimate/edit/" + schedule_id,
   );
 }
 
 // Add item to preview
 function add_item_to_preview(id) {
-  requestGetJSON("invoice_items/get_item_by_id/" + id).done(function (
-    response
-  ) {
-    clear_item_preview_values();
+  requestGetJSON("invoice_items/get_item_by_id/" + id).done(
+    function (response) {
+      clear_item_preview_values();
 
-    $('.main textarea[name="description"]').val(response.description);
-    $('.main textarea[name="long_description"]').val(
-      response.long_description.replace(/(<|&lt;)br\s*\/*(>|&gt;)/g, " ")
-    );
+      $('.main textarea[name="description"]').val(response.description);
+      $('.main textarea[name="long_description"]').val(
+        response.long_description.replace(/(<|&lt;)br\s*\/*(>|&gt;)/g, " "),
+      );
 
-    _set_item_preview_custom_fields_array(response.custom_fields);
+      _set_item_preview_custom_fields_array(response.custom_fields);
 
-    $('.main input[name="quantity"]').val(1);
+      $('.main input[name="quantity"]').val(1);
 
-    var taxSelectedArray = [];
-    if (response.taxname && response.taxrate) {
-      taxSelectedArray.push(response.taxname + "|" + response.taxrate);
-    }
-    if (response.taxname_2 && response.taxrate_2) {
-      taxSelectedArray.push(response.taxname_2 + "|" + response.taxrate_2);
-    }
+      var taxSelectedArray = [];
+      if (response.taxname && response.taxrate) {
+        taxSelectedArray.push(response.taxname + "|" + response.taxrate);
+      }
+      if (response.taxname_2 && response.taxrate_2) {
+        taxSelectedArray.push(response.taxname_2 + "|" + response.taxrate_2);
+      }
 
-    $(".main select.tax").selectpicker("val", taxSelectedArray);
-    $('.main input[name="unit"]').val(response.unit);
+      $(".main select.tax").selectpicker("val", taxSelectedArray);
+      $('.main input[name="unit"]').val(response.unit);
 
-    var $currency = $("body").find(
-      '.accounting-template select[name="currency"]'
-    );
-    var baseCurency = $currency.attr("data-base");
-    var selectedCurrency = $currency.find("option:selected").val();
-    var $rateInputPreview = $('.main input[name="rate"]');
+      // Display Item ID
+      $(".main .item_id_display").html("ID: " + (response.itemid || response.id || ""));
+      $('.main input[name="itemid"]').val(response.itemid || response.id || "");
 
-    if (baseCurency == selectedCurrency) {
-      $rateInputPreview.val(response.rate);
-    } else {
-      var itemCurrencyRate = response["rate_currency_" + selectedCurrency];
-      if (!itemCurrencyRate || parseFloat(itemCurrencyRate) === 0) {
+      // Set HSN Code if field exists on the page
+      var hsn_code = response.hsn_code || response.commodity_code || ""; 
+      $('.main input[name="hsn_code"]').val(hsn_code);
+      $('.main input[name="discount_item"]').val(0);
+
+      var $currency = $("body").find(
+        '.accounting-template select[name="currency"]',
+      );
+      var baseCurency = $currency.attr("data-base");
+      var selectedCurrency = $currency.find("option:selected").val();
+      var $rateInputPreview = $('.main input[name="rate"]');
+
+      if (baseCurency == selectedCurrency) {
         $rateInputPreview.val(response.rate);
       } else {
-        $rateInputPreview.val(itemCurrencyRate);
+        var itemCurrencyRate = response["rate_currency_" + selectedCurrency];
+        if (!itemCurrencyRate || parseFloat(itemCurrencyRate) === 0) {
+          $rateInputPreview.val(response.rate);
+        } else {
+          $rateInputPreview.val(itemCurrencyRate);
+        }
       }
-    }
 
-    $(document).trigger({
-      type: "item-added-to-preview",
-      item: response,
-      item_type: "item",
-    });
-  });
+      $(document).trigger({
+        type: "item-added-to-preview",
+        item: response,
+        item_type: "item",
+      });
+    },
+  );
 }
 
 function _set_item_preview_custom_fields_array(custom_fields) {
@@ -7034,7 +7067,7 @@ function _set_item_preview_custom_fields_array(custom_fields) {
         });
         $('tr.main td[data-id="' + cf.id + '"] select').selectpicker(
           "val",
-          selected
+          selected,
         );
       }
     } else if (cf.type == "checkbox") {
@@ -7049,7 +7082,7 @@ function _set_item_preview_custom_fields_array(custom_fields) {
               cf.id +
               '"] input[type="checkbox"][value="' +
               e +
-              '"]'
+              '"]',
           ).prop("checked", true);
         });
       }
@@ -7058,25 +7091,25 @@ function _set_item_preview_custom_fields_array(custom_fields) {
 }
 // Add task to preview
 function add_task_to_preview_as_item(id) {
-  requestGetJSON("tasks/get_billable_task_data/" + id).done(function (
-    response
-  ) {
-    response.taxname = $("select.main-tax").selectpicker("val");
-    var previewArea = $(".main");
-    previewArea.find('textarea[name="description"]').val(response.name);
-    previewArea
-      .find('textarea[name="long_description"]')
-      .val(response.description);
-    previewArea.find('input[name="quantity"]').val(response.total_hours);
-    previewArea.find('input[name="rate"]').val(response.hourly_rate);
-    previewArea.find('input[name="unit"]').val("");
-    $('input[name="task_id"]').val(id);
-    $(document).trigger({
-      type: "item-added-to-preview",
-      item: response,
-      item_type: "task",
-    });
-  });
+  requestGetJSON("tasks/get_billable_task_data/" + id).done(
+    function (response) {
+      response.taxname = $("select.main-tax").selectpicker("val");
+      var previewArea = $(".main");
+      previewArea.find('textarea[name="description"]').val(response.name);
+      previewArea
+        .find('textarea[name="long_description"]')
+        .val(response.description);
+      previewArea.find('input[name="quantity"]').val(response.total_hours);
+      previewArea.find('input[name="rate"]').val(response.hourly_rate);
+      previewArea.find('input[name="unit"]').val("");
+      $('input[name="task_id"]').val(id);
+      $(document).trigger({
+        type: "item-added-to-preview",
+        item: response,
+        item_type: "task",
+      });
+    },
+  );
 }
 
 // Clear the items added to preview
@@ -7098,9 +7131,13 @@ function clear_item_preview_values(default_taxes) {
   previewArea.find("select.tax").selectpicker("val", last_taxes_applied);
   previewArea.find('input[name="rate"]').val("");
   previewArea.find('input[name="unit"]').val("");
-  previewArea.find('#main-optional').prop("checked", false);
-  previewArea.find('#main-optional').trigger('change')
-  previewArea.find('#main-optional-choosen').prop("checked", true);
+  previewArea.find('input[name="hsn_code"]').val("");
+  previewArea.find('input[name="discount_item"]').val("");
+  previewArea.find(".item_id_display").html("");
+  previewArea.find('input[name="itemid"]').val("");
+  previewArea.find("#main-optional").prop("checked", false);
+  previewArea.find("#main-optional").trigger("change");
+  previewArea.find("#main-optional-choosen").prop("checked", true);
 
   $('input[name="task_id"]').val("");
   $('input[name="expense_id"]').val("");
@@ -7147,245 +7184,318 @@ function add_item_to_table(data, itemid, merge_invoice, bill_expense) {
   }
 
   var amount = data.rate * data.qty;
+  if (data.discount_item > 0) {
+    var discount_amount = (amount * data.discount_item) / 100;
+    amount = amount - discount_amount;
+  }
 
   var tax_name = "newitems[" + item_key + "][taxname][]";
   $("body").append('<div class="dt-loader"></div>');
   var regex = /<br[^>]*>/gi;
-  get_taxes_dropdown_template(tax_name, data.taxname).done(function (
-    tax_dropdown
-  ) {
-    // order input
-    table_row +=
-      '<input type="hidden" class="order" name="newitems[' +
-      item_key +
-      '][order]">';
+  get_taxes_dropdown_template(tax_name, data.taxname).done(
+    function (tax_dropdown) {
+      // order input
+      table_row +=
+        '<input type="hidden" class="order" name="newitems[' +
+        item_key +
+        '][order]">';
 
-    table_row += "</td>";
+      table_row += "</td>";
 
-    table_row +=
-      '<td class="bold description"><textarea name="newitems[' +
-      item_key +
-      '][description]" class="form-control" rows="5">' +
-      data.description +
-      "</textarea>";
+      // Column 2: long_description (matches table header col 2)
+      table_row +=
+        '<td><textarea name="newitems[' +
+        item_key +
+        '][long_description]" class="form-control item_long_description" rows="5">' +
+        data.long_description.replace(regex, "\n") +
+        "</textarea></td>";
 
-    table_row += '<div class="tw-mt-1.5">';
-    table_row += '<div class="checkbox checkbox-info">';
-    table_row += '<input class="optional-item-checkbox" ' + (data.is_optional ? ' checked' : '') + ' value="1" id="' + item_key + '-optional" type="checkbox" name="newitems[' + item_key + '][is_optional]" data-index="' + item_key + '" />';
-    table_row += '<label for="' + item_key + '-optional">' + app.lang.item_is_optional + '</label>';
-    table_row += '</div>';
+      // Column 3: description + optional checkboxes (matches table header col 3)
+      table_row +=
+        '<td class="bold description"><textarea name="newitems[' +
+        item_key +
+        '][description]" class="form-control" rows="5">' +
+        data.description +
+        "</textarea>";
 
-    table_row += '<div class="checkbox" style="' + (data.is_optional ? '' : 'display: none; ') + '">';
-    table_row += '<input class="optional-choose-item-checkbox" ' + (data.is_selected ? ' checked' : '') + ' value="1" id="' + item_key + '-optional-choosen" type="checkbox" name="newitems[' + item_key + '][is_selected]" />';
-    table_row += '<label for="' + item_key + '-optional-choosen">' + app.lang.item_is_selected + '</label>';
-    table_row += '</div>';
-    table_row += '</div>';
-
-    table_row += "</td>";
-
-    table_row +=
-      '<td><textarea name="newitems[' +
-      item_key +
-      '][long_description]" class="form-control item_long_description" rows="5">' +
-      data.long_description.replace(regex, "\n") +
-      "</textarea></td>";
-
-    var custom_fields = $("tr.main td.custom_field");
-    var cf_has_required = false;
-
-    if (custom_fields.length > 0) {
-      $.each(custom_fields, function () {
-        var cf = $(this).clone();
-        var cf_html = "";
-        var cf_field = $(this).find("[data-fieldid]");
-        var cf_name =
-          "newitems[" +
+      if (data.itemid) {
+        table_row +=
+          '<input type="hidden" name="newitems[' +
           item_key +
-          "][custom_fields][items][" +
-          cf_field.attr("data-fieldid") +
-          "]";
+          '][itemid]" value="' +
+          data.itemid +
+          '">';
+        table_row +=
+          '<div class="item_id_display">ID: ' + data.itemid + "</div>";
+      }
 
-        if (cf_field.is(":checkbox")) {
-          var checked = $(this).find('input[type="checkbox"]:checked');
-          var checkboxes = cf.find('input[type="checkbox"]');
+      table_row += '<div class="tw-mt-1.5">';
+      table_row += '<div class="checkbox checkbox-info">';
+      table_row +=
+        '<input class="optional-item-checkbox" ' +
+        (data.is_optional ? " checked" : "") +
+        ' value="1" id="' +
+        item_key +
+        '-optional" type="checkbox" name="newitems[' +
+        item_key +
+        '][is_optional]" data-index="' +
+        item_key +
+        '" />';
+      table_row +=
+        '<label for="' +
+        item_key +
+        '-optional">' +
+        app.lang.item_is_optional +
+        "</label>";
+      table_row += "</div>";
 
-          $.each(checkboxes, function (i, e) {
-            var random_key = Math.random().toString(20).slice(2);
-            $(this)
-              .attr("id", random_key)
-              .attr("name", cf_name)
-              .next("label")
-              .attr("for", random_key);
-            if ($(this).attr("data-custom-field-required") == "1") {
+      table_row +=
+        '<div class="checkbox" style="' +
+        (data.is_optional ? "" : "display: none; ") +
+        '">';
+      table_row +=
+        '<input class="optional-choose-item-checkbox" ' +
+        (data.is_selected ? " checked" : "") +
+        ' value="1" id="' +
+        item_key +
+        '-optional-choosen" type="checkbox" name="newitems[' +
+        item_key +
+        '][is_selected]" />';
+      table_row +=
+        '<label for="' +
+        item_key +
+        '-optional-choosen">' +
+        app.lang.item_is_selected +
+        "</label>";
+      table_row += "</div>";
+      table_row += "</div>";
+
+      table_row += "</td>";
+
+      var custom_fields = $("tr.main td.custom_field");
+      var cf_has_required = false;
+
+      if (custom_fields.length > 0) {
+        $.each(custom_fields, function () {
+          var cf = $(this).clone();
+          var cf_html = "";
+          var cf_field = $(this).find("[data-fieldid]");
+          var cf_name =
+            "newitems[" +
+            item_key +
+            "][custom_fields][items][" +
+            cf_field.attr("data-fieldid") +
+            "]";
+
+          if (cf_field.is(":checkbox")) {
+            var checked = $(this).find('input[type="checkbox"]:checked');
+            var checkboxes = cf.find('input[type="checkbox"]');
+
+            $.each(checkboxes, function (i, e) {
+              var random_key = Math.random().toString(20).slice(2);
+              $(this)
+                .attr("id", random_key)
+                .attr("name", cf_name)
+                .next("label")
+                .attr("for", random_key);
+              if ($(this).attr("data-custom-field-required") == "1") {
+                cf_has_required = true;
+              }
+            });
+
+            $.each(checked, function (i, e) {
+              cf.find('input[value="' + $(e).val() + '"]').attr(
+                "checked",
+                true,
+              );
+            });
+
+            cf_html = cf.html();
+          } else if (cf_field.is("input") || cf_field.is("textarea")) {
+            if (cf_field.is("input")) {
+              cf.find("[data-fieldid]").attr("value", cf_field.val());
+            } else {
+              cf.find("[data-fieldid]").html(cf_field.val());
+            }
+            cf.find("[data-fieldid]").attr("name", cf_name);
+            if (
+              cf.find("[data-fieldid]").attr("data-custom-field-required") ==
+              "1"
+            ) {
               cf_has_required = true;
             }
-          });
+            cf_html = cf.html();
+          } else if (cf_field.is("select")) {
+            if ($(cf_field).attr("data-custom-field-required") == "1") {
+              cf_has_required = true;
+            }
 
-          $.each(checked, function (i, e) {
-            cf.find('input[value="' + $(e).val() + '"]').attr("checked", true);
-          });
+            var selected = $(this)
+              .find("select[data-fieldid]")
+              .selectpicker("val");
+            selected = typeof (selected != "array")
+              ? new Array(selected)
+              : selected;
 
-          cf_html = cf.html();
-        } else if (cf_field.is("input") || cf_field.is("textarea")) {
-          if (cf_field.is("input")) {
-            cf.find("[data-fieldid]").attr("value", cf_field.val());
-          } else {
-            cf.find("[data-fieldid]").html(cf_field.val());
+            // Check if is multidimensional by multi-select customfield
+            selected =
+              selected[0].constructor === Array ? selected[0] : selected;
+
+            var selectNow = cf.find("select");
+            var $wrapper = $("<div/>");
+            selectNow.attr("name", cf_name);
+
+            var $select = selectNow.clone();
+            $select.prop("required", 1);
+            $wrapper.append($select);
+            $.each(selected, function (i, e) {
+              $wrapper
+                .find('select option[value="' + e + '"]')
+                .attr("selected", true);
+            });
+
+            cf_html = $wrapper.html();
           }
-          cf.find("[data-fieldid]").attr("name", cf_name);
-          if (
-            cf.find("[data-fieldid]").attr("data-custom-field-required") == "1"
-          ) {
-            cf_has_required = true;
-          }
-          cf_html = cf.html();
-        } else if (cf_field.is("select")) {
-          if ($(cf_field).attr("data-custom-field-required") == "1") {
-            cf_has_required = true;
-          }
+          table_row += '<td class="custom_field">' + cf_html + "</td>";
+        });
+      }
 
-          var selected = $(this)
-            .find("select[data-fieldid]")
-            .selectpicker("val");
-          selected = typeof (selected != "array")
-            ? new Array(selected)
-            : selected;
+      // HSN Code column (only if the table has the column)
+      var hsn_code = data.hsn_code || "";
+      table_row +=
+        '<td><input type="text" placeholder="HSN Code" name="newitems[' +
+        item_key +
+        '][hsn_code]" class="form-control" value="' +
+        hsn_code +
+        '"></td>';
 
-          // Check if is multidimensional by multi-select customfield
-          selected = selected[0].constructor === Array ? selected[0] : selected;
+      // Qty column (separate td now)
+      table_row +=
+        '<td><input type="number" min="0" onblur="calculate_total();" onchange="calculate_total();" data-quantity name="newitems[' +
+        item_key +
+        '][qty]" value="' +
+        data.qty +
+        '" class="form-control"></td>';
 
-          var selectNow = cf.find("select");
-          var $wrapper = $("<div/>");
-          selectNow.attr("name", cf_name);
+      // Unit column (separate td)
+      if (!data.unit || typeof data.unit == "undefined") {
+        data.unit = "";
+      }
+      table_row +=
+        '<td><input type="text" placeholder="' + (app.lang.unit || "Unit") + '" name="newitems[' +
+        item_key +
+        '][unit]" class="form-control input-transparent text-right" value="' +
+        data.unit +
+        '"></td>';
 
-          var $select = selectNow.clone();
-          $select.prop('required', 1);
-          $wrapper.append($select);
-          $.each(selected, function (i, e) {
-            $wrapper
-              .find('select option[value="' + e + '"]')
-              .attr("selected", true);
-          });
+      // Discount (%) column
+      var discount_val =
+        data.discount_item !== undefined &&
+        data.discount_item !== 0 &&
+        data.discount_item !== "0" &&
+        data.discount_item !== "0.000000"
+          ? data.discount_item
+          : "";
+      table_row +=
+        '<td><input type="number" min="0" max="100" placeholder="0" name="newitems[' +
+        item_key +
+        '][discount_item]" class="form-control est-discount" value="' +
+        discount_val +
+        '"></td>';
 
-          cf_html = $wrapper.html();
-        }
-        table_row += '<td class="custom_field">' + cf_html + "</td>";
+      // Rate column
+      table_row +=
+        '<td class="rate"><input type="number" data-toggle="tooltip" title="' +
+        app.lang.item_field_not_formatted +
+        '" onblur="calculate_total();" onchange="calculate_total();" name="newitems[' +
+        item_key +
+        '][rate]" value="' +
+        data.rate +
+        '" class="form-control"></td>';
+
+      table_row += '<td class="taxrate">' + tax_dropdown + "</td>";
+
+      table_row +=
+        '<td class="amount" align="right">' +
+        format_money(amount, true) +
+        "</td>";
+
+      table_row +=
+        '<td><a href="#" class="btn btn-danger pull-left !tw-px-3" onclick="delete_item(this,' +
+        itemid +
+        '); return false;"><i class="fa fa-trash"></i></a></td>';
+
+      table_row += "</tr>";
+
+      $("table.items tbody").append(table_row);
+
+      $(document).trigger({
+        type: "item-added-to-table",
+        data: data,
+        row: table_row,
       });
-    }
 
-    table_row +=
-      '<td><input type="number" min="0" onblur="calculate_total();" onchange="calculate_total();" data-quantity name="newitems[' +
-      item_key +
-      '][qty]" value="' +
-      data.qty +
-      '" class="form-control">';
+      setTimeout(function () {
+        calculate_total();
+      }, 15);
 
-    if (!data.unit || typeof data.unit == "undefined") {
-      data.unit = "";
-    }
+      var billed_task = $('input[name="task_id"]').val();
+      var billed_expense = $('input[name="expense_id"]').val();
 
-    table_row +=
-      '<input type="text" placeholder="' +
-      app.lang.unit +
-      '" name="newitems[' +
-      item_key +
-      '][unit]" class="form-control input-transparent text-right" value="' +
-      data.unit +
-      '">';
+      if (billed_task !== "" && typeof billed_task != "undefined") {
+        billed_tasks = billed_task.split(",");
+        $.each(billed_tasks, function (i, obj) {
+          $("#billed-tasks").append(
+            hidden_input("billed_tasks[" + item_key + "][]", obj),
+          );
+        });
+      }
 
-    table_row += "</td>";
+      if (billed_expense !== "" && typeof billed_expense != "undefined") {
+        billed_expenses = billed_expense.split(",");
+        $.each(billed_expenses, function (i, obj) {
+          $("#billed-expenses").append(
+            hidden_input("billed_expenses[" + item_key + "][]", obj),
+          );
+        });
+      }
 
-    table_row +=
-      '<td class="rate"><input type="number" data-toggle="tooltip" title="' +
-      app.lang.item_field_not_formatted +
-      '" onblur="calculate_total();" onchange="calculate_total();" name="newitems[' +
-      item_key +
-      '][rate]" value="' +
-      data.rate +
-      '" class="form-control"></td>';
+      if (
+        $("#item_select").hasClass("ajax-search") &&
+        $("#item_select").selectpicker("val") !== ""
+      ) {
+        $("#item_select").prepend("<option></option>");
+      }
 
-    table_row += '<td class="taxrate">' + tax_dropdown + "</td>";
+      init_selectpicker();
+      init_datepicker();
+      init_color_pickers();
+      clear_item_preview_values();
+      reorder_items();
 
-    table_row +=
-      '<td class="amount" align="right">' +
-      format_money(amount, true) +
-      "</td>";
+      $("body").find("#items-warning").remove();
+      $("body").find(".dt-loader").remove();
+      $("#item_select").selectpicker("val", "");
 
-    table_row +=
-      '<td><a href="#" class="btn btn-danger pull-left !tw-px-3" onclick="delete_item(this,' +
-      itemid +
-      '); return false;"><i class="fa fa-trash"></i></a></td>';
+      if (cf_has_required && $(".invoice-form").length) {
+        validate_invoice_form();
+      } else if (cf_has_required && $(".estimate-form").length) {
+        validate_estimate_form();
+      } else if (cf_has_required && $(".proposal-form").length) {
+        validate_proposal_form();
+      } else if (cf_has_required && $(".credit-note-form").length) {
+        validate_credit_note_form();
+      }
 
-    table_row += "</tr>";
-
-    $("table.items tbody").append(table_row);
-
-    $(document).trigger({
-      type: "item-added-to-table",
-      data: data,
-      row: table_row,
-    });
-
-    setTimeout(function () {
-      calculate_total();
-    }, 15);
-
-    var billed_task = $('input[name="task_id"]').val();
-    var billed_expense = $('input[name="expense_id"]').val();
-
-    if (billed_task !== "" && typeof billed_task != "undefined") {
-      billed_tasks = billed_task.split(",");
-      $.each(billed_tasks, function (i, obj) {
-        $("#billed-tasks").append(
-          hidden_input("billed_tasks[" + item_key + "][]", obj)
-        );
-      });
-    }
-
-    if (billed_expense !== "" && typeof billed_expense != "undefined") {
-      billed_expenses = billed_expense.split(",");
-      $.each(billed_expenses, function (i, obj) {
-        $("#billed-expenses").append(
-          hidden_input("billed_expenses[" + item_key + "][]", obj)
-        );
-      });
-    }
-
-    if (
-      $("#item_select").hasClass("ajax-search") &&
-      $("#item_select").selectpicker("val") !== ""
-    ) {
-      $("#item_select").prepend("<option></option>");
-    }
-
-    init_selectpicker();
-    init_datepicker();
-    init_color_pickers();
-    clear_item_preview_values();
-    reorder_items();
-
-    $("body").find("#items-warning").remove();
-    $("body").find(".dt-loader").remove();
-    $("#item_select").selectpicker("val", "");
-
-    if (cf_has_required && $(".invoice-form").length) {
-      validate_invoice_form();
-    } else if (cf_has_required && $(".estimate-form").length) {
-      validate_estimate_form();
-    } else if (cf_has_required && $(".proposal-form").length) {
-      validate_proposal_form();
-    } else if (cf_has_required && $(".credit-note-form").length) {
-      validate_credit_note_form();
-    }
-
-    if (bill_expense == "undefined" || !bill_expense) {
-      $('select[name="task_select"]')
-        .find('[value="' + billed_task + '"]')
-        .remove();
-      $('select[name="task_select"]').selectpicker("refresh");
-    }
-    return true;
-  });
+      if (bill_expense == "undefined" || !bill_expense) {
+        $('select[name="task_select"]')
+          .find('[value="' + billed_task + '"]')
+          .remove();
+        $('select[name="task_select"]').selectpicker("refresh");
+      }
+      return true;
+    },
+  );
 
   return false;
 }
@@ -7516,14 +7626,17 @@ function get_item_preview_values() {
   var response = {};
   response.description = $('.main textarea[name="description"]').val();
   response.long_description = $(
-    '.main textarea[name="long_description"]'
+    '.main textarea[name="long_description"]',
   ).val();
   response.qty = $('.main input[name="quantity"]').val();
   response.taxname = $(".main select.tax").selectpicker("val");
   response.rate = $('.main input[name="rate"]').val();
   response.unit = $('.main input[name="unit"]').val();
-  response.is_optional = $('#main-optional').prop('checked') ? 1 : 0;
-  response.is_selected = $('#main-optional-choosen').prop('checked') ? 1 : 0;
+  response.hsn_code = $('.main input[name="hsn_code"]').val() || "";
+  response.discount_item = $('.main input[name="discount_item"]').val() || 0;
+  response.is_optional = $("#main-optional").prop("checked") ? 1 : 0;
+  response.is_selected = $("#main-optional-choosen").prop("checked") ? 1 : 0;
+  response.itemid = $('.main input[name="itemid"]').val() || "";
   return response;
 }
 
@@ -7563,21 +7676,29 @@ function calculate_total() {
     }
 
     // Check if item is optional and not chosen - skip calculation if so
-    var isOptional = $(this).find('.optional-item-checkbox').prop('checked');
-    var isChosen = $(this).find('.optional-choose-item-checkbox').prop('checked');
+    var isOptional = $(this).find(".optional-item-checkbox").prop("checked");
+    var isChosen = $(this)
+      .find(".optional-choose-item-checkbox")
+      .prop("checked");
 
     _amount = accounting.toFixed(
       $(this).find("td.rate input").val() * quantity,
-      app.options.decimal_places
+      app.options.decimal_places,
     );
     _amount = parseFloat(_amount);
+
+    var discount_item = $(this).find('input[name*="[discount_item]"]').val();
+    if (discount_item > 0) {
+      var discount_amount = (_amount * discount_item) / 100;
+      _amount = _amount - discount_amount;
+    }
 
     $(this).find("td.amount").html(format_money(_amount, true));
 
     if (isOptional && !isChosen) {
       return true; // skip to next iteration
     }
-   
+
     subtotal += _amount;
     row = $(this);
     item_taxes = $(this).find("select.tax").selectpicker("val");
@@ -7680,7 +7801,7 @@ function calculate_total() {
 
   var discount_html = "-" + format_money(total_discount_calculated);
   $('input[name="discount_total"]').val(
-    accounting.toFixed(total_discount_calculated, app.options.decimal_places)
+    accounting.toFixed(total_discount_calculated, app.options.decimal_places),
   );
 
   // Append, format to html and display
@@ -7690,15 +7811,15 @@ function calculate_total() {
     format_money(subtotal) +
       hidden_input(
         "subtotal",
-        accounting.toFixed(subtotal, app.options.decimal_places)
-      )
+        accounting.toFixed(subtotal, app.options.decimal_places),
+      ),
   );
   $(".total").html(
     format_money(total) +
       hidden_input(
         "total",
-        accounting.toFixed(total, app.options.decimal_places)
-      )
+        accounting.toFixed(total, app.options.decimal_places),
+      ),
   );
 
   $(document).trigger("sales-total-calculated");
@@ -7707,11 +7828,11 @@ function calculate_total() {
 function exclude_tax_from_amount(tax_percent, total_amount) {
   totalTax = accounting.toFixed(
     (total_amount * tax_percent) / (100 + tax_percent),
-    app.options.decimal_places
+    app.options.decimal_places,
   );
   return accounting.toFixed(
     total_amount - totalTax,
-    app.options.decimal_places
+    app.options.decimal_places,
   );
 }
 
@@ -7752,21 +7873,21 @@ function init_currency(id, callback) {
       ? $accountingTemplate.find('select[name="currency"]').val()
       : id;
 
-    requestGetJSON("misc/get_currency/" + selectedCurrencyId).done(function (
-      currency
-    ) {
-      // Used for formatting money
-      accounting.settings.currency.decimal = currency.decimal_separator;
-      accounting.settings.currency.thousand = currency.thousand_separator;
-      accounting.settings.currency.symbol = currency.symbol;
-      accounting.settings.currency.format =
-        currency.placement == "after" ? "%v %s" : "%s%v";
-      calculate_total();
+    requestGetJSON("misc/get_currency/" + selectedCurrencyId).done(
+      function (currency) {
+        // Used for formatting money
+        accounting.settings.currency.decimal = currency.decimal_separator;
+        accounting.settings.currency.thousand = currency.thousand_separator;
+        accounting.settings.currency.symbol = currency.symbol;
+        accounting.settings.currency.format =
+          currency.placement == "after" ? "%v %s" : "%s%v";
+        calculate_total();
 
-      if (callback) {
-        callback();
-      }
-    });
+        if (callback) {
+          callback();
+        }
+      },
+    );
   }
 }
 
@@ -7780,7 +7901,7 @@ function delete_invoice_attachment(id) {
             .find('[data-attachment-id="' + id + '"]')
             .remove();
           init_invoice(
-            $("body").find('input[name="_attachment_sale_id"]').val()
+            $("body").find('input[name="_attachment_sale_id"]').val(),
           );
         }
       })
@@ -7800,7 +7921,7 @@ function delete_credit_note_attachment(id) {
             .find('[data-attachment-id="' + id + '"]')
             .remove();
           init_credit_note(
-            $("body").find('input[name="_attachment_sale_id"]').val()
+            $("body").find('input[name="_attachment_sale_id"]').val(),
           );
         }
       })
@@ -7896,12 +8017,12 @@ function init_invoices_total(manual) {
   });
 
   var currency = $("body").find('select[name="total_currency"]').val();
-  
+
   var data = {
     currency: currency,
     years: years,
     init_total: true,
-    display_type: _inv_total_wrapper.attr('data-type')
+    display_type: _inv_total_wrapper.attr("data-type"),
   };
 
   var project_id = $('input[name="project_id"]').val();
@@ -7911,11 +8032,11 @@ function init_invoices_total(manual) {
   } else if (typeof customer_id != "undefined") {
     data.customer_id = customer_id;
   }
-  $.post(admin_url + "invoices/get_invoices_total", data).done(function (
-    response
-  ) {
-    _inv_total_wrapper.html(response);
-  });
+  $.post(admin_url + "invoices/get_invoices_total", data).done(
+    function (response) {
+      _inv_total_wrapper.html(response);
+    },
+  );
 }
 
 // Estimates quick total stats
@@ -8166,7 +8287,7 @@ function estimate_pipeline() {
     estimates_pipeline_update,
     ".pipeline-status",
     290,
-    360
+    360,
   );
 }
 
@@ -8186,18 +8307,18 @@ function estimates_pipeline_update(ui, object) {
         if (id) {
           data.order.push([id, idx + 1]);
         }
-      }
+      },
     );
 
     check_kanban_empty_col("[data-estimate-id]");
 
     setTimeout(function () {
-      $.post(admin_url + "estimates/update_pipeline", data).done(function (
-        response
-      ) {
-        update_kan_ban_total_when_moving(ui, data.status);
-        estimate_pipeline();
-      });
+      $.post(admin_url + "estimates/update_pipeline", data).done(
+        function (response) {
+          update_kan_ban_total_when_moving(ui, data.status);
+          estimate_pipeline();
+        },
+      );
     }, 200);
   }
 }
@@ -8218,18 +8339,18 @@ function proposals_pipeline_update(ui, object) {
         if (id) {
           data.order.push([id, idx + 1]);
         }
-      }
+      },
     );
 
     check_kanban_empty_col("[data-proposal-id]");
 
     setTimeout(function () {
-      $.post(admin_url + "proposals/update_pipeline", data).done(function (
-        response
-      ) {
-        update_kan_ban_total_when_moving(ui, data.status);
-        proposals_pipeline();
-      });
+      $.post(admin_url + "proposals/update_pipeline", data).done(
+        function (response) {
+          update_kan_ban_total_when_moving(ui, data.status);
+          proposals_pipeline();
+        },
+      );
     }, 200);
   }
 }
@@ -8241,7 +8362,7 @@ function proposals_pipeline() {
     proposals_pipeline_update,
     ".pipeline-status",
     290,
-    360
+    360,
   );
 }
 
@@ -8469,7 +8590,7 @@ function view_lead_consent(id) {
 function set_notification_read_inline(id) {
   requestGet("misc/set_notification_read_inline/" + id).done(function () {
     var notification = $("body").find(
-      '.notification-wrapper[data-notification-id="' + id + '"]'
+      '.notification-wrapper[data-notification-id="' + id + '"]',
     );
     notification
       .find(".notification-handler")
@@ -8534,7 +8655,7 @@ function validate_calendar_form() {
       start: "required",
       reminder_before: "required",
     },
-    calendar_form_handler
+    calendar_form_handler,
   );
 
   appValidateForm(
@@ -8544,7 +8665,7 @@ function validate_calendar_form() {
       start: "required",
       reminder_before: "required",
     },
-    calendar_form_handler
+    calendar_form_handler,
   );
 }
 
@@ -8600,7 +8721,9 @@ function fetch_notifications(callback) {
                 function (response) {
                   var $totalIndicator = nw.find(".icon-total-indicator");
                   nw.find(
-                    'li[data-notification-id="' + notId + '"] .notification-box'
+                    'li[data-notification-id="' +
+                      notId +
+                      '"] .notification-box',
                   ).removeClass("unread");
                   var currentTotalNotifications = $totalIndicator.text();
                   currentTotalNotifications = currentTotalNotifications.trim();
@@ -8616,7 +8739,7 @@ function fetch_notifications(callback) {
                     document.title = doc_initial_title;
                     $totalIndicator.addClass("hide");
                   }
-                }
+                },
               );
             })
             .click(function (e) {
@@ -8636,7 +8759,7 @@ function fetch_notifications(callback) {
 }
 
 function init_new_task_comment(manual) {
-  if (tinymce.get('task_comment')) {
+  if (tinymce.get("task_comment")) {
     tinymce.remove("#task_comment");
   }
 
@@ -8661,7 +8784,7 @@ function init_new_task_comment(manual) {
       sending: function (file, xhr, formData) {
         formData.append(
           "taskid",
-          $("#addTaskCommentBtn").attr("data-comment-task-id")
+          $("#addTaskCommentBtn").attr("data-comment-task-id"),
         );
         if (tinyMCE.activeEditor) {
           formData.append("content", tinyMCE.activeEditor.getContent());
@@ -8679,12 +8802,12 @@ function init_new_task_comment(manual) {
           tinymce.remove("#task_comment");
         }
       },
-    })
+    }),
   );
 
   var editorConfig = _simple_editor_config();
-  
-  editorConfig.toolbar_sticky = true
+
+  editorConfig.toolbar_sticky = true;
 
   if (typeof manual == "undefined" || manual === false) {
     editorConfig.auto_focus = true;
@@ -8701,69 +8824,69 @@ function init_new_task_comment(manual) {
   editorConfig.setup = function (editor) {
     initializeTinyMceMentions(editor, function () {
       return $.getJSON(
-        admin_url + "tasks/get_staff_names_for_mentions/" + taskid     
-      )
-    })
+        admin_url + "tasks/get_staff_names_for_mentions/" + taskid,
+      );
+    });
   };
 
-  init_editor("#task_comment", editorConfig)
+  init_editor("#task_comment", editorConfig);
 }
 
 function initializeTinyMceMentions(editor, usersCallback) {
-  if(!Object.hasOwn(editor, 'perfexCommands')) {
-    editor.perfexCommands = {}
+  if (!Object.hasOwn(editor, "perfexCommands")) {
+    editor.perfexCommands = {};
   }
 
   let cachedUsers = null;
 
-  editor.perfexCommands.getUsersForMention = async function() {
-    if(Array.isArray(cachedUsers)) {
-      return cachedUsers
+  ((editor.perfexCommands.getUsersForMention = async function () {
+    if (Array.isArray(cachedUsers)) {
+      return cachedUsers;
     }
 
-    let users = await usersCallback()
+    let users = await usersCallback();
 
-    cachedUsers = users.map(u=>({
+    cachedUsers = users.map((u) => ({
       value: u.id.toString(),
       text: u.name,
     }));
 
-    return cachedUsers
-  },
-  editor.perfexCommands.insertMentionUser = function (id, name, rng) {
-    // Insert in to the editor
-    editor.selection.setRng(rng || 0)
+    return cachedUsers;
+  }),
+    (editor.perfexCommands.insertMentionUser = function (id, name, rng) {
+      // Insert in to the editor
+      editor.selection.setRng(rng || 0);
 
-    editor.insertContent((
-      '<span class="mention" contenteditable="false" data-mention-id="' +
-      id +
-      '">@' +
-      name +
-      "</span>&nbsp;"
-    ))
-  }
+      editor.insertContent(
+        '<span class="mention" contenteditable="false" data-mention-id="' +
+          id +
+          '">@' +
+          name +
+          "</span>&nbsp;",
+      );
+    }));
 
-  editor.ui.registry.addAutocompleter('mentions', {
-    trigger: '@', // the trigger character to open the autocompleter
+  editor.ui.registry.addAutocompleter("mentions", {
+    trigger: "@", // the trigger character to open the autocompleter
     minChars: 0, // 0 to open the dropdown immediately after the @ is typed
     columns: 1, // must be 1 for text-based results
 
     // Retrieve the available users
     fetch: function (pattern) {
-      return new Promise(resolve =>
-          resolve(editor.perfexCommands.getUsersForMention())
-      )
+      return new Promise((resolve) =>
+        resolve(editor.perfexCommands.getUsersForMention()),
+      );
     },
 
     // Executed when user is selected from the dropdown
     onAction: function (autocompleteApi, rng, value) {
-      editor.perfexCommands.getUsersForMention().then(users=> {
-        let user = users.find(user=>user.value == value)
-        editor.perfexCommands.insertMentionUser(value, user.text, rng)
-        autocompleteApi.hide()
-      })
+      editor.perfexCommands.getUsersForMention().then((users) => {
+        let user = users.find((user) => user.value == value);
+        editor.perfexCommands.insertMentionUser(value, user.text, rng);
+        autocompleteApi.hide();
+      });
     },
-  })
+  });
 }
 
 function init_ajax_search(type, selector, server_data, url) {
@@ -8884,7 +9007,7 @@ function salesExtenalFileUpload(files, externalType) {
         }
       }
       $("#sales_attach_file").modal("hide");
-    }
+    },
   );
 }
 
@@ -8940,7 +9063,7 @@ function get_templates(rel_type, rel_id) {
       },
       function () {
         update_templates_count();
-      }
+      },
     );
   } else if (rel_type === "contracts") {
     $("#contract-templates").load(
@@ -8951,7 +9074,7 @@ function get_templates(rel_type, rel_id) {
       },
       function () {
         update_templates_count();
-      }
+      },
     );
   }
 }
@@ -8985,7 +9108,7 @@ function add_template(rel_type, rel_id) {
           "link image inserttable | cell row column deletetable | paste copy | pagebreak",
         append_plugins: "pagebreak",
       });
-    }
+    },
   );
 }
 
@@ -9019,7 +9142,7 @@ function edit_template(rel_type, id, rel_id) {
           "link image inserttable | cell row column deletetable | paste copy | pagebreak",
         append_plugins: "pagebreak",
       });
-    }
+    },
   );
 }
 
@@ -9146,7 +9269,7 @@ function add_batch_payment() {
                   .find("input, select");
                 rowFields
                   .filter(
-                    'select[name$="[paymentmode]"],input[name$="[transactionid]"],input[name$="[amount]"]'
+                    'select[name$="[paymentmode]"],input[name$="[transactionid]"],input[name$="[amount]"]',
                   )
                   .each(function () {
                     if ($(this).val() != "") {
@@ -9163,67 +9286,70 @@ function add_batch_payment() {
             });
           });
       });
-    }
+    },
   );
 }
 
 function configure_ai_editor(editor) {
   let items = [
-      {
-        type: 'menuitem',
-        text:app.lang.text_enhancement_make_polite,
-        icon: 'brightness',
-        onAction: function () {
-          make_ai_text_enhancement_request(editor, 'polite')
-        }
+    {
+      type: "menuitem",
+      text: app.lang.text_enhancement_make_polite,
+      icon: "brightness",
+      onAction: function () {
+        make_ai_text_enhancement_request(editor, "polite");
       },
-      {
-        type: 'menuitem',
-        text: app.lang.text_enhancement_make_formal,
-        icon: 'accessibility-check',
-        onAction: function () {
-          make_ai_text_enhancement_request(editor, 'formal')
-        }
+    },
+    {
+      type: "menuitem",
+      text: app.lang.text_enhancement_make_formal,
+      icon: "accessibility-check",
+      onAction: function () {
+        make_ai_text_enhancement_request(editor, "formal");
       },
-      {
-        type: 'menuitem',
-        icon: 'emoji',
-        text: app.lang.text_enhancement_make_friendly,
-        onAction: function () {
-          make_ai_text_enhancement_request(editor, 'friendly')
-        }
-      }
-    ];
+    },
+    {
+      type: "menuitem",
+      icon: "emoji",
+      text: app.lang.text_enhancement_make_friendly,
+      onAction: function () {
+        make_ai_text_enhancement_request(editor, "friendly");
+      },
+    },
+  ];
 
-    editor.ui.registry.addMenuButton('ai', {
-      icon: 'ai',
-      fetch: function (callback) {
-        callback(items);
-      }
-    });
+  editor.ui.registry.addMenuButton("ai", {
+    icon: "ai",
+    fetch: function (callback) {
+      callback(items);
+    },
+  });
 }
 
 function make_ai_text_enhancement_request(editor, type) {
-  const selectedText = editor.selection.getContent({ format: 'text' });
+  const selectedText = editor.selection.getContent({ format: "text" });
 
   if (!selectedText.trim()) {
-      alert_float('warning', 'Please select text to enhance.');
-      return;
+    alert_float("warning", "Please select text to enhance.");
+    return;
   }
 
-  $.post(admin_url + 'ai/text_enhancement/' + type, {
-      text: selectedText,
+  $.post(admin_url + "ai/text_enhancement/" + type, {
+    text: selectedText,
   })
-  .done(function (response) {
+    .done(function (response) {
       const result = JSON.parse(response);
       if (result.success) {
-          editor.selection.setContent(result.message);
+        editor.selection.setContent(result.message);
       }
-  })
-  .catch(function (error) {
+    })
+    .catch(function (error) {
       const result = JSON.parse(error.responseText);
-      alert_float('danger', result.error ? result.error : app.lang.something_went_wrong);
-  });
+      alert_float(
+        "danger",
+        result.error ? result.error : app.lang.something_went_wrong,
+      );
+    });
 }
 
 /**
@@ -9235,7 +9361,7 @@ function make_ai_text_enhancement_request(editor, type) {
  */
 function initDatatableOffline(dt_table) {
   console.warn(
-    '"initDatatableOffline" is deprecated, use "initDataTableInline" instead.'
+    '"initDatatableOffline" is deprecated, use "initDataTableInline" instead.',
   );
   initDataTableInline(dt_table);
 }
@@ -9246,8 +9372,7 @@ function initDatatableOffline(dt_table) {
  */
 function init_currency_symbol() {
   console.warn(
-    '"init_currency_symbol" is deprecated, use "init_currency" instead'
+    '"init_currency_symbol" is deprecated, use "init_currency" instead',
   );
   init_currency();
 }
-

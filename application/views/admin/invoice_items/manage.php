@@ -83,6 +83,7 @@
         _l('tax_1'),
         _l('tax_2'),
         _l('unit'),
+        'HSN Code',
         _l('item_group_name'),
     ];
 
@@ -209,6 +210,7 @@ render_datatable($table_data, 'invoice-items'); ?>
                         /(<|<)br\s*\/*(>|>)/g, " "));
                 $itemModal.find('input[name="rate"]').val(response.rate);
                 $itemModal.find('input[name="unit"]').val(response.unit);
+                $itemModal.find('input[name="hsn_code"]').val(response.hsn_code || '');
                 $('select[name="tax"]').selectpicker('val', response.taxid).change();
                 $('select[name="tax2"]').selectpicker('val', response.taxid_2).change();
                 $itemModal.find('#group_id').selectpicker('val', response.group_id);

@@ -227,14 +227,7 @@
   </div>
 </div> 
 <div class="table-responsive s_table">
- <table class="table credite-note-items-table items table-main-credit-note-edit has-calculations no-mtop">
-  <thead>
-   <tr>
-    <th></th>
-    <th width="20%" align="left"><i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-title="<?php echo _l('item_description_new_lines_notice'); ?>"></i> <?php echo _l('debit_note_table_item_heading'); ?></th>
-    <th width="25%" align="left"><?php echo _l('debit_note_table_item_description'); ?></th>
-    <?php
-   
+   <?php
    $qty_heading = _l('debit_note_table_quantity_heading');
    if(isset($debit_note) && $debit_note->show_quantity_as == 2 || isset($hours_quantity)){
     $qty_heading = _l('debit_note_table_hours_heading');
@@ -242,58 +235,75 @@
         $qty_heading = _l('debit_note_table_quantity_heading') .'/'._l('debit_note_table_hours_heading');
       }
       ?>
-      <th width="10%" class="qty" align="right"><?php echo $qty_heading; ?></th>
-      <th width="15%" align="right"><?php echo _l('debit_note_table_rate_heading'); ?></th>
-      <th width="20%" align="right"><?php echo _l('debit_note_table_tax_heading'); ?></th>
-      <th width="10%" align="right"><?php echo _l('debit_note_table_amount_heading'); ?></th>
-      <th align="center"><i class="fa fa-cog"></i></th>
-    </tr>
+ <table class="table credite-note-items-table items table-main-credit-note-edit has-calculations no-mtop">
+  <thead>
+   <tr>
+    <th></th>
+    <th width="20%" align="left"><?php echo _l('debit_note_table_item_description'); ?></th>
+    <th width="15%" align="left"><?php echo _l('debit_note_table_item_heading'); ?></th>
+    <th width="10%" align="left">HSN Code</th>
+    <th width="7%" class="qty" align="right"><?php echo $qty_heading; ?></th>
+    <th width="7%" align="right"><?php echo _l('unit'); ?></th>
+    <th width="7%" align="right"><?php echo _l('discount'); ?> (%)</th>
+    <th width="10%" align="right"><?php echo _l('debit_note_table_rate_heading'); ?></th>
+    <th width="15%" align="right"><?php echo _l('debit_note_table_tax_heading'); ?></th>
+    <th width="10%" align="right"><?php echo _l('debit_note_table_amount_heading'); ?></th>
+    <th align="center"><i class="fa fa-cog"></i></th>
+   </tr>
   </thead>
 <tbody>
     <tr class="main">
       <td></td>
       <td>
-      <textarea name="description" class="form-control" rows="4" placeholder="<?php echo _l('item_description_placeholder'); ?>"></textarea>
-    </td>
-    <td>
-      <textarea name="long_description" rows="4" class="form-control" placeholder="<?php echo _l('item_long_description_placeholder'); ?>"></textarea>
-    </td>
-
-    <td>
-      <input type="number" name="quantity" min="0" value="1" class="form-control" placeholder="<?php echo _l('item_quantity_placeholder'); ?>">
-      <input type="text" placeholder="<?php echo _l('unit'); ?>" name="unit" class="form-control input-transparent text-right">
-    </td>
-    <td>
-      <input type="number" name="rate" class="form-control" placeholder="<?php echo _l('item_rate_placeholder'); ?>">
-    </td>
-    <td>
-   <?php
-   $default_tax = unserialize(get_option('default_tax'));
-   $select = '<select class="selectpicker display-block tax main-tax" data-width="100%" name="taxname" multiple data-none-selected-text="'._l('no_tax').'">';
-   foreach($taxes as $tax){
-     $selected = '';
-     if(is_array($default_tax)){
-      if(in_array($tax['name'] . '|' . $tax['taxrate'],$default_tax)){
-       $selected = ' selected ';
+        <textarea name="long_description" rows="4" class="form-control" placeholder="<?php echo _l('item_long_description_placeholder'); ?>"></textarea>
+      </td>
+      <td>
+        <textarea name="description" class="form-control" rows="4" placeholder="<?php echo _l('item_description_placeholder'); ?>"></textarea>
+        <div class="item_id_display" style="font-size: 11px; color: #777;"></div>
+      </td>
+      <td>
+        <input type="text" name="hsn_code" class="form-control" placeholder="HSN Code">
+      </td>
+      <td>
+        <input type="number" name="quantity" min="0" value="1" class="form-control" placeholder="<?php echo _l('item_quantity_placeholder'); ?>">
+      </td>
+      <td>
+        <input type="text" placeholder="<?php echo _l('unit'); ?>" name="unit" class="form-control">
+      </td>
+      <td>
+        <input type="number" name="discount_item" min="0" value="0" class="form-control" placeholder="0">
+      </td>
+      <td>
+        <input type="number" name="rate" class="form-control" placeholder="<?php echo _l('item_rate_placeholder'); ?>">
+      </td>
+      <td>
+     <?php
+     $default_tax = unserialize(get_option('default_tax'));
+     $select = '<select class="selectpicker display-block tax main-tax" data-width="100%" name="taxname" multiple data-none-selected-text="'._l('no_tax').'">';
+     foreach($taxes as $tax){
+       $selected = '';
+       if(is_array($default_tax)){
+        if(in_array($tax['name'] . '|' . $tax['taxrate'],$default_tax)){
+         $selected = ' selected ';
+       }
      }
+     $select .= '<option value="'.$tax['name'].'|'.$tax['taxrate'].'"'.$selected.'data-taxrate="'.$tax['taxrate'].'" data-taxname="'.$tax['name'].'" data-subtext="'.$tax['name'].'">'.$tax['taxrate'].'%</option>';
    }
-   $select .= '<option value="'.$tax['name'].'|'.$tax['taxrate'].'"'.$selected.'data-taxrate="'.$tax['taxrate'].'" data-taxname="'.$tax['name'].'" data-subtext="'.$tax['name'].'">'.$tax['taxrate'].'%</option>';
- }
- $select .= '</select>';
- echo $select;
- ?>
-</td>
-<td></td>
-<td>
- <?php
- $new_item = 'undefined';
- if(isset($debit_note)){
-  $new_item = true;
-}
-?>
-<button type="button" onclick="add_item_to_table('undefined','undefined',<?php echo $new_item; ?>); return false;" class="btn pull-right btn-info"><i class="fa fa-check"></i></button>
-</td>
-</tr>
+   $select .= '</select>';
+   echo $select;
+   ?>
+  </td>
+  <td class="amount"></td>
+  <td>
+   <?php
+   $new_item = 'undefined';
+   if(isset($debit_note)){
+    $new_item = true;
+  }
+  ?>
+  <button type="button" onclick="add_item_to_table('undefined','undefined',<?php echo $new_item; ?>); return false;" class="btn pull-right btn-info"><i class="fa fa-check"></i></button>
+  </td>
+  </tr>
 <?php if (isset($debit_note) || isset($add_items)) {
   $i               = 1;
   $items_indicator = 'newitems';
@@ -315,22 +325,30 @@
       $manual             = true;
     }
     $table_row .= form_hidden('' . $items_indicator . '[' . $i . '][itemid]', $item['id']);
-    $amount = $item['rate'] * $item['qty'];
+    $amount = ($item['rate'] * $item['qty']);
+    if(isset($item['discount_item']) && $item['discount_item'] > 0){
+        $amount = $amount - ($amount * $item['discount_item'] / 100);
+    }
     $amount = app_format_number($amount);
                               // order input
     $table_row .= '<input type="hidden" class="order" name="' . $items_indicator . '[' . $i . '][order]">';
     $table_row .= '</td>';
-    $table_row .= '<td class="bold description"><textarea name="' . $items_indicator . '[' . $i . '][description]" class="form-control" rows="5">' . clear_textarea_breaks($item['description']) . '</textarea></td>';
     $table_row .= '<td><textarea name="' . $items_indicator . '[' . $i . '][long_description]" class="form-control" rows="5">' . clear_textarea_breaks($item['long_description']) . '</textarea></td>';
+    $table_row .= '<td class="bold description"><textarea name="' . $items_indicator . '[' . $i . '][description]" class="form-control" rows="5">' . clear_textarea_breaks($item['description']) . '</textarea><div style="font-size: 11px; color: #777;">ID: ' . $item['id'] . '</div></td>';
+    $table_row .= '<td><input type="text" name="' . $items_indicator . '[' . $i . '][hsn_code]" class="form-control" value="' . (isset($item['hsn_code']) ? $item['hsn_code'] : '') . '"></td>';
 
-    $table_row .= '<td><input type="number" min="0" onblur="calculate_total();" onchange="calculate_total();" data-quantity name="' . $items_indicator . '[' . $i . '][qty]" value="' . $item['qty'] . '" class="form-control">';
+    $table_row .= '<td><input type="number" min="0" onblur="calculate_total();" onchange="calculate_total();" data-quantity name="' . $items_indicator . '[' . $i . '][qty]" value="' . $item['qty'] . '" class="form-control"></td>';
+    
     $unit_placeholder = '';
     if(!$item['unit']){
       $unit_placeholder = _l('unit');
       $item['unit'] = '';
     }
-    $table_row .= '<input type="text" placeholder="'.$unit_placeholder.'" name="'.$items_indicator.'['.$i.'][unit]" class="form-control input-transparent text-right" value="'.$item['unit'].'">';
-    $table_row .= '</td>';
+    $table_row .= '<td><input type="text" placeholder="'.$unit_placeholder.'" name="'.$items_indicator.'['.$i.'][unit]" class="form-control" value="'.$item['unit'].'"></td>';
+    
+    $discount_item = isset($item['discount_item']) ? $item['discount_item'] : 0;
+    $table_row .= '<td><input type="number" min="0" onblur="calculate_total();" onchange="calculate_total();" name="' . $items_indicator . '[' . $i . '][discount_item]" value="' . $discount_item . '" class="form-control"></td>';
+
     $table_row .= '<td class="rate"><input type="number" data-toggle="tooltip" title="' . _l('numbers_not_formatted_while_editing') . '" onblur="calculate_total();" onchange="calculate_total();" name="' . $items_indicator . '[' . $i . '][rate]" value="' . $item['rate'] . '" class="form-control"></td>';
     $table_row .= '<td class="taxrate">' . $this->misc_model->get_taxes_dropdown_template('' . $items_indicator . '[' . $i . '][taxname][]', $debit_note_item_taxes, 'debit_note', $item['id'], true, $manual) . '</td>';
     $table_row .= '<td class="amount" align="right">' . $amount . '</td>';

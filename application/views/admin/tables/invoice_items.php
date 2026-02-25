@@ -15,6 +15,7 @@ $aColumns = array_merge($aColumns, [
     't1.taxrate as taxrate_1',
     't2.taxrate as taxrate_2',
     'unit',
+    db_prefix() . 'items.hsn_code as hsn_code',
     db_prefix() . 'items_groups.name as group_name',
 ]);
 
@@ -89,7 +90,7 @@ foreach ($rResult as $aRow) {
     $aRow['taxrate_2'] ??= 0;
     $row[] = '<span data-toggle="tooltip" title="' . e($aRow['taxname_2']) . '" data-taxid="' . $aRow['tax_id_2'] . '">' . e(app_format_number($aRow['taxrate_2'])) . '%</span>';
     $row[] = $aRow['unit'];
-
+    $row[] = e(isset($aRow['hsn_code']) ? $aRow['hsn_code'] : '');
     $row[] = e($aRow['group_name']);
 
     // Custom fields add values

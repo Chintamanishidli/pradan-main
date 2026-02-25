@@ -98,6 +98,12 @@ class App_items_table extends App_items_table_template
             }
 
             /**
+             * HSN Code
+             */
+            $hsn_code = isset($item['hsn_code']) ? $item['hsn_code'] : '';
+            $itemHTML .= '<td align="center" width="' . $regularItemWidth . '%">' . e($hsn_code) . '</td>';
+
+            /**
              * Item quantity
              */
             $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . e(floatval($item['qty']));
@@ -112,7 +118,19 @@ class App_items_table extends App_items_table_template
             $itemHTML .= '</td>';
 
             /**
-             * Item rate
+             * MRP
+             */
+            $mrp = isset($item['mrp']) ? $item['mrp'] : $item['rate'];
+            $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . e(app_format_money($mrp, $this->transaction->currency_name, $this->exclude_currency())) . '</td>';
+
+            /**
+             * Discount %
+             */
+            $discount_item = isset($item['discount_item']) ? $item['discount_item'] : 0;
+            $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . e(floatval($discount_item)) . '%</td>';
+
+            /**
+             * Item Selling Rate (rate)
              *
              * @var string
              */
@@ -122,7 +140,7 @@ class App_items_table extends App_items_table_template
                 ['item' => $item, 'transaction' => $this->transaction]
             );
 
-            $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . e($rate) . '</td>';
+            $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%"><strong>' . e($rate) . '</strong></td>';
 
             /**
              * Items table taxes HTML custom function because it's too general for all features/options
@@ -178,7 +196,10 @@ class App_items_table extends App_items_table_template
         }
 
         $html .= '<th align="right">' . $this->qty_heading() . '</th>';
-        $html .= '<th align="right">' . $this->rate_heading() . '</th>';
+        $html .= '<th align="center">HSN Code</th>';
+        $html .= '<th align="right">MRP</th>';
+        $html .= '<th align="right">Discount %</th>';
+        $html .= '<th align="right"><strong>Selling Rate</strong></th>';
         if ($this->show_tax_per_item()) {
             $html .= '<th align="right">' . $this->tax_heading() . '</th>';
         }
@@ -209,7 +230,10 @@ class App_items_table extends App_items_table_template
         }
 
         $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">' . $this->qty_heading() . '</th>';
-        $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">' . $this->rate_heading() . '</th>';
+        $tblhtml .= '<th width="' . $regularItemWidth . '%" align="center">HSN Code</th>';
+        $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">MRP</th>';
+        $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">Disc%</th>';
+        $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">Selling Rate</th>';
 
         if ($this->show_tax_per_item()) {
             $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">' . $this->tax_heading() . '</th>';
@@ -273,7 +297,9 @@ class App_items_table extends App_items_table_template
         $descriptionItemWidth = $this->get_description_item_width();
         $customFieldsItems    = $this->get_custom_fields_for_table();
         // Calculate headings width, in case there are custom fields for items
-        $totalheadings = $this->show_tax_per_item() == 1 ? 4 : 3;
+        // Base: Qty, Rate/SellingRate, Amount = 3 (or 4 with Tax)
+        // New columns added: HSN Code, MRP, Discount % = +3 (Selling Rate replaces Rate)
+        $totalheadings = $this->show_tax_per_item() == 1 ? 7 : 6;
         $totalheadings += count($customFieldsItems);
 
         return (100 - ($descriptionItemWidth + $adjustment)) / $totalheadings;

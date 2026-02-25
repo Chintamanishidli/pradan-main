@@ -753,6 +753,9 @@ function add_new_sales_item_post($item, $rel_id, $rel_type)
         'rel_type'         => $rel_type,
         'item_order'       => $item['order'],
         'unit'             => $item['unit'],
+        'hsn_code'         => isset($item['hsn_code']) ? $item['hsn_code'] : '',
+        'mrp'              => isset($item['mrp']) ? number_format($item['mrp'], get_decimal_places(), '.', '') : '0.00',
+        'discount_item'    => isset($item['discount_item']) ? number_format($item['discount_item'], get_decimal_places(), '.', '') : '0.00',
         'is_optional'      => $isOptional ? 1 : 0,
         'is_selected'      => $isOptional ? ($item['is_selected'] ?? 0) : 1,
     ]);
@@ -805,6 +808,9 @@ function update_sales_item_post($item_id, $data, $field = '')
             'rate'             => number_format($data['rate'], get_decimal_places(), '.', ''),
             'qty'              => $data['qty'],
             'unit'             => $data['unit'],
+            'hsn_code'         => isset($data['hsn_code']) ? $data['hsn_code'] : '',
+            'mrp'              => isset($data['mrp']) ? number_format($data['mrp'], get_decimal_places(), '.', '') : '0.00',
+            'discount_item'    => isset($data['discount_item']) ? number_format($data['discount_item'], get_decimal_places(), '.', '') : '0.00',
             'is_optional'      => $isOptional ? 1 : 0,
             'is_selected'      => $isOptional ? ($data['is_selected'] ?? 0) : 1,
         ];

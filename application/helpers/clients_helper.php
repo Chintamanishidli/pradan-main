@@ -208,6 +208,14 @@ function app_init_customer_profile_tabs()
         'badge'    => [],
     ]);
 
+    $CI->app_tabs->add_customer_profile_tab('shipping', [
+        'name'     => 'Shipping Addresses',
+        'icon'     => 'fa fa-truck',
+        'view'     => 'admin/clients/groups/shipping',
+        'position' => 7,
+        'badge'    => [],
+    ]);
+
     $CI->app_tabs->add_customer_profile_tab('contacts', [
         'name'     => ! is_empty_customer_company($client_id) || empty($client_id) ? _l('customer_contacts') : _l('contact'),
         'icon'     => 'fa-regular fa-user',

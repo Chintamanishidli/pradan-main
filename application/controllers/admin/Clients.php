@@ -199,6 +199,11 @@ class Clients extends AdminController
                         ],
                         ]);
                 }
+            } elseif ($group == 'shipping') {
+                $this->db->where('client_id', $id);
+                $this->db->order_by('id', 'desc');
+                $data['shipping_addresses'] = $this->db->get(db_prefix() . 'client_shipping_addresses')->result_array();
+                $data['shipping_countries'] = get_all_countries();
             }
 
             $data['staff'] = $this->staff_model->get('', ['active' => 1]);
@@ -652,6 +657,56 @@ class Clients extends AdminController
     public function get_customer_billing_and_shipping_details($id)
     {
         echo json_encode($this->clients_model->get_customer_billing_and_shipping_details($id));
+    }
+
+    public function save_shipping_address($client_id)
+    {
+        if (staff_cant('edit', 'customers') && !is_customer_admin($client_id)) {
+            access_denied('customers');
+        }
+
+        if ($this->input->post()) {
+            $data = [
+                'client_id'        => $client_id,
+                'label'            => $this->input->post('label'),
+                'shipping_street'  => $this->input->post('shipping_street'),
+                'shipping_city'    => $this->input->post('shipping_city'),
+                'shipping_state'   => $this->input->post('shipping_state'),
+                'shipping_zip'     => $this->input->post('shipping_zip'),
+                'shipping_country' => $this->input->post('shipping_country'),
+            ];
+
+            $address_id = $this->input->post('address_id');
+
+            if ($address_id) {
+                $this->db->where('id', $address_id);
+                $this->db->where('client_id', $client_id);
+                $this->db->update(db_prefix() . 'client_shipping_addresses', $data);
+                set_alert('success', 'Shipping address updated successfully');
+            } else {
+                $this->db->insert(db_prefix() . 'client_shipping_addresses', $data);
+                set_alert('success', 'Shipping address added successfully');
+            }
+        }
+
+        redirect(admin_url('clients/client/' . $client_id . '?group=shipping'));
+    }
+
+    public function delete_shipping_address($client_id, $address_id)
+    {
+        if (staff_cant('delete', 'customers') && !is_customer_admin($client_id)) {
+            access_denied('customers');
+        }
+
+        $this->db->where('id', $address_id);
+        $this->db->where('client_id', $client_id);
+        $this->db->delete(db_prefix() . 'client_shipping_addresses');
+
+        if ($this->db->affected_rows() > 0) {
+            set_alert('success', 'Shipping address deleted successfully');
+        }
+
+        redirect(admin_url('clients/client/' . $client_id . '?group=shipping'));
     }
 
     /* Change client status / active / inactive */

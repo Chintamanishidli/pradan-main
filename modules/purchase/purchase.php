@@ -24,8 +24,19 @@ hooks()->add_action('before_expense_form_name','init_vendor_option');
 hooks()->add_action('after_custom_fields_select_options','init_vendor_customfield');
 hooks()->add_action('after_custom_fields_select_options','init_po_customfield');
 hooks()->add_action('after_custom_fields_select_options','init_vendor_contacts_customfield');
-hooks()->add_action('after_customer_admins_tab', 'init_tab_pur_order');
-hooks()->add_action('after_custom_profile_tab_content', 'init_content_pur_order');
+hooks()->add_action('admin_init', 'purchase_init_customer_profile_tabs');
+// hooks()->add_action('after_customer_admins_tab', 'init_tab_pur_order');
+// hooks()->add_action('after_custom_profile_tab_content', 'init_content_pur_order');
+
+function purchase_init_customer_profile_tabs() {
+    $CI =& get_instance();
+    $CI->app_tabs->add_customer_profile_tab('purchase_orders', [
+        'name'     => _l('pur_order'),
+        'icon'     => 'fa fa-shopping-cart',
+        'view'     => 'purchase/client_pur_order',
+        'position' => 46, // After Estimates (45)
+    ]);
+}
 
 //PO task
 hooks()->add_action('task_related_to_select', 'po_related_to_select'); // old

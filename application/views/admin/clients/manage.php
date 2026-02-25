@@ -163,7 +163,7 @@
 $_table_data                         = [
     '<span class="hide"> - </span><div class="checkbox mass_select_all_wrap"><input type="checkbox" id="mass_select_all" data-to-table="clients"><label></label></div>',
     [
-        'name'     => _l('the_number_sign'),
+        'name'     => 'Customer ID',
         'th_attrs' => ['class' => 'toggleable', 'id' => 'th-number'],
     ],
     [
@@ -186,6 +186,7 @@ $_table_data                         = [
         'name'     => _l('customer_active'),
         'th_attrs' => ['class' => 'text-center toggleable', 'id' => 'th-active'],
     ],
+
     // [
     //     'name'     => _l('customer_groups'),
     //     'th_attrs' => ['class' => 'toggleable', 'id' => 'th-groups'],
