@@ -22,19 +22,23 @@
 
     body {
         font-family: "Inter", sans-serif;
-        color: #475569;
+        color: #000000;
         margin: 0;
         padding: 0;
+        overflow: hidden;
+        height: 100vh;
     }
 
     .company-logo {
-        padding: 25px 10px;
+        padding: 4px 10px;
         display: block;
     }
 
     .company-logo img {
         margin: 0 auto;
         display: block;
+        max-height: 80px;
+        width: auto;
     }
 
     @media screen and (max-height: 575px),

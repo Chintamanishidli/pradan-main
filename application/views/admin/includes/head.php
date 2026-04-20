@@ -78,6 +78,21 @@
     .table-hover > tbody > tr:hover {
       background: linear-gradient(90deg, #dbeafe 0%, #e0f2fe 50%, #f0f9ff 100%) !important;
     }
+
+    /* ===== FORCE ALL LABELS BLACK ===== */
+    label,
+    label[class],
+    label:not([class]),
+    .control-label,
+    .form-group label,
+    div label,
+    form label,
+    td label,
+    span label,
+    html body label {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+    }
     </style>
     
     <?php render_admin_js_variables(); ?>
@@ -96,6 +111,21 @@
             _table_api;
     </script>
     <?php app_admin_head(); ?>
+    <script>
+    // Force all label text black - overrides any CSS specificity issue
+    function forceLabelsBlack() {
+        var labels = document.querySelectorAll('label');
+        for (var i = 0; i < labels.length; i++) {
+            labels[i].style.setProperty('color', '#000000', 'important');
+        }
+    }
+    // Run on DOM ready and again after a short delay (for dynamically loaded content)
+    document.addEventListener('DOMContentLoaded', forceLabelsBlack);
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(forceLabelsBlack, 500);
+        setTimeout(forceLabelsBlack, 1500);
+    });
+    </script>
 </head>
 
 <body <?= admin_body_class($bodyclass ?? ''); ?>>

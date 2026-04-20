@@ -19,8 +19,8 @@ return App_table::find('clients')
             'email',
             db_prefix() . 'clients.phonenumber as phonenumber',
             db_prefix() . 'clients.active',
-            '(SELECT GROUP_CONCAT(name SEPARATOR ",") FROM ' . db_prefix() . 'customer_groups JOIN ' . db_prefix() . 'customers_groups ON ' . db_prefix() . 'customer_groups.groupid = ' . db_prefix() . 'customers_groups.id WHERE customer_id = ' . db_prefix() . 'clients.userid ORDER by name ASC) as customerGroups',
-            db_prefix() . 'clients.datecreated as datecreated',
+            // '(SELECT GROUP_CONCAT(name SEPARATOR ",") FROM ' . db_prefix() . 'customer_groups JOIN ' . db_prefix() . 'customers_groups ON ' . db_prefix() . 'customer_groups.groupid = ' . db_prefix() . 'customers_groups.id WHERE customer_id = ' . db_prefix() . 'clients.userid ORDER by name ASC) as customerGroups',
+            // db_prefix() . 'clients.datecreated as datecreated',
         ];
 
         $sIndexColumn = 'userid';

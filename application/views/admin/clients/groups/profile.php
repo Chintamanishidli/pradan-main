@@ -302,10 +302,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h4
-                                    class="tw-font-semibold tw-text-base tw-text-white tw-flex tw-justify-between tw-items-center tw-mt-0 tw-mb-6">
+                                    class="tw-font-semibold tw-text-base tw-text-black tw-flex tw-justify-between tw-items-center tw-mt-0 tw-mb-6">
                                     <?= _l('billing_address'); ?>
                                     <a href="#"
-                                        class="billing-same-as-customer tw-text-sm tw-text-white hover:tw-text-neutral-200 active:tw-text-neutral-200">
+                                        class="billing-same-as-customer tw-text-sm tw-text-black hover:tw-text-neutral-800 active:tw-text-neutral-800">
                                         <?= _l('customer_billing_same_as_profile'); ?>
                                     </a>
                                 </h4>
@@ -322,14 +322,14 @@
                             </div>
                             <div class="col-md-6">
                                 <h4
-                                    class="tw-font-semibold tw-text-base tw-text-white tw-flex tw-justify-between tw-items-center tw-mt-0 tw-mb-6">
+                                    class="tw-font-semibold tw-text-base tw-text-black tw-flex tw-justify-between tw-items-center tw-mt-0 tw-mb-6">
                                     <span>
                                         <i class="fa-regular fa-circle-question tw-mr-1" data-toggle="tooltip"
                                             data-title="<?= _l('customer_shipping_address_notice'); ?>"></i>
                                         <?= _l('shipping_address'); ?>
                                     </span>
                                     <a href="#"
-                                        class="customer-copy-billing-address tw-text-sm tw-text-white hover:tw-text-neutral-200 active:tw-text-neutral-200">
+                                        class="customer-copy-billing-address tw-text-sm tw-text-black hover:tw-text-neutral-800 active:tw-text-neutral-800">
                                         <?= _l('customer_billing_copy'); ?>
                                     </a>
                                 </h4>
